@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .checkout-btn, .back-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+        }
+
+        .quantity-btn, .remove-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .product-image {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Your Shopping Cart</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Capacity</th>
+                <th>Color</th>
+                <th>Material</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Remove from Cart</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Replace the following rows with dynamic data from your backend -->
+            <tr>
+                <td><img src="path/to/product1-image.jpg" alt="Product 1" class="product-image"></td>
+                <td>Product 1</td>
+                <td>Product 1 description</td>
+                <td>10 oz</td>
+                <td>Red</td>
+                <td>Ceramic</td>
+                <td>$20.00</td>
+                <td>
+                    <button class="quantity-btn" onclick="decrementQuantity(this)">-</button>
+                    <input class="quantity-input" type="text" value="2">
+                    <button class="quantity-btn" onclick="incrementQuantity(this)">+</button>
+                </td>
+                <td>$40.00</td>
+                <td><button class="remove-btn" onclick="removeFromCart(this)">Remove</button></td>
+            </tr>
+            <tr>
+                <td><img src="path/to/product2-image.jpg" alt="Product 2" class="product-image"></td>
+                <td>Product 2</td>
+                <td>Product 2 description</td>
+                <td>16 oz</td>
+                <td>Blue</td>
+                <td>Plastic</td>
+                <td>$30.00</td>
+                <td>
+                    <button class="quantity-btn" onclick="decrementQuantity(this)">-</button>
+                    <input class="quantity-input" type="text" value="1">
+                    <button class="quantity-btn" onclick="incrementQuantity(this)">+</button>
+                </td>
+                <td>$30.00</td>
+                <td><button class="remove-btn" onclick="removeFromCart(this)">Remove</button></td>
+            </tr>
+            <!-- Add more rows for additional products -->
+        </tbody>
+    </table>
+
+    <div class="total">Total Price: $70.00</div>
+
+    <a href="{% url 'back_to_shopping' %}" class="back-btn">Back to Shopping</a>
+	<a href="{% url 'checkout' %}" class="checkout-btn">Checkout</a>
+
+
+    <script>
+        function incrementQuantity(element) {
+            var input = element.parentElement.querySelector('.quantity-input');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrementQuantity(element) {
+            var input = element.parentElement.querySelector('.quantity-input');
+            var value = parseInt(input.value) - 1;
+            input.value = value > 0 ? value : 1;
+        }
+
+        function removeFromCart(element) {
+            // Implement logic to remove the corresponding product from the cart
+            // You can use the product ID or other unique identifier to identify the product
+            // For now, let's just remove the row from the table
+            var row = element.closest('tr');
+            row.remove();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}
+        {% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@600&display=swap" rel="stylesheet">
+
+    
+
+<!--
+    
+TemplateMo 559 Zay Shop
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+{% block style %}{% endblock style %}
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+                
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="\">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'abouttt' %}">About</a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'con' %}">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    <br><br>
+    <!DOCTYPE html>
+    <html lang="en">
+<head>
+    <title>Registration Form</title>
+    <style>
+        
+        /* Reset some default styles */
+        body, h1, h2, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* CSS for Form Container */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #e1e1e1;
+            border-radius: 10px; /* Add rounded corners */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form fields styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="email"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* CSS for Buttons */
+        .btn {
+            background-color: #258dfc;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #16f716;
+        }
+
+        /* CSS for Name Fields */
+        .name-fields {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .name-fields input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        /* CSS for City and State Fields */
+        .city-state-fields {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .city-state-fields input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+<body>
+
+    {% for message in messages %}
+
+    <div class="alert alert-{{messages.tags}}" role="alert">
+      <strong>{{message}}</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    {% endfor %}
+
+    <center>
+        <div class="form-container">
+            <h2 style="text-align: center; color: #258dfc;">Update Profile</h2><br>
+            <form action="/myauth/sell_upd/" method="post" enctype="multipart/form-data" onsubmit="return validateForm(this)">
+                {% csrf_token %}
+
+            <!-- profile_image -->
+
+            <div class="edit-left">
+                <div class="profile-picture">
+                    {% if user.sellerprofile.profile_picture %}
+                        <img src="{{ user.sellerprofile.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% else %}
+                        <!-- Display a placeholder or default image if no profile picture exists -->
+                        <img src="{% static 'assets/img/pro.png' %}" alt="Default Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Allow the user to upload a new profile picture -->
+            <div class="form-group">
+                <label for="profile_picture">Upload a new profile picture</label>
+                <input type="file" name="profile_picture" accept="image/*" required>
+            </div><br>
+            
+
+
+            <!-- First Name and Last Name in a single line -->
+            <div class="form-group name-fields">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Enter First Name" value="{{ user.first_name }}">
+                <div class="error-message" id="first_name_error"></div>
+            </div>
+            
+            <div class="form-group name-fields">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Enter Last Name" value="{{ user.last_name }}">
+                <div class="error-message" id="last_name_error"></div>
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address"  value="{{ user.email }}">
+                <div class="error-message" id="email_error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required value="{{ user.sellerprofile.phone }}">
+                <div class="error-message" id="phone_error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="alt_phone">Alternate Phone Number</label>
+                <input type="tel" id="alt_phone" name="alt_phone" placeholder="Enter your alternate phone number" required value="{{ user.sellerprofile.alt_phone }}">
+                <div class="error-message" id="alt_phone_error"></div>
+            </div>
+            
+
+             <!-- gst Number -->
+             <div class="form-group">
+                <label for="gst">GST Number</label>
+                <input type="text" id="gst" name="gst" placeholder="Enter GSTIN" oninput="validateGSTInput()"  required user.sellerprofile.gst  value="{{ user.sellerprofile.gst }}">
+                <div class="error-message" id="gst_error"></div>
+            </div>
+
+            <!-- companyname -->
+<div class="form-group">
+    <label for="company_name">Enter Company / Agency Name</label>
+    <input type="text" id="company_name" name="company_name" required placeholder="Enter Company / Agency Name" value="{{ user.sellerprofile.company_name }}">
+    <div class="error-message" id="company_name_error"></div>
+</div>
+
+
+<!-- Incorporation Certificate -->
+<div class="form-group">
+    <label for="incorporation_certificate">Upload Incorporation Certificate</label>
+    <input type="file" name="incorporation_certificate" required accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <div class="error-message" id="incorporation_certificate_error"></div>
+</div>
+
+
+              <!-- country -->
+              <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" placeholder="Country"  required value="{{ user.sellerprofile.country }}">
+                <div class="error-message" id="country_error"></div>
+            </div>
+
+
+
+
+          
+
+<!-- City and State with labels above -->
+<div class="form-group city-state-fields">
+    <div class="label-input-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" placeholder="Enter State"  required value="{{ user.sellerprofile.state }}">
+    </div>
+
+    <div class="label-input-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter City" required value="{{ user.sellerprofile.city }}">
+    </div>
+
+    <div class="error-message" id="state_error"></div>
+    <div class="error-message" id="city_error"></div>
+</div>
+
+
+             <!-- Pincode -->
+             <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" name="pincode"  placeholder="Enter your pincode"  required value="{{ user.sellerprofile.pincode }}" >
+                <div class="error-message" id="pincode_error"></div>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="building_name">Address</label>
+                <input type="text" id="address" name="address"  placeholder="Enter Address" required value="{{ user.sellerprofile.address }} ">
+                <div class="error-message" id="address_error"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="privacy_consent"></label>
+                <div class="form-check">
+                    <input type="checkbox" id="privacy_consent" name="privacy_consent" class="form-check-input" required>
+                    <label class="form-check-label" for="privacy_consent">
+                        I agree to the privacy policy and terms of service.
+                    </label>
+                </div>
+                <div class="error-message" id="privacy_consent_error"></div>
+            </div>
+
+
+           
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="btn" id="submit-button">Update</button>
+            </div>
+            <div class="mt-3 text-center">
+                After updating & Getting approval <a href="/myauth/login/">Login</a>
+            </div>
+        </form>
+    </div>
+</center>
+<script>
+    
+
+
+
+    // Function to validate the first name
+    function validateFirstName() {
+        const firstNameInput = document.getElementById('first_name');
+        const firstNameError = document.getElementById('first_name_error');
+        const firstNamePattern = /^[A-Za-z]+$/; // Only letters allowed
+
+        if (firstNameInput.value.trim() === '') {
+            firstNameError.textContent = 'First Name is required';
+        } else if (firstNameInput.value.includes(' ')) {
+            firstNameError.textContent = 'Spaces are not allowed';
+        } else if (!firstNamePattern.test(firstNameInput.value)) {
+            firstNameError.textContent = 'Only letters are allowed';
+        } else {
+            firstNameError.textContent = ''; // Clear any previous error message
+        }
+    }
+
+    // Function to validate the last name
+    function validateLastName() {
+        const lastNameInput = document.getElementById('last_name');
+        const lastNameError = document.getElementById('last_name_error');
+        const lastNamePattern = /^[A-Za-z]+$/; // Only letters allowed
+
+        if (lastNameInput.value.trim() === '') {
+            lastNameError.textContent = 'Last Name is required';
+        } else if (lastNameInput.value.includes(' ')) {
+            lastNameError.textContent = 'Spaces are not allowed';
+        } else if (!lastNamePattern.test(lastNameInput.value)) {
+            lastNameError.textContent = 'Only letters are allowed';
+        } else {
+            lastNameError.textContent = ''; // Clear any previous error message
+        }
+    }
+      // Function to validate the email
+      function validateEmail() {
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('email_error');
+        const emailPattern = /^[a-z0-9]+([.][a-z0-9]+)*@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+        if (emailInput.value.trim() === '') {
+            emailError.textContent = 'Email is required';
+        } else if (!emailPattern.test(emailInput.value)) {
+            emailError.textContent = 'Invalid email format,Only Lowercase letters are allowed';
+        } else if (emailInput.value.includes('..')) {
+            emailError.textContent = 'Consecutive dots are not allowed in the email';
+        } else {
+            // Additional server-side email existence validation can be performed here if needed.
+            emailError.textContent = ''; // Clear any previous error message
+        }
+    }
+
+
+   
+
+
+   // Function to validate the pincode
+function validatePincode() {
+    const pincodeInput = document.getElementById('pincode');
+    const pincodeError = document.getElementById('pincode_error');
+    const pincodePattern = /^\d{6}$/; // 6 digits
+
+    if (pincodeInput.value.trim() === '') {
+        pincodeError.textContent = 'Pincode is required';
+    } else if (!pincodePattern.test(pincodeInput.value)) {
+        pincodeError.textContent = 'Pincode must have exactly 6 digits';
+    } else if (/0{3,}/.test(pincodeInput.value)) {
+        pincodeError.textContent = 'Pincode cannot have consecutive zeros';
+    } else {
+        pincodeError.textContent = ''; // Clear any previous error message
+    }
+}
+
+
+//gst
+function validateGSTNumber(gstNumber) {
+    const gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
+    return gstPattern.test(gstNumber);
+}
+
+function validateGSTInput() {
+    const gstInput = document.getElementById('gst');
+    const gstError = document.getElementById('gst_error');
+
+    if (validateGSTNumber(gstInput.value)) {
+        gstError.textContent = ''; // Clear any previous error message
+    } else {
+        gstError.textContent = 'Invalid GST number format'; // Display an error message
+    }
+}
+
+   // Function to validate the company name (only letters are allowed) -->
+ // Get references to the input field and error message
+ const companyNameInput = document.getElementById("company_name");
+    const companyNameError = document.getElementById("company_name_error");
+
+    // Function to validate the company name input
+    function validateCompanyName() {
+        const companyNamePattern = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces
+
+        if (companyNamePattern.test(companyNameInput.value)) {
+            // Company name is valid
+            companyNameError.textContent = ""; // Clear the error message
+            return true;
+        } else {
+            // Company name is invalid
+            companyNameError.textContent = "Only letters and spaces are allowed"; // Display the error message
+            return false;
+        }
+    }
+
+    // Event listener for inline validation (on input)
+    companyNameInput.addEventListener("input", validateCompanyName);
+
+
+
+
+// Function to validate the country (only letters are allowed)
+    // Get references to the input field and error message
+    const countryInput = document.getElementById("country");
+    const countryError = document.getElementById("country_error");
+
+    // Function to validate the country input
+    function validateCountry() {
+        const countryPattern = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces
+
+        if (countryPattern.test(countryInput.value)) {
+            // Country is valid
+            countryError.textContent = ""; // Clear the error message
+            return true;
+        } else {
+            // Country is invalid
+            countryError.textContent = "Only letters and spaces are allowed"; // Display the error message
+            return false;
+        }
+    }
+
+    // Event listener for inline validation (on input)
+    countryInput.addEventListener("input", validateCountry);
+
+
+
+
+
+   // Function to validate the state
+   function validateState() {
+        const stateInput = document.getElementById('state');
+        const stateError = document.getElementById('state_error');
+        const statePattern = /^[A-Za-z]+$/; // Only letters allowed
+
+        if (stateInput.value.trim() === '') {
+            stateError.textContent = 'State is required';
+        } else if (!statePattern.test(stateInput.value)) {
+            stateError.textContent = 'Only letters are allowed, spaces are not allowed';
+        } else {
+            stateError.textContent = ''; // Clear any previous error message
+        }
+    }
+
+    //validate city
+    function validateCity() {
+    const cityInput = document.getElementById('city');
+    const cityError = document.getElementById('city_error');
+    const cityPattern = /^[A-Za-z]+$/; // Only letters are allowed
+
+    if (cityInput.value.trim() === '') {
+        cityError.textContent = 'City is required';
+    } else if (!cityPattern.test(cityInput.value)) {
+        cityError.textContent = 'Only letters are allowed, spaces are not allowed';
+    } else {
+        cityError.textContent = ''; // Clear any previous error message
+    }
+}
+
+
+
+          // Function to validate phone number and alternate phone number
+   // Function to validate phone numbers
+   function validatePhoneNumber(inputId, errorId) {
+    const phoneInput = document.getElementById(inputId);
+    const phoneError = document.getElementById(errorId);
+    const phonePattern = /^[1-9][0-9]{9}$/; // Starts with 1-9 and followed by 9 digits
+
+    if (phoneInput.value.trim() === '') {
+        phoneError.textContent = 'Phone number is required';
+    } else if (!phonePattern.test(phoneInput.value)) {
+        phoneError.textContent = 'Invalid phone number format. It should start with 1-9 and have 9 digits';
+    } else if (/0{3,}/.test(phoneInput.value)) {
+        phoneError.textContent = 'Consecutive zeros are not allowed';
+    } else {
+        phoneError.textContent = ''; // Clear any previous error message
+    }
+}
+
+// Event listener for phone number input
+document.getElementById('phone').addEventListener('input', function () {
+    validatePhoneNumber('phone', 'phone_error');
+});
+
+// Event listener for alternate phone number input
+document.getElementById('alt_phone').addEventListener('input', function () {
+    validatePhoneNumber('alt_phone', 'alt_phone_error');
+});
+
+
+
+   // Function to validate the address
+   function validateAddress() {
+    const addressInput = document.getElementById('address');
+    const addressError = document.getElementById('address_error');
+    const addressPattern = /^[A-Za-z\s]+$/; // Letters and spaces allowed
+
+    if (addressInput.value.trim() === '') {
+        addressError.textContent = 'Address is required';
+    } else if (!addressPattern.test(addressInput.value)) {
+        addressError.textContent = 'Only letters and spaces are allowed';
+    } else {
+        addressError.textContent = ''; // Clear any previous error message
+    }
+}
+
+ 
+
+    // Add event listeners to trigger validation on input change
+    document.getElementById('first_name').addEventListener('input', validateFirstName);
+    document.getElementById('last_name').addEventListener('input', validateLastName);
+    document.getElementById('email').addEventListener('input', validateEmail);
+    document.getElementById('pincode').addEventListener('input', validatePincode);
+    document.getElementById('state').addEventListener('input', validateState);
+    document.getElementById('city').addEventListener('input', validateCity);
+    document.getElementById('gst').addEventListener('input', validateGSTInput);
+    document.getElementById('country').addEventListener('input', validateCountry);
+    document.getElementById('company_name').addEventListener('input', validateCompanyName);
+    document.getElementById('address').addEventListener('input', validateAddress);
+
+
+
+
+   
+    function validateForm(form) {
+        // Run all the validation functions here
+        validateFirstName();
+        validateLastName();
+        validateEmail();
+        validatePincode();
+        validateState();
+        validateCity();
+        validateGSTInput();
+        validateCountry();
+        validateCompanyName();
+        validateAddress();
+
+
+
+
+
+      
+
+        // Check if there are any error messages
+        const errorMessages = document.querySelectorAll('.error-message');
+        for (const errorMessage of errorMessages) {
+            if (errorMessage.textContent !== '') {
+                // If there are error messages, prevent form submission
+                return false;
+            }
+        }
+
+        // If there are no error messages, allow form submission
+        return true;
+    }
+</script>
+
+
+
+</body>
+</html>
+

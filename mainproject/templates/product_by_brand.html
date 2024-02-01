@@ -1,0 +1,9 @@
+<h1>Products by Brand: {{ brand_name }}</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            <a href="{% url 'prodetailview' product.id %}">{{ product.product_name }}</a>
+            <!-- Display other product details here -->
+        </li>
+    {% endfor %}
+</ul>

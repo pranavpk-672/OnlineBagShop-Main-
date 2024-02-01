@@ -1,0 +1,247 @@
+{% extends 'nav.html' %}
+{% block title %}
+AispaceX
+{% endblock title %}
+{% block style %}
+<style>
+    .btn{
+        font-family: "Raleway",sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 1px;
+        display: inline-block;
+        padding: 10px 30px;
+        border-radius: 50px;
+        transition: 0.5s;
+        color: #3498db;
+        border: 2px solid #3498db;
+    }
+    .btn:hover{
+        background-color: rgb(57, 230, 22);
+        color: white;
+    }
+</style>
+{% endblock style %}
+{% block form %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <center><h4>SignUp</h4></center>
+
+
+                </div>
+                {% for message in messages %}
+
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                    <strong></strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endfor %}
+
+
+
+                <div class="card-body">
+                    <form action="http://127.0.0.1:8000/myauth/signup/" method="POST" id="signup-form">
+                        {% csrf_token %}
+                        <br>
+
+                        <!-- First Name and Last Name on the same row with spacing -->
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="First Name" name="first_name" id="first_name" required >
+                                <div class="text-danger" id="first_name_error"></div>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="Last Name" name="last_name" id="last_name" >
+                                <div class="text-danger" id="last_name_error"></div>
+                            </div>
+                        </div>
+                        <!-- Email with spacing -->
+                        <div class="form-group">
+                            <input type="email" class="form-control mb-3" placeholder="Email" name="email" id="email" required>
+                            <div class="text-danger" id="email_error"></div>
+                        </div>
+                        <!-- Password with spacing -->
+                        <div class="form-group">
+                            <input type="password" class="form-control mb-3" placeholder="Password" name="password" id="password" required>
+                            <div class="text-danger" id="password_error"></div>
+                        </div>
+                        <!-- Confirm Password with spacing -->
+                        <div class="form-group">
+                            <input type="password" class="form-control mb-3" placeholder="Confirm Password" name="confirm_password" id="confirm_password" required>
+                            <div class="text-danger" id="confirm_password_error"></div>
+                        </div>
+                        <!-- Sign Up Button centered -->
+                        <div class="text-center">
+                            <button type="submit" class="btn">Sign Up</button><br><br>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-center">
+                        Already a user? <a href="/myauth/login/">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Your HTML code -->
+
+
+<script>
+  
+// Function to validate the first name
+function validateFirstName() {
+    const firstNameInput = document.getElementById('first_name');
+    const firstNameError = document.getElementById('first_name_error');
+    const firstNamePattern = /^[A-Za-z]+$/; // Only letters allowed
+
+    if (firstNameInput.value.trim() === '') {
+        firstNameError.textContent = 'First Name is required';
+    } else if (firstNameInput.value.includes(' ')) {
+        firstNameError.textContent = 'Spaces are not allowed';
+    } else if (!firstNamePattern.test(firstNameInput.value)) {
+        firstNameError.textContent = 'Only letters are allowed';
+    } else {
+        firstNameError.textContent = ''; // Clear any previous error message
+    }
+}
+
+
+
+
+
+
+
+// Function to validate the last name
+function validateLastName() {
+    const lastNameInput = document.getElementById('last_name');
+    const lastNameError = document.getElementById('last_name_error');
+    const lastNamePattern = /^[A-Za-z]+$/; // Only letters allowed
+
+    if (lastNameInput.value.trim() === '') {
+        lastNameError.textContent = 'Last Name is required';
+    } else if (lastNameInput.value.includes(' ')) {
+        lastNameError.textContent = 'Spaces are not allowed';
+    } else if(!lastNamePattern.test(lastNameInput.value)) {
+        lastNameError.textContent = 'Only letters are allowed'; 
+    } else {
+        lastNameError.textContent = ''; // Clear any previous error message
+    }
+}
+
+
+
+
+// Function to validate the email
+function validateEmail() {
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email_error');
+    const emailPattern = /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/; // Restrict to lowercase letters
+
+    if (emailInput.value.trim() === '') {
+        emailError.textContent = 'Email is required';
+    } else if (!emailPattern.test(emailInput.value)) {
+        emailError.textContent = 'Invalid email format';
+    } else if (emailInput.value.includes('..')) {
+        emailError.textContent = 'Consecutive dots are not allowed in the email';
+    } else {
+        // Check if the email already exists (you'll need to implement this logic on your server)
+        // Here, we assume a function 'checkEmailExists' that checks if the email exists
+        if (checkEmailExists(emailInput.value)) {
+            emailError.textContent = 'Email already exists';
+        } else {
+            emailError.textContent = ''; // Clear any previous error message
+        }
+    }
+}
+
+// Example function to check if the email exists (you'll need to implement this)
+function checkEmailExists(email) {
+    
+    const existingEmails = ['example@email.com', 'another@example.com'];
+    return existingEmails.includes(email);
+}
+
+
+
+
+
+
+// Function to validate the password
+function validatePassword() {
+    const passwordInput = document.getElementById('password');
+    const passwordError = document.getElementById('password_error');
+    const passwordValue = passwordInput.value;
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\]).{8,}$/;
+
+    if (!passwordRegex.test(passwordValue)) {
+        passwordError.textContent = 'Password must mcontain at least 8 characters, one uppercase letter, and one special character';
+    } else {
+        passwordError.textContent = ''; 
+    }
+}
+
+
+
+
+    
+
+
+    // Function to validate the confirm password
+function validateConfirmPassword() {
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const confirmPasswordError = document.getElementById('confirm_password_error');
+
+    if (confirmPasswordInput.value !== passwordInput.value) {
+        confirmPasswordError.textContent = 'Passwords do not match';
+    } else {
+        confirmPasswordError.textContent = ''; 
+    }
+}
+
+// Add event listeners to trigger validation on input change
+document.getElementById('first_name').addEventListener('input', validateFirstName);
+document.getElementById('last_name').addEventListener('input', validateLastName);
+document.getElementById('email').addEventListener('input', validateEmail);
+document.getElementById('password').addEventListener('input', validatePassword);
+document.getElementById('confirm_password').addEventListener('input', validateConfirmPassword);
+
+// Function to handle form submission
+function submitForm(e) {
+    const firstNameError = document.getElementById('first_name_error');
+    const lastNameError = document.getElementById('last_name_error');
+    const emailError = document.getElementById('email_error');
+    const passwordError = document.getElementById('password_error');
+    const confirmPasswordError = document.getElementById('confirm_password_error');
+
+    if (
+        firstNameError.textContent ||
+        lastNameError.textContent ||
+        emailError.textContent ||
+        passwordError.textContent ||
+        confirmPasswordError.textContent
+    ) {
+        e.preventDefault(); // Prevent form submission if there are errors
+    }
+}
+
+// Event listener for form submission
+document.getElementById('signup-form').addEventListener('submit', submitForm);
+
+    
+</script>
+</body>
+</html>
+
+{% endblock form %}
+
+
+
+
+
+
+

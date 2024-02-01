@@ -1,0 +1,720 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <title>Customer Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
+<!--
+
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+</head>
+
+<body>
+
+   
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+
+
+         <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/myauth/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/myauth/productallview/">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="/myauth/logout/">Logout</a>
+                        </li>-->
+
+                      <!-- <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Welcome{{user.username}}</a>
+                            
+                        </li>
+
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="">Signup</a>
+                                <a class="dropdown-item" href=""></a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                        </li>--> 
+
+                        <!--<li class="nav-item dropdown">
+                           
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                          
+                        </li>-->
+
+
+                </div>
+                <div class="navbar align-self-center d-flex">
+                  <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                                <a class="nav-icon d-none d-lg-inline" href="/myauth/search/" >
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="/myauth/view_cart/">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                            {{ cart_items_count }}
+                        </span>
+                    </a>
+                   <!-- <li class="nav-item dropdown">
+                           
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                        </div>-->
+                      
+                    </li>
+                    <!--<a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>-->
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+
+    
+ <!--demo header-->
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Website Header</title>
+     <style>
+         /* Header styles */
+         header {
+             background-color: #2c621d;
+             color: #fff;
+             padding: 10px 0;
+         }
+ 
+         .container {
+             max-width: 1200px;
+             margin: 0 auto;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+ 
+         /* Navigation styles */
+         nav ul {
+             list-style: none;
+             margin: 0;
+             padding: 0;
+             display: flex;
+         }
+ 
+         nav ul li {
+             margin-right: 20px;
+         }
+ 
+         nav ul li:last-child {
+             margin-right: 0;
+         }
+ 
+         nav a {
+             text-decoration: none;
+             color: #fff;
+             font-weight: bold;
+         }
+ 
+         /* Dropdown styles */
+         .dropdown {
+             position: relative;
+         }
+ 
+         .dropdown-content {
+             display: none;
+             position: absolute;
+             background-color: #333;
+             min-width: 120px;
+             z-index: 1;
+         }
+ 
+         .dropdown:hover .dropdown-content {
+             display: block;
+         }
+ 
+         .dropdown-content a {
+             padding: 10px;
+             text-align: center;
+             color: #fff;
+             text-decoration: none;
+             display: block;
+         }
+ 
+         .dropdown-content a:hover {
+             background-color: #555;
+         }
+ 
+         .user {
+             display: flex;
+             align-items: center;
+             margin-left: auto; /* Align to the right */
+         }
+ 
+         .user img {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             margin-right: 10px; /* Add some space between image and text */
+         }
+         header {
+            background-color: #2c621d;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back {
+           
+            padding: 10px;
+            display: flex; /* Use flex to align items horizontally */
+        }
+
+        .back ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .back ul li {
+            margin-right: 20px;
+        }
+
+        .back ul li:last-child {
+            margin-right: 0;
+        }
+
+        .back a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .user.dropdown {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .user.dropdown a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .user.dropdown img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #343a40;
+            min-width: 120px;
+            z-index: 1;
+        }
+
+        .user.dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+     </style>
+ </head>
+ 
+ <body>
+     <header>
+        <div class="container">
+            <div class="back">
+                <ul>
+                    <li><a href="http://127.0.0.1:8000/myauth/productallview/">All Collections </a></li>
+                    <li class="dropdown">
+                        <a href="#">Categories</a>
+                        <div class="dropdown-content">
+                            <!-- Categories loop -->
+                            {% for category in categories %}
+                            <a href="http://127.0.0.1:8000/myauth/productscategorylist/{{ category.id }}">{{ category.category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Sub-categories</a>
+                        <div class="dropdown-content">
+                            <!-- Subcategories loop -->
+                            {% for subcategory in subcategories %}
+                            <a href="http://127.0.0.1:8000/myauth/productssubcategorylist/{{ subcategory.id }}">{{ subcategory.sub_category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/4">Men</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/5">Women</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/6">Kids</a>
+                    </li>
+                  
+                    <li>
+                        <a href="#">Latest Collections</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="user dropdown">
+                <a href="#">
+                    {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+                    {% else %}
+                    <img src="{% static 'assets/img/pro.png' %}" alt="Default Profile Picture">
+                    {% endif %}
+                    Hello, {{ user.first_name }}
+                </a>
+                <div class="dropdown-content" style="margin-top: 215px;">
+                    <a href="/myauth/updateprofile/">Profile</a>
+                    <a href="/myauth/view_cart/">View Cart</a>
+                    <a href="/myauth/view_wishlist/">View Wishlist</a>
+                    <a href="/myauth/logout/">Logout</a>
+                </div>
+            </div>
+        </div>
+     </header>
+     <!-- Your page content goes here -->
+ </body>
+ 
+ </html>
+ 
+<!--demoheader close-->
+
+
+
+
+
+
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <style>
+        .body_design {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            OBJECT-FIT: contain;
+
+        }
+
+        .quantity {
+            width: 50px;
+            text-align: center;
+        }
+
+        .increment-btn,
+        .decrement-btn,
+        .remove-btn,
+        .checkout-btn,
+        .back-btn {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .increment-btn:hover,
+        .decrement-btn:hover,
+        .remove-btn:hover,
+        .checkout-btn:hover,
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+
+        #total-price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            align-self: flex-end;
+        }
+
+        .buttons-container {
+            display: flex;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="body_design">
+    <h1> Cart Items</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.product_name }}</td>
+                <td>
+                    <a href="{% url 'prodetailview' item.product.id %}">
+                        <img src="{{ item.product.image_1.url }}" alt="Product Image">
+                    </a>
+                </td>
+                                <td>
+                    <input type="number" class="quantity" value="{{ item.quantity }}" min="1">
+
+                    <input type="hidden" class="stock" value="{{ item.product.stock }}">
+
+                    <input type="hidden" class="id_no" value="{{ item.id_number_info }}">
+
+
+                    <input type="hidden" class="cart_id" value="{{ item.cart_id }}">
+                    
+
+                    <input type="hidden" class="item_id" value="{{ item.id }}">
+
+                    
+                    <button class="decrement-btn">-</button>
+                    <button class="increment-btn">+</button>
+                </td>
+                
+                <td class="item-price">
+                    <input type="hidden" class="update_price" value="{{ item.product.current_price }}">
+                    
+                    ₹ <span data-price="{{ item.product.current_price }}">{{ item.product.current_price }}</span></td>
+                <td>
+                   <!-- <a href="{% url 'prodetailview' item.product.id %}" class="view-details">View Details</a>-->
+
+                   <form class="delete-form" method="POST" action="{% url 'delete_cartitem' item.id %}">
+                    {% csrf_token %}
+                    <button type="button" class="remove-btn" style="width: 100px; height: 40px;">Remove</button><br><br>
+                </form>
+                
+                <form class="delete-form" method="POST" action="{% url 'prodetailview' item.product.id %}">
+                    {% csrf_token %}
+                    <button type="button" class="remove-btn" style="width: 100px; height: 40px;">View Details</button>
+                </form>
+                  
+                </td>
+            </tr>
+            {% endfor %}
+            
+
+        </tbody>
+    </table>
+    
+    <p id="total-price">Total Price: ₹<span id="total-price-value"></span></p>
+
+    <div class="buttons-container">
+        <a href="/myauth/home/">
+            <button class="">Back to Shopping</button>
+        </a>
+    
+        <!-- Add a margin to create space -->
+        <span style="margin-right: 10px;"></span>
+        <button class="checkout-btn">Checkout</button>
+
+    
+        <!-- <form action="https://www.example.com/payment/success/" method="POST">
+            <script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="rzp_test_UWsnOOpJ8l5HSD"
+                data-amount="{{ total_amount_in_paise}}"  
+                data-currency="INR"
+                data-order_id="{{ order.id }}"
+                data-buttontext="Pay with Razorpay"
+                data-name="Acme Corp"
+                data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
+                data-image="https://example.com/your_logo.jpg"
+                data-prefill.name="Pranav"
+                data-prefill.email="pranav@gmail.com"
+                data-theme.color="#F37254"
+            ></script>
+            <input type="hidden" custom="Hidden Element" name="hidden"/>
+        </form>   </div> -->
+    <script>
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInputs = document.querySelectorAll('.quantity');
+            const decrementBtns = document.querySelectorAll('.decrement-btn');
+            const incrementBtns = document.querySelectorAll('.increment-btn');
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            const itemPrices = document.querySelectorAll('.item-price span');
+            const totalPriceElem = document.getElementById('total-price-value');
+
+            const checkoutBtn = document.querySelector('.checkout-btn');
+
+// checkoutBtn.addEventListener('click', function(event) {
+//     event.preventDefault();
+
+//     // Get the cart_id value
+//     const cartId = document.querySelector('.cart_id').value;
+//     window.location.href = `/checkout/${cartId}`;
+
+// });
+         
+
+checkoutBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const items = [];
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach(function(row) {
+        const itemId = parseInt(row.querySelector('.item_id').value);
+        const quantity = parseInt(row.querySelector('.quantity').value);
+        const price = parseFloat(row.querySelector('.update_price').value);
+
+        items.push({
+            "item_id": itemId,
+            "quantity": quantity,
+            "price": price
+        });
+    });
+
+    // You can now use the 'items' array to send JSON data to your backend.
+    console.log(items);
+
+    window.location.href = `/myauth/checkout/?items=${encodeURIComponent(JSON.stringify(items))}`;
+});
+
+            function updateItemPrice(item, quantity) {
+                const price = parseFloat(item.querySelector('.item-price span').getAttribute('data-price'));
+                const itemPriceElem = item.querySelector('.item-price span');
+                const totalPrice = price * quantity;
+                itemPriceElem.textContent = totalPrice.toFixed(2);
+
+                const hiddenInputp = item.querySelector('.update_price');
+    hiddenInputp.value = totalPrice.toFixed(2);
+                
+            }
+
+            function updateTotalPrice() {
+                let totalPrice = 0;
+                itemPrices.forEach(function(price) {
+                    totalPrice += parseFloat(price.textContent);
+                });
+                totalPriceElem.textContent = totalPrice.toFixed(2);
+            }
+
+            quantityInputs.forEach(function(quantityInput, index) {
+                const decrementBtn = decrementBtns[index];
+                const incrementBtn = incrementBtns[index];
+                const item = quantityInput.closest('tr');
+
+                const stockDataInput = item.querySelector('.stock');
+
+                incrementBtn.addEventListener('click', function() {
+                    let quantity = parseInt(quantityInput.value);
+
+                    let stockdata = parseInt(stockDataInput.value);
+
+                    if(quantity >= stockdata) {
+                        alert("Only "+stockdata+" stocks available")
+                    }
+                    else if(quantity < 1) {
+                        alert("Invalid quantity")
+                    }
+                    else {
+                        quantity++;
+                        quantityInput.value = quantity;
+                    updateItemPrice(item, quantity);
+                    updateTotalPrice();
+                    }
+
+                   
+                    
+                });
+
+                decrementBtn.addEventListener('click', function() {
+                    let quantity = parseInt(quantityInput.value);
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityInput.value = quantity;
+                        updateItemPrice(item, quantity);
+                        updateTotalPrice();
+                    }
+                });
+
+                quantityInput.addEventListener('input', function() {
+                    let quantity = parseInt(quantityInput.value);
+                    updateItemPrice(item, quantity);
+                    updateTotalPrice();
+                });
+            });
+
+            removeBtns.forEach(function(removeBtn) {
+    removeBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        const deleteForm = removeBtn.closest('.delete-form');
+        deleteForm.submit();
+    });
+});
+
+            updateTotalPrice();
+        });
+    </script>
+    </div>
+</body>
+</html>

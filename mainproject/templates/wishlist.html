@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <title>Customer Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
+<!--
+
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+</head>
+
+<body>
+
+   
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+
+
+         <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/myauth/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/myauth/productallview/">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="/myauth/logout/">Logout</a>
+                        </li>-->
+
+                      <!-- <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Welcome{{user.username}}</a>
+                            
+                        </li>
+
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="">Signup</a>
+                                <a class="dropdown-item" href=""></a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                        </li>--> 
+
+                        <!--<li class="nav-item dropdown">
+                           
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                          
+                        </li>-->
+
+
+                </div>
+                <div class="navbar align-self-center d-flex">
+                  <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                                <a class="nav-icon d-none d-lg-inline" href="/myauth/search/" >
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="/myauth/view_cart/">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                            {{ cart_items_count }}
+                        </span>
+                    </a>
+                   <!-- <li class="nav-item dropdown">
+                           
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                        </div>-->
+                      
+                    </li>
+                    <!--<a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>-->
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+    <br><br><br><br>
+    <style>
+  .head {
+        font-size: 24px; /* Increase font size for emphasis */
+        margin: 10px 0;
+        color: #459a37; /* Set the font color */
+        font-family: 'Your Preferred Font', sans-serif; /* Choose a beautiful font */
+        text-transform: uppercase; /* Convert text to uppercase */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow */
+        letter-spacing: 2px; /* Adjust letter spacing */
+        line-height: 1.2; /* Adjust line height for readability */
+        text-align: center; /* Center-align the text */
+    }
+    </style>
+  
+
+
+    <div class="head">
+
+    <center><h1 class="h1">WISHLIST ITEMS</h1></center>
+    </div>
+    <br><br><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <style>
+        body {
+            font-family: 'Your Preferred Font', sans-serif;
+            background-color: #f8f9fa; /* Set a light background color */
+            color: #495057; /* Set text color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .wishlist-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Adjust to control the spacing between cards */
+            margin: -20px; /* Adjust margin to compensate for individual item margins */
+        }
+
+        .cart-item {
+            border: 1px solid #dee2e6; /* Set border color */
+            border-radius: 5px; /* Add border-radius for a rounded look */
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            position: relative;
+            background-color: #ffffff; /* Set background color */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+            width: calc(33.33% - 40px); /* Set a fixed width for each item and adjust margin */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            transition: box-shadow 0.5s; /* Adjust transition duration for smoother effect */
+        }
+
+        .cart-item:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* Increase box shadow on hover */
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #ff6600; /* Set a distinct color for the price */
+            font-size: 18px; /* Adjust font size for price */
+        }
+
+        .remove-btn,
+        .add-to-cart,
+        .view-details {
+            display: inline-block; /* Set buttons to inline-block for single line */
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 16px; /* Adjust font size for buttons */
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff; /* Set text color for buttons */
+        }
+
+        .remove-btn {
+            background-color: #dc3545; /* Red color for remove button */
+            transition: background-color 0.3s;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        .add-to-cart {
+            background-color: #28a745; /* Green color for add to cart button */
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .view-details {
+            color: #007bff; /* Blue color for view details link */
+            margin-left: 10px; /* Add margin to separate buttons */
+        }
+
+        .product-image-link {
+            text-decoration: none; /* Remove underline from the link */
+            color: inherit; /* Inherit color from the parent element */
+        }
+
+        .button-group {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wishlist-container">
+        {% for item in wishlist_items %}
+            <div class="cart-item" data-price="{{ item.product.current_price }}">
+                <a href="{% url 'prodetailview' item.product.id %}" class="product-image-link">
+                    <img src="{{ item.product.image_1.url }}" alt="Product Image" height="200">
+                </a>
+                <p>Product Name: {{ item.product.product_name }}</p>
+                <p>Price: ₹ <span class="item-price">{{ item.product.current_price }}</span></p>
+                
+                <form method="POST" action="{% url 'delete_wishlistitem' item.id %}" class="button-group">
+                    {% csrf_token %}
+                    <button type="submit" class="remove-btn">Remove</button>
+                    <a href="{% url 'add_to_cart' item.product.id %}" class="add-to-cart">Add to Cart</a>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

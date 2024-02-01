@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 700px; /* Adjust the width value to your preference */
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #495057;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            color: #495057;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        button {
+            background-color: #0056b3;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0ade34; /* Orange color on hover */
+        }
+
+        #image-container {
+            margin-bottom: 15px;
+        }
+
+        #image-container input {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Additional Styles for Visual Enhancement */
+        input[type="file"] {
+            border: none;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 12px;
+            background: #f8f9fa url('https://cdn3.iconfinder.com/data/icons/iconic-1/32/sync_32x32.png') no-repeat right center / 18px;
+        }
+
+        input[type="submit"] {
+            background-color: #0056b3;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0ade34; /* Orange color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        {% csrf_token %}
+
+        <h2>Add Product</h2>
+    
+        <label for="product_name">Product Name:</label>
+        <input type="text" name="product_name" id="product_name" required oninput="validateProductName()">
+
+        <div id="product_name_error" class="error"></div>
+
+
+        <label for="brand_name">Brand Name:</label>
+        <input type="text" name="brand_name" id="brand_name" required oninput="validateBrandName()">
+        <div id="brand_name_error" class="error"></div>
+
+        <label for="product_number">Product Number:</label>
+        <input type="text" name="product_number" id="product_number" required oninput="validateProductNumber()">
+        <div id="product_number_error" class="error"></div>
+
+
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" id="stock" required oninput="validateStock()">
+
+        <div id="stock_error" class="error"></div>
+
+        <label for="about_product"> Product Description:</label>
+<textarea name="about_product" id="about_product" required  oninput="validateAboutProduct()"></textarea>
+
+<div id="about_product_error" class="error"></div>
+
+
+
+        <!-- Add similar structure for other fields with corresponding validation functions -->
+        
+        <label for="current_price">Current Price:</label>
+<input type="number" name="current_price" id="current_price" step="0.01" required oninput="validateCurrentPrice()">
+<div id="current_price_error" class="error"></div>
+
+
+        <label for="category_id">Category:</label>
+        <select name="category_id" required>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="sub_category_id">Subcategory:</label>
+        <select name="sub_category_id" required>
+            {% for subcategory in subcategories %}
+            <option value="{{ subcategory.id }}">{{ subcategory.sub_category_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="capacity">Capacity:</label>
+        <input type="text" name="capacity" id="capacity" required oninput="validateCapacity()">
+        <div id="capacity_error" class="error"></div>
+        
+        
+        <label for="color">Color:</label>
+        <input type="text" name="color" required oninput="validateField('color')">
+        <div id="color_error" class="error"></div>
+        
+        <label for="material">Material:</label>
+        <input type="text" name="material" required oninput="validateField('material')">
+        <div id="material_error" class="error"></div>
+        
+
+        
+        <label for="main_image">Main Image:</label>
+        <input type="file" name="main_image" required>
+
+        <label for="images">Images:</label>
+
+        <input type="hidden" name="num_images" id="num_images" value="0">
+        
+        <div id="image-container">
+            <!-- Dynamically add image input fields using JavaScript -->
+        </div>
+
+     
+        
+        <button type="button" onclick="addImageField()">Add Image</button>
+        <br><br><br>
+        
+        <input type="submit" value="Add Product">
+        </form>
+        
+        <script>
+            function addImageField() {
+                var container = document.getElementById('image-container');
+                var numImages = container.getElementsByTagName('input').length + 1;
+        
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'image_' + numImages;
+                container.appendChild(input);
+        
+                document.getElementById('num_images').value = numImages;
+            }
+        
+            // Add validation function for the main image
+            function validateMainImage() {
+                var mainImageInput = document.querySelector('input[name="main_image"]');
+                var mainImageError = document.getElementById('main_image_error');
+        
+                if (!mainImageInput.files.length) {
+                    mainImageError.textContent = 'Main Image is required';
+                } else {
+                    mainImageError.textContent = '';
+                }
+            }
+        
+            // Add event listener for input change
+            document.querySelector('input[name="main_image"]').addEventListener('change', validateMainImage);
+        </script>
+     <script>
+        function validateField(fieldName, errorId) {
+            var inputField = document.getElementsByName(fieldName)[0];
+            var errorElement = document.getElementById(errorId);
+
+            // Regular expression to allow only letters (both uppercase and lowercase)
+            var lettersOnly = /^[A-Za-z]+$/;
+
+            if (inputField.value.trim() === '') {
+                errorElement.textContent = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' is required';
+            } else if (!lettersOnly.test(inputField.value)) {
+                errorElement.textContent = 'Only letters are allowed in the ' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+            } else {
+                errorElement.textContent = '';
+            }
+        }
+
+       
+        function validateStock() {
+            var stockInput = document.getElementById('stock');
+            var stockError = document.getElementById('stock_error');
+
+            var digitsOnly = /^\d+$/;
+
+            if (isNaN(stockInput.value) || stockInput.value <= 0 || !digitsOnly.test(stockInput.value)) {
+                stockError.textContent = 'Please enter a valid stock value (only digits are allowed)';
+            } else {
+                stockError.textContent = '';
+            }
+        }
+
+        function validateProductName() {
+            var productNameInput = document.getElementById('product_name');
+            var productNameError = document.getElementById('product_name_error');
+
+            var lettersOnly = /^[A-Za-z]+$/;
+
+            if (productNameInput.value.trim() === '') {
+                productNameError.textContent = 'Product Name is required';
+            } else if (!lettersOnly.test(productNameInput.value)) {
+                productNameError.textContent = 'Only letters are allowed in the Product Name';
+            } else {
+                productNameError.textContent = '';
+            }
+        }
+        function validateBrandName() {
+    var brandNameInput = document.getElementById('brand_name');
+    var brandNameError = document.getElementById('brand_name_error');
+
+    var lettersOnly = /^[A-Za-z]+$/;
+
+    if (brandNameInput.value.trim() === '') {
+        brandNameError.textContent = 'Brand Name is required';
+    } else if (!lettersOnly.test(brandNameInput.value)) {
+        brandNameError.textContent = 'Only letters are allowed in the Brand Name';
+    } else {
+        brandNameError.textContent = '';
+    }
+}
+
+
+
+     function validateAboutProduct() {
+    var aboutProductInput = document.getElementById('about_product');
+    var aboutProductError = document.getElementById('about_product_error');
+
+    var lettersAndSpacesOnly = /^[A-Za-z ]+$/;
+
+    if (aboutProductInput.value.trim() === '') {
+        aboutProductError.textContent = 'About Product is required';
+    } else if (!lettersAndSpacesOnly.test(aboutProductInput.value)) {
+        aboutProductError.textContent = 'Only letters and spaces are allowed in the About Product';
+    } else {
+        aboutProductError.textContent = '';
+    }
+}
+
+
+
+
+
+        function validateCurrentPrice() {
+            var currentPriceInput = document.getElementById('current_price');
+            var currentPriceError = document.getElementById('current_price_error');
+
+            var digitsOnly = /^\d+$/;
+
+            if (currentPriceInput.value.trim() === '') {
+                currentPriceError.textContent = 'Current Price is required';
+            } else if (!digitsOnly.test(currentPriceInput.value)) {
+                currentPriceError.textContent = 'Only digits are allowed in the Current Price';
+            } else {
+                currentPriceError.textContent = '';
+            }
+        }
+
+    //     function validateField(fieldName) {
+    //     var inputField = document.getElementsByName(fieldName)[0];
+    //     var errorElement = document.getElementById(fieldName + '_error');
+
+    //     // Regular expression to allow only letters and digits
+    //     var lettersAndDigitsOnly = /^[a-zA-Z0-9]+$/;
+
+    //     if (inputField.value.trim() === '') {
+    //         errorElement.textContent = 'Capacity is required';
+    //     } else if (!lettersAndDigitsOnly.test(inputField.value)) {
+    //         errorElement.textContent = 'Only letters and digits are allowed in the Capacity';
+    //     } else {
+    //         errorElement.textContent = '';
+    //     }
+    // }
+
+    function validateCapacity() {
+    var capacityInput = document.getElementById('capacity');
+    var capacityError = document.getElementById('capacity_error');
+
+    // Regular expression to allow decimal numbers with optional integer part
+    var decimalNumber = /^\d+(\.\d{1,2})?$/;
+
+    if (capacityInput.value.trim() === '') {
+        capacityError.textContent = 'Capacity is required';
+    } else if (!decimalNumber.test(capacityInput.value)) {
+        capacityError.textContent = 'Only digits are allowed';
+    } else {
+        capacityError.textContent = '';
+    }
+}
+
+
+
+    function validateField(fieldName) {
+        var input = document.getElementsByName(fieldName)[0];
+        var errorElement = document.getElementById(fieldName + '_error');
+
+        // Regular expression to allow only letters (both uppercase and lowercase)
+        var lettersOnly = /^[A-Za-z]+$/;
+
+        if (input.value.trim() === '') {
+            errorElement.textContent = 'Color is required';
+        } else if (!lettersOnly.test(input.value)) {
+            errorElement.textContent = 'Only letters are allowed in the Color';
+        } else {
+            errorElement.textContent = '';
+        }
+    }
+
+
+    function validateField(fieldName) {
+        var inputField = document.getElementsByName(fieldName)[0];
+        var errorElement = document.getElementById(fieldName + '_error');
+
+        // Regular expression to allow only letters (both uppercase and lowercase)
+        var lettersOnly = /^[A-Za-z]+$/;
+
+        if (inputField.value.trim() === '') {
+            errorElement.textContent = 'Material is required';
+        } else if (!lettersOnly.test(inputField.value)) {
+            errorElement.textContent = 'Only letters are allowed in the Material';
+        } else {
+            errorElement.textContent = '';
+        }
+    }
+
+        // Add similar validation functions for other fields
+
+        function validateForm() {
+            // Add overall form validation logic here
+            // Return true if the form is valid, false otherwise
+
+            var errorElements = document.querySelectorAll('.error');
+            for (var i = 0; i < errorElements.length; i++) {
+                if (errorElements[i].textContent !== '') {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function addImageField() {
+            var container = document.getElementById('image-container');
+            var numImages = container.getElementsByTagName('input').length + 1;
+
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.name = 'image_' + numImages;
+            container.appendChild(input);
+
+            document.getElementById('num_images').value = numImages;
+        }
+
+        // ... (existing functions for dynamic image fields) ...
+    </script>
+
+</body>
+
+</html>
