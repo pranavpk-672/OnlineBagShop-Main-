@@ -151,7 +151,12 @@ path('payment_success/', views.payment_success, name='payment_success'),
 
     #authentication
 
-    path('activate/<uidb64>/<token>',views.ActivateAccountView.as_view(),name='activate')
+    path('activate/<uidb64>/<token>',views.ActivateAccountView.as_view(),name='activate'),
+
+
+    #delivery_boy_registration
+    path('deliveryboy_registration/', views.deliveryboy_registration, name='deliveryboy_registration'),
+
 
 ]
 

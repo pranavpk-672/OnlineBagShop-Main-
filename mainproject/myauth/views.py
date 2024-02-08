@@ -1499,8 +1499,7 @@ def product_review_page(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product_name_d = product.product_name  # Fetching the product name
 
-    return render(request, 'product_review.html', {'product_name': product_name_d})
-
+    return render(request, 'product_review.html', {'product_name': product_name_d,'product_id' : product_id})
 
 
 @login_required
@@ -1556,3 +1555,15 @@ def productscategorylist_index(request, category_id):
     
     return render(request, 'product_by_category.html', {'items': items,  
                                                  'categories': categories, 'subcategories': subcategories})
+
+
+#deliveryboy_registration
+
+def deliveryboy_registration(request):
+    return render(request,'delivery_boy_registration.html')
+    
+
+
+
+
+   
