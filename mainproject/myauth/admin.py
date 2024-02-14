@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Profile, SellerProfile, Product, product_images,Cart,Wishlist,product_review,Cart_items
+from .models import User, Profile, SellerProfile, Product, product_images,Cart,Wishlist,product_review,Cart_items,DeliveryBoy
 
 class CustomUserAdmin(UserAdmin):
  #   list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
@@ -23,7 +23,9 @@ admin.site.register(Cart_items),
 admin.site.register(Product),
 admin.site.register(Wishlist),
 admin.site.register(product_review),
-admin.site.register(product_images)
+admin.site.register(product_images),
+admin.site.register(DeliveryBoy)
+
 
 
 

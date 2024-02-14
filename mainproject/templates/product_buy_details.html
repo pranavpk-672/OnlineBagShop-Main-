@@ -1,0 +1,84 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Cart Details</title>
+</head>
+<body>
+    <h1>Product Cart Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Brand Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_item in cart_items %}
+            <tr>
+                <td>{{ cart_item.product.product_name }}</td>
+                <td>{{ cart_item.product.image_1 }}</td>
+                <td>{{ cart_item.product.brand_name }}</td>
+                <td>{{ cart_item.quantity }}</td>
+                <td>{{ cart_item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Cart Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for styling */
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Product Cart Details</h1>
+        <div class="row">
+            {% for cart_item in cart_items %}
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{{ cart_item.product.image_1.url }}" class="card-img-top img-fluid card-img" style="max-height: 150px; max-width: 150px;" alt="{{ cart_item.product.product_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cart_item.product.product_name }}</h5>
+                        <p class="card-text"><strong>Brand Name:</strong> {{ cart_item.product.brand_name }}</p>
+                        <p class="card-text"><strong>Quantity:</strong> {{ cart_item.quantity }}</p>
+                        <p class="card-text"><strong>Price:</strong> {{ cart_item.price }}</p>
+                        <!-- You may add more product details here -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional, if you need it) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

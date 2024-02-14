@@ -129,6 +129,21 @@ class product_review(models.Model):
     description = models.TextField(blank=True, null=True)  # Adding the description field
 
 
+class DeliveryBoy(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    contact_number = models.CharField(max_length=15)
+    address = models.TextField()
+    vehicle_type = models.CharField(max_length=50)
+    registration_number = models.CharField(max_length=20)
+    delivery_zones = models.TextField()
+    availability_timings = models.CharField(max_length=100)
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    current_date = models.DateField(auto_now_add=True)
+
+
     # You can add more image fields here if needed
 
     # Other fields and methods for your model as needed

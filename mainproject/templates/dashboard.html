@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>User Role Counts</h1>
+    <ul>
+        <li>Customer: {{ customer_count }}</li>
+        <li>Seller: {{ seller_count }}</li>
+        <li>Delivery Boy: {{ delivery_boy_count }}</li>
+    </ul>
+
+    <h2>Last Three Users</h2>
+    <ul>
+        {% for user in last_three_users %}
+            <li>Username: {{ user.username }}, Name: {{ user.name }} , Date : {{user.current_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

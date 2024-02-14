@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Purchasing History</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Purchasing History</h2>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Order Id</th>
+                <th>Payment Id</th>
+                <!-- <th>Product Name</th>
+                <th>About Product</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Seller</th> -->
+                <th>Amount</th>
+                <th>Date & Time</th>
+                <th>Product Details</th>
+            </tr>
+            {% for payment in purchasing_history %}
+            <tr>
+                <td>{{ payment.user.first_name }}</td>
+                <td>{{ payment.order_id_data }}</td>
+                <td>{{ payment.payment_id_data }}</td>
+                <!-- <td>{{ payment.product.product_name }}</td>
+                <td>{{ payment.product.about_product }}</td>
+                <td>{{ payment.product.brand_name }}</td>
+                <td>{{ payment.product.category_id }}</td>
+                <td>{{ payment.product.sub_category_id }}</td>
+                <td>{{ payment.product.seller_id.username }}</td> -->
+                <td>{{ payment.amount }}</td>
+                <td>{{ payment.datetime }}</td>
+                <td><a href="http://127.0.0.1:8000/myauth/cart_items_list/{{ payment.cart }}">Product Details</a></td>
+
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

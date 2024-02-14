@@ -1,6 +1,8 @@
 import datetime
 import json
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+import pandas as pd
+
 
 import razorpay
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -63,6 +65,10 @@ from django.utils.html import strip_tags
 
 from django.shortcuts import render
 from .models import Profile
+
+from django.core.mail import EmailMessage
+
+from .models import Product, Profile, SellerProfile
 
 from .models import SellerProfile
 from django.shortcuts import render
@@ -245,9 +251,29 @@ def sellersig(request):
 def adminreg(request):
     # Query all User objects (using the custom user model) from the database
 
+    customer_count = User.objects.filter(role='CUSTOMER').count()
+    seller_count = User.objects.filter(role='SELLER').count()
+    delivery_boy_count = User.objects.filter(role='DELIVERYBOY').count()
+
+    approvcount = SellerProfile.objects.filter().count()
+    productcount = Product.objects.filter().count()
+
+    # Get the last three users from the notifications table
+    last_three_notifications = Notification.objects.order_by('-id')[:3]
+    last_three_users = [{'username': notification.user.username, 'current_date': notification.current_date, 'name': f"{notification.user.first_name} {notification.user.last_name}"} for notification in last_three_notifications]
+
+    # Pass the counts and last three users to the template context
+    context = {
+        'customer_count': customer_count,
+        'seller_count': seller_count,
+        'delivery_boy_count': delivery_boy_count,
+        'last_three_users': last_three_users,
+        'approvcount': approvcount,
+        'productcount' : productcount
+    }
     
     # Render the HTML template
-    return render(request, 'admintemplate.html' )
+    return render(request, 'admintemplate.html', context)
 
 
 
@@ -421,6 +447,49 @@ def sell(request):
 
 
 #seller signup
+# def signupsell(request):
+#     if request.method == "POST":
+#         fname=request.POST['first_name']
+#         lname=request.POST['last_name']
+#         email = request.POST['email']
+#         password = request.POST['password']
+#         confirm_password = request.POST['confirm_password']
+#         if password != confirm_password:
+#             messages.warning(request, "Password is not matching")
+#             return render(request, 'auth/seller_signup.html')
+
+#         try:
+#             if User.objects.get(username=email):
+#                 messages.warning(request, "Email is already taken")
+#                 return render(request, 'auth/seller_signup.html')
+#         except Exception as identifier:
+#             pass
+
+#         myuser = User.objects.create_user(first_name=fname,last_name=lname,email=email,password=password,username=email,role='SELLER')
+#         print(myuser)
+
+#         #authentication
+#         myuser.is_active=False
+
+#         myuser.save()
+#         #authentication
+#         current_site=get_current_site(request)
+#         email_subject="Activate your Account"
+#         message=render_to_string('auth/activate.html',{
+#              'User':myuser,
+#              'domain':'127.0.0.1:8000',
+#              'uid':urlsafe_base64_encode(force_bytes(myuser.pk)),
+#              'token':generate_token.make_token(myuser)
+             
+#         })
+#         email_message = EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[email],)
+#         EmailThread(email_message).start()
+
+#         messages.info(request, " Activate your account by clicking link on your email")
+#         return redirect('/myauth/login')
+
+#     return render(request, 'auth/seller_signup.html')
+
 def signupsell(request):
     if request.method == "POST":
         fname=request.POST['first_name']
@@ -439,33 +508,30 @@ def signupsell(request):
         except Exception as identifier:
             pass
 
-        myuser = User.objects.create_user(first_name=fname,last_name=lname,email=email,password=password,username=email,role='SELLER')
-        print(myuser)
-
-        #authentication
+        # Create the user
+        myuser = User.objects.create_user(first_name=fname, last_name=lname, email=email, password=password, username=email, role='SELLER')
         myuser.is_active=False
-
         myuser.save()
-        #authentication
+
+        # Create a notification for the user
+        Notification.objects.create(user=myuser)
+
+        # Send activation email
         current_site=get_current_site(request)
         email_subject="Activate your Account"
-        message=render_to_string('auth/activate.html',{
+        message=render_to_string('auth/activate.html', {
              'User':myuser,
              'domain':'127.0.0.1:8000',
              'uid':urlsafe_base64_encode(force_bytes(myuser.pk)),
              'token':generate_token.make_token(myuser)
-             
         })
-        email_message = EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[email],)
-        EmailThread(email_message).start()
+        email_message = EmailMessage(email_subject, message, settings.EMAIL_HOST_USER, [email])
+        email_message.send()
 
-        messages.info(request, " Activate your account by clicking link on your email")
+        messages.info(request, "Activate your account by clicking link on your email")
         return redirect('/myauth/login')
 
     return render(request, 'auth/seller_signup.html')
-
-
-
 
 
 #update_seller_profile
@@ -1011,8 +1077,6 @@ def cartt(request):
 def admin_prodview(request):
      products = Product.objects.all()
      return render(request, 'admin_view_product.html', {'products': products})
-    
-
 
 #seller view products
 # def seller_prodview(request):
@@ -1493,11 +1557,33 @@ def payment_history(request):
 
     return render(request, 'history.html', context)
 
+def list_reviews(request):
+    # Get all product reviews
+    reviews = product_review.objects.all()
 
+    # Prepare data to be displayed
+    review_data = []
+    for review in reviews:
+        print(review.product_id)
+        product = Product.objects.get(id=review.product_id)
+        review_data.append({
+            'product_name': product.product_name,
+            'product_image': product.image_1,
+            'rating': review.product_rating,
+            'description': review.description
+        })
+
+    context = {
+        'reviews': review_data
+    }
+    return render(request, 'review.html', context)
+def reviews(request):
+    return render(request,'review.html')
 
 def product_review_page(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product_name_d = product.product_name  # Fetching the product name
+    
 
     return render(request, 'product_review.html', {'product_name': product_name_d,'product_id' : product_id})
 
@@ -1564,6 +1650,147 @@ def deliveryboy_registration(request):
     
 
 
+#purchase history
+def purchasing_history(request):
+    purchasing_history = user_payment.objects.select_related('user').all()
+    return render(request, 'purchasing_history.html', {'purchasing_history': purchasing_history})
 
 
-   
+def purchasing_histor(request):
+    return render(request,'purchasing_history.html')
+
+
+def product_purchase_details(request):
+    
+    return render(request,'product_buy_details.html')
+
+
+def product_cart_details(request, cart_id):
+
+
+    # Retrieve product details and related cart items for the specific cart_id
+    cart_items = Cart_items.objects.select_related('product').filter(cart_id=cart_id)
+
+    # Pass the cart_items to the template context
+    context = {
+        'cart_items': cart_items,
+    }
+
+    
+
+    return render(request, 'product_buy_details.html', context)
+
+
+
+#delivery boy 
+def delivery_add_excel(request):
+    return render(request,'delivery_boy_excel.html')   
+
+
+#delivery boy registration 
+from django.core.mail import EmailMessage
+
+def sendmail_in_thread(subject, html_message, to_email):
+    email = EmailMessage(subject, html_message, to=to_email)
+    email.content_subtype = "html"
+    email.send()
+import pandas as pd
+
+def add_delivery_boys(request):
+    if request.method == 'POST' and request.FILES['xl_sheet']:
+        xl_sheet = request.FILES['xl_sheet']
+
+        try:
+            df = pd.read_excel(xl_sheet)
+
+            for _, row in df.iterrows():
+                # Create a unique username and password for each delivery boy
+                username = row['Email']
+                password = User.objects.make_random_password()
+
+                user = User.objects.create_user(
+                    username=username,
+                    email=row['Email'],
+                    password=password,
+                    first_name=row['Firstname'],
+                    last_name=row['Lastname'],
+                    role='DELIVERYBOY'
+                )
+
+                contact_number = row['Contact Number']
+                address = row['Address']
+                vehicle_type = row['Vehicle Type']
+                registration_number = row['Registration Number']
+                delivery_zones = row['Delivery Zones']
+                availability_timings = row['Availability Timings']
+
+                delivery_boy = DeliveryBoy.objects.create(
+                    user=user,
+                    contact_number=contact_number,
+                    address=address,
+                    vehicle_type=vehicle_type,
+                    registration_number=registration_number,
+                    delivery_zones=delivery_zones,
+                    availability_timings=availability_timings
+                )
+
+                # Send an email to the delivery boy with their password
+                subject = 'Welcome to the Delivery Service'
+                html_message = render_to_string('email_to_deliveryboy.html', {
+                    'firstname': row['Firstname'],
+                    'password': password,
+                })
+                to_email = [row['Email']]
+
+                # Use a thread to send the email asynchronously
+                email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
+                email_thread.start()
+
+                # Notify the user that delivery boys were added successfully
+                messages.success(request, 'Delivery boys added successfully.')
+
+        except Exception as e:
+            messages.error(request, f'Error processing the Excel sheet: {e}')
+
+    return render(request, 'delivery_boy_excel.html')
+
+
+
+#count
+# def dashboard(request):
+#     # Get the count of each role
+#     customer_count = User.objects.filter(role='CUSTOMER').count()
+#     seller_count = User.objects.filter(role='SELLER').count()
+#     delivery_boy_count = User.objects.filter(role='DELIVERYBOY').count()
+
+#     # Pass the counts to the template context
+#     context = {
+#         'customer_count': customer_count,
+#         'seller_count': seller_count,
+#         'delivery_boy_count': delivery_boy_count,
+
+#     }
+
+#     # Render the template with the context
+#     return render(request, 'admintemplate.html', context)
+
+def dashboardd(request):
+    # Get the count of each role
+    customer_count = User.objects.filter(role='CUSTOMER').count()
+    seller_count = User.objects.filter(role='SELLER').count()
+    delivery_boy_count = User.objects.filter(role='DELIVERYBOY').count()
+
+    # Get the last three users from the notifications table
+    last_three_notifications = Notification.objects.order_by('-id')[:3]
+    last_three_users = [{'username': notification.user.username, 'current_date': notification.current_date, 'name': f"{notification.user.first_name} {notification.user.last_name}"} for notification in last_three_notifications]
+
+    # Pass the counts and last three users to the template context
+    context = {
+        'customer_count': customer_count,
+        'seller_count': seller_count,
+        'delivery_boy_count': delivery_boy_count,
+        'last_three_users': last_three_users,
+    }
+
+    # Render the template with the context
+    return render(request, 'admintemplate.html', context)

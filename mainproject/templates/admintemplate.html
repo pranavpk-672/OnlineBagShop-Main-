@@ -124,8 +124,30 @@
                                     <li>
                                         <h6>Notifications</h6>
                                         <label class="label label-danger">New</label>
+                                    
                                     </li>
                                     <li>
+                                        <p>Recent Seller Registration</p>
+                                    </li>
+
+                                    {% for user in last_three_users %}
+                                    <li>
+
+                                        <div class="media">
+                                            <img class="d-flex align-self-center img-radius" src="{% static 'assets/img/notification.png' %}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="notification-user">{{ user.name }}</h5>
+                                                <h5 class="notification-user">{{ user.username }}</h5>
+                                                <!-- <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p> -->
+                                                <span class="notification-time">{{ user.current_date }}</span>
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+                                {% endfor %}
+
+                                    <!-- <li>
                                         <div class="media">
                                             <img class="d-flex align-self-center img-radius" src="{% static 'assetsss/images/avatar-4.jpg' %}" alt="Generic placeholder image">
                                             <div class="media-body">
@@ -154,7 +176,7 @@
                                                 <span class="notification-time">30 minutes ago</span>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
                             <li class="user-profile header-notification">
@@ -270,7 +292,7 @@
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Category View</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>-->
+                                        </li> -->
                                        
                                       
                                      
@@ -289,7 +311,7 @@
                                             </a> -->
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/reviews/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Reviews</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -298,7 +320,7 @@
                                         <li class=" ">
                                             <a href="#">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Notifications </span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"> Seller's Item </span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a> 
                                         </li>
@@ -310,9 +332,9 @@
                                             </a> -->
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/purchasing_history/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Typography</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Purchase History</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -480,9 +502,10 @@
                                                 <a href="http://127.0.0.1:8000/myauth/adminn/" style="text-decoration: none; color: inherit;">
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
-                                                        <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                                        <i class="icofont icofont-users-social bg-c-blue card1-icon"></i>
+                                                        <!-- <i class="icofont-users-social"></i> -->
                                                         <span class="text-c-blue f-w-600">View Customer Details</span>
-                                                        <h4>11</h4>
+                                                        <h4>{{ customer_count }}</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                                <!-- <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Get more space-->
@@ -497,9 +520,9 @@
                                                 <a href="http://127.0.0.1:8000/myauth/sellerr/" style="text-decoration: none; color: inherit;">
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
-                                                        <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
+                                                        <i class="icofont icofont-users-alt-1 bg-c-pink card1-icon"></i>
                                                         <span class="text-c-pink f-w-600">View Seller Details</span>
-                                                        <h4>9</h4>
+                                                        <h4>{{ seller_count }}</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                                 <!--<i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Last 24 hours-->
@@ -514,9 +537,9 @@
                                                 <a href="http://127.0.0.1:8000/myauth/admin_prodview/" style="text-decoration: none; color: inherit;">
                                                     <div class="card widget-card-1">
                                                         <div class="card-block-small">
-                                                            <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
+                                                            <i class="icofont icofont-database bg-c-green card1-icon"></i>
                                                             <span class="text-c-green f-w-600">View Product Details</span>
-                                                            <h4>45</h4>
+                                                            <h4>{{ productcount }}</h4>
                                                             <div>
                                                                 <span class="f-left m-t-10 text-muted">
                                                                     <!--<i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>Tracked via microsoft-->
@@ -532,9 +555,10 @@
                                                 <a href="http://127.0.0.1:8000/myauth/sellor_approval/" class="card-link">
                                                     <div class="card widget-card-1">
                                                         <div class="card-block-small">
-                                                            <i class="icofont icofont-social-twitter bg-c-yellow card1-icon"></i>
+                                                            <i class="icofont icofont-phoenix bg-c-yellow card1-icon"></i>
+                                                            <!-- <i class="icofont-category"></i> -->
                                                             <span class="text-c-yellow f-w-600">View Seller Approvals</span>
-                                                            <h4>30</h4>
+                                                            <h4>{{approvcount}}</h4>
                                                             <div>
                                                                 <span class="f-left m-t-10 text-muted">
                                                                     <!-- <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Just update-->
@@ -551,7 +575,7 @@
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
                                                         <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
-                                                        <span class="text-c-blue f-w-600">View Customer Details</span><br><br>
+                                                        <span class="text-c-blue f-w-600">View Delivery boy Details</span><br><br>
                                                         <!-- <h7>Click to view Customer Details</h7> -->
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
@@ -568,7 +592,7 @@
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
                                                         <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
-                                                        <span class="text-c-pink f-w-600">View Seller Details</span><br><br>
+                                                        <span class="text-c-pink f-w-600">View Seller Location</span><br><br>
                                                         <!-- <h7>Click to View Seller Details</h7> -->
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
@@ -612,6 +636,14 @@
                                                 </a>
                                             </div> 
 
+
+
+                                            <!-- <h2>Last Three Users</h2>
+    <ul>
+        {% for user in last_three_users %}
+            <li>Username: {{ user.username }}, Name: {{ user.name }} , Date : {{user.current_date }}</li>
+        {% endfor %} -->
+    </ul>
 <!-- 
                                             <div class="col-md-6 col-xl-3">
                                                 <a href="" class="card-link">

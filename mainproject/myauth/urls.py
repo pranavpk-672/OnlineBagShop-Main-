@@ -132,6 +132,8 @@ path('payment_success/', views.payment_success, name='payment_success'),
 #activate and  deactivate
     path('activate_user/<int:user_id>/', views.activate_user, name='activate_user'),
     path('deactivate_user/<int:user_id>/', views.deactivate_user, name='deactivate_user'),
+    #     path('activate_seller/<int:user_id>/', views.activate_seller, name='activate_seller'),
+    # path('deactivate_seller/<int:user_id>/', views.deactivate_seller, name='deactivate_sellerr'),
 
     path('payment_history/', views.payment_history, name='payment_history'),
 
@@ -157,6 +159,18 @@ path('payment_success/', views.payment_success, name='payment_success'),
     #delivery_boy_registration
     path('deliveryboy_registration/', views.deliveryboy_registration, name='deliveryboy_registration'),
 
+    path('add_delivery_boys/',views.add_delivery_boys,name="add_delivery_boys"),
+
+ #purchase history view
+    path('purchasing_histor/', views.purchasing_histor, name='purchasing_histor'),
+    path('purchasing_history/', views.purchasing_history, name='purchasing_history'),
+    path('product_purchase_details/', views.product_purchase_details, name='product_purchase_details'),
+    path('cart_items_list/<int:cart_id>/', views.product_cart_details, name='cart_items_list'),
+    path('reviews/', views.list_reviews, name='list_reviews'),
+
+path('delivery_add_excel/', views.delivery_add_excel, name='delivery_add_excel'),
+#count not correct
+ path('adminreg/', views.dashboardd, name='dashboardd'),
 
 ]
 

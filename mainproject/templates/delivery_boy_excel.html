@@ -431,68 +431,53 @@
 
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Delivery Boys</title>
+    <style>
+        /* .bodyy {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        } */
 
+        .container {
+            width: 500px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            border: 2px solid #5093db; 
+            height:400px ; 
+        }
 
-                                                                <!DOCTYPE html>
-                                                                <html lang="en">
-                                                                <head>
-                                                                <meta charset="UTF-8">
-                                                                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
-                                                                <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple"> -->
-                                                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                                                <title>Registration Form</title>
-                                                                <style>
-                                                                  /* .bodyy {
-                                                                    font-family: Arial, sans-serif;
-                                                                    background-color: #f2f2f2;
-                                                                    margin: 0;
-                                                                    padding: 0;
-                                                                    display: flex;
-                                                                    justify-content: center;
-                                                                    align-items: center;
-                                                                    min-height: 100vh;
-                                                                  } */
-                                                                  .colo {
-                                                                    color: #da7217;
-                                                                    font-family: "Sofia", sans-serif;
-                                                                    font-size: 50px;
-                                                                  }
-                                                                  .container {
-                                                                    background-color: #fff;
-                                                                    border-radius: 8px;
-                                                                    box-shadow: 0 0 10px rgba(221, 175, 90, 0.1); /* Light orange box shadow */
-                                                                    padding: 40px;
-                                                                    width: 450px;
-                                                                    border-radius: 50px;
-                                                                    border: 2px solid #5093db;                                                                  }
-                                                                  
-                                                                  h2 {
-                                                                    text-align: center;
-                                                                    margin-bottom: 30px;
-                                                                  }
-                                                                  
-                                                                  .form-group {
-                                                                    margin-bottom: 20px;
-                                                                  }
-                                                                  
-                                                                  label {
-                                                                    display: block;
-                                                                    font-weight: bold;
-                                                                    margin-bottom: 5px;
-                                                                  }
-                                                                  
-                                                                  input[type="text"],
-                                                                  input[type="email"],
-                                                                  input[type="password"] {
-                                                                    width: 100%;
-                                                                    padding: 10px;
-                                                                    border: 1px solid #ccc;
-                                                                    border-radius: 35px;
-                                                                    box-sizing: border-box;
-                                                                  }
-                                                                  
-                                                                  button {
-                                                                    font-family: "Raleway",sans-serif;
+        .container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        .container input[type="file"] {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #1e9bc9;
+            border-radius: 5px;
+        }
+
+        .container button[type="submit"] {
+            font-family: "Raleway",sans-serif;
                                                                     font-weight: 500;
                                                                     font-size: 16px;
                                                                     letter-spacing: 1px;
@@ -502,85 +487,59 @@
                                                                     transition: 0.5s;
                                                                     color: #3498db;
                                                                     border: 2px solid #3498db;
-                                                                  }
-                                                                  
-                                                                  button:hover {
-                                                                    background-color: #0056b3;
-                                                                  }
-                                                                  .form-group {
-            
-                                                                    border-radius: 20px;
-                                                                    border-bottom: 4px solid rgb(9, 149, 188);
-                                                                }
-                                                                .styled-link {
-                                                                    font-family: "Raleway",sans-serif;
-                                                                    font-weight: 500;
-                                                                    font-size: 16px;
-                                                                    letter-spacing: 1px;
-                                                                    display: inline-block;
-                                                                    padding: 10px 30px;
-                                                                    border-radius: 50px;
-                                                                    transition: 0.5s;
-                                                                    color: #0d93ed;
-                                                                    border: 2px solid #3498db;
-                                                                    
-                                                                }
+        }
 
-                                                                .styled-link:hover {
-                                                                    background-color: #74aae4;
-                                                                }
+        .container button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
 
-                                                                .styled-link::after {
-                                                                    content: '\00a0 \2192'; /* Right arrow Unicode */
-                                                                }
-                                                                
-                                                                </style>
-                                                                </head>
-                                                                <body>
-                                                                    <div class="bodyy">
-                                                                        
-
-                                                                <div class="container">
-                                                                    <div class="colo">
-                                                                  
-                                                                  <h2 class="font-effect-fire">Add Delivery Boy</h2>
-
-                                                                  </div>
-                                                                  <form action="#" method="post">
-                                                                    <div class="form-group">
-                                                                      <label for="firstname">First Name:</label>
-                                                                      <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label for="lastname">Last Name:</label>
-                                                                      <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label for="email">Email:</label>
-                                                                      <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label for="password">Password:</label>
-                                                                      <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                                                                    </div>
-                                                                    <center><button type="submit">Register</button></center>
-                                                                  </form><br>
-                                                                  <center><p>OR</p></center> 
-
-                                                                <center> <div class="styled-link">
-                                                                    <a style="color: #3498db;" href="http://127.0.0.1:8000/myauth/delivery_add_excel/" >Add Multiple Delivery Boys</a>
-                                                                </div></center> 
-                                                                </div>
-                                                                
-                                                            </div>
-
-                                                                </body>
-                                                                </html>
-                                                                                                                    
+        .container .message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-radius: 5px;
+        }
+        .con {
+        color: #da7217;
+        font-family: "Sofia", sans-serif;
+        font-size: 50px;
+        }
+    </style>
+</head>
+<br><br><br><br><br>
+<br><br><br><br><br>
 
 
+<body>
+    <div class="bodyy">
 
+    <div class="container">
+        <form method="post" action="http://127.0.0.1:8000/myauth/add_delivery_boys/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <br>
+            <div class="con">
 
+            <h1 style="color: #ffffff;" class="font-effect-fire">Add Delivery Boys</h1>
+            </div>
+            <!-- Display a button to trigger the file input -->
+            <br>
+            <input type="file" name="xl_sheet" accept=".xlsx, .xls">
+            <br>
+           <center> <button type="submit">Add Delivery Boys</button></center>
+            <!-- Display messages (success or error) -->
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+         
+                                                                                                            
 <!-- Required Jquery -->
 <script type="text/javascript" src="{% static 'assetsss/js/jquery/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assetsss/js/jquery-ui/jquery-ui.min.js' %}"></script>
