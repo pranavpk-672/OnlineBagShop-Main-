@@ -81,6 +81,10 @@ path('prodetailview_index/<int:product_id>/', views.prodetailview_index, name='p
 
 path('cartt/', views.cartt, name='cartt'),
 path('admin_prodview/', views.admin_prodview, name='admin_prodview'),
+path('reviews/', views.admin_proddview, name='reviews'),
+path('prod_detail_review/<int:product_id>/', views.prod_detail_review, name='prod_detail_review'),
+
+
 
 
 

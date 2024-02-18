@@ -556,6 +556,8 @@ def seller_profile_update(request):
         address = request.POST.get('address')
         company_name = request.POST.get('company_name')
         country = request.POST.get('country')
+        lat = request.POST.get('latitude')
+        lon = request.POST.get('longitude')
 
         # Check if the email is already taken by another user
         if User.objects.filter(username=email).exclude(id=request.user.id).exists():
@@ -612,6 +614,8 @@ def seller_profile_update(request):
         seller_profile.country = country
         seller_profile.address = address
         seller_profile.gst = gst
+        seller_profile.latitude = lat
+        seller_profile.longitude = lon
         seller_profile.save()
 
         # Logout the user and redirect to the seller profile update page
@@ -1077,6 +1081,11 @@ def cartt(request):
 def admin_prodview(request):
      products = Product.objects.all()
      return render(request, 'admin_view_product.html', {'products': products})
+
+#Admin view products
+def admin_proddview(request):
+     products = Product.objects.all()
+     return render(request, 'review.html', {'products': products})
 
 #seller view products
 # def seller_prodview(request):
@@ -1601,11 +1610,13 @@ def submit_review(request):
         # Get the current time using Django's timezone
         current_time = timezone.now()
 
+        formatted_time = current_time.strftime('%d-%m-%Y %I:%M:%S %p')
+
         # Create a new product_review instance and save it to the database
         review = product_review.objects.create(
             user=user,
             product_id=product_id,
-            created_at=current_time,
+            created_at=formatted_time,
             product_rating=product_rating,
             description=description
         )
@@ -1794,3 +1805,39 @@ def dashboardd(request):
 
     # Render the template with the context
     return render(request, 'admintemplate.html', context)
+
+#product reviews details
+def prod_detail_review(request, product_id):
+    subcategory_id = request.GET.get('subcat_id')
+
+    product = Product.objects.get(id=product_id)
+    product_images = product.product_images_set.all()
+
+    categories = category.objects.all()
+    subcategories = sub_category.objects.all()
+
+    similar_products = Product.objects.filter(sub_category_id=subcategory_id).exclude(id=product_id)[:6]
+
+    reviews = product_review.objects.filter(product_id=product_id)
+
+    review_details = []
+    for review in reviews:
+        user_name = None
+        if review.user:
+            user_name = review.user.first_name
+        review_details.append({
+            'review_text': review.description,
+            'review_username': user_name,
+            'review_rating': review.product_rating,
+            'dateinfo': review.created_at
+        })
+
+    return render(request, 'product_revieww.html', {
+        'product': product,
+        'product_images': product_images,
+        'similarproducts': similar_products,
+        'reviews': review_details,
+        'categories': categories,
+        'subcategories': subcategories
+    })
+    #return render(request,'product_revieww.html')   

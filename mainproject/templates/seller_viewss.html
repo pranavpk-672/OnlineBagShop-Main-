@@ -531,6 +531,8 @@
                                                                 <th>City</th>
                                                                 <th>Pincode</th>
                                                                 <th>Address</th>
+                                                                <th>View Location</th>
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -548,6 +550,10 @@
                                                                 <td>{{ user_profile.city }}</td>
                                                                 <td>{{ user_profile.pincode }}</td>
                                                                 <td>{{ user_profile.address }}</td>
+                                                                <td><a href="https://maps.google.com/maps?q={{ user_profile.latitude }},{{ user_profile.longitude }}" target="_blank"><button>Click here</button></a></td>
+                                                                
+
+
                                                             </tr>
                                                             {% endfor %}
                                                         </tbody>

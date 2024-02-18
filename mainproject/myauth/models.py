@@ -30,6 +30,20 @@ class Profile(models.Model):
         return self.user.username
     
     #model for seller
+# class SellerProfile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     phone = models.CharField(max_length=15, unique=True)
+#     alt_phone = models.CharField(max_length=12, unique=True)
+#     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+#     gst = models.CharField(max_length=15)
+#     company_name = models.CharField(max_length=100)
+#     country = models.CharField(max_length=100)
+#     pincode = models.CharField(max_length=6)
+#     state = models.CharField(max_length=50)
+#     city = models.CharField(max_length=50)
+#     address = models.CharField(max_length=255)
+#     is_approved = models.BooleanField(default=False)
+#     incorporation_certificate = models.FileField(upload_to='incorporation_certificates/', null=True, blank=True)
 class SellerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=15, unique=True)
@@ -42,6 +56,8 @@ class SellerProfile(models.Model):
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
+    latitude = models.CharField(max_length=20, null=True, blank=True)  # Example length for latitude
+    longitude = models.CharField(max_length=20, null=True, blank=True)  # Example length for longitude
     is_approved = models.BooleanField(default=False)
     incorporation_certificate = models.FileField(upload_to='incorporation_certificates/', null=True, blank=True)
 
@@ -78,7 +94,7 @@ class Product(models.Model):
     seller_id = models.ForeignKey(User, on_delete=models.DO_NOTHING,null=True, blank=True)
     capacity = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
-    material = models.CharField(max_length=255)
+    material = models.CharField(max_length=255)   
     product_status = models.BooleanField(default=True)
     image_1 = models.ImageField(upload_to='product_main_images/', blank=True, null=True)
 

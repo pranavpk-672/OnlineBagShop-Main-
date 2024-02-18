@@ -345,6 +345,12 @@ https://templatemo.com/tm-559-zay-shop
             </div>
 
 
+            <!-- Hidden Latitude and Longitude Fields -->
+            <input type="hidden" id="latitude" name="latitude" value="">
+            <input type="hidden" id="longitude" name="longitude" value="">
+
+
+
             <div class="form-group">
                 <label for="privacy_consent"></label>
                 <div class="form-check">
@@ -643,6 +649,23 @@ document.getElementById('alt_phone').addEventListener('input', function () {
         // If there are no error messages, allow form submission
         return true;
     }
+</script>
+<script>
+    function setLatLong() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }
+
+    // Call the setLatLong function when the page loads or when needed
+    setLatLong();
 </script>
 
 
