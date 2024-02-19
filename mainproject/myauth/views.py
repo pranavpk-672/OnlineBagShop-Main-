@@ -1,4 +1,5 @@
 import datetime
+import io
 import json
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import pandas as pd
@@ -1932,5 +1933,39 @@ def register_delivery_boy(request):
 def delivery_login(request):
     
    return render(request,'delivery_dashboard.html')
+
+
+
+
+
+from django.contrib.auth import update_session_auth_hash
+
+@login_required
+def Change_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password == confirm_password:
+            user = request.user
+            user.set_password(new_password)
+            user.save()
+
+            # Update session to prevent the user from being logged out
+            update_session_auth_hash(request, user)
+
+            messages.success(request, 'Password changed successfully.')
+            return redirect('delivery_login')
+        else:
+            messages.error(request, 'Passwords do not match.')
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+
+
+
+
+
 
 

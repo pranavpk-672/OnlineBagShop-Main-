@@ -1,3 +1,513 @@
+<!-- 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reviews</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Reviews</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Rating</th>
+                <th>Reviews</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td> <img src="{{ review.product_image.url }}" style="max-height: 150px; max-width: 150px;" /></td>
+                <td>{{ review.product_name }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+ -->
+
+
+
+
+
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin Dashboard </title>
+    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <!-- Meta -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="description" content="CodedThemes">
+      <meta name="keywords" content=" Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+      <meta name="author" content="CodedThemes">
+      <!-- Favicon icon -->
+      <link rel="icon" href="{% static 'assetsss/images/favicon.ico' %}" type="image/x-icon">
+      <!-- Google font-->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+      <!-- Required Fremwork -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assetsss/css/bootstrap/css/bootstrap.min.css' %}">
+      <!-- themify-icons line icon -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assetsss/icon/themify-icons/themify-icons.css' %}">
+      <!-- ico font -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assetsss/icon/icofont/css/icofont.css' %}">
+      <!-- Style.css -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assetsss/css/style.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assetsss/css/jquery.mCustomScrollbar.css' %}">
+  </head>
+
+  <body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                            <i class="ti-menu"></i>
+                        </a>
+                        <a class="mobile-search morphsearch-search" href="#">
+                            <i class="ti-search"></i>
+                        </a>
+
+
+
+                        <!--logo-->
+                        <a href="http://127.0.0.1:8000/myauth/adminreg/">
+                            <!--<img class="img-fluid" src="{% static 'assets/img/logo2.jpg' %}" alt="Theme-Logo" />-->
+                            <h5>Admin Dashboard</h5>
+                        </a>
+
+
+
+                        <a class="mobile-options">
+                            <i class="ti-more"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-left">
+                            <li>
+                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                            </li>
+
+                            <li>
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                    <i class="ti-fullscreen"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+                            <li class="header-notification">
+                                <a href="#!">
+                                    <i class="ti-bell"></i>
+                                    <span class="badge bg-c-pink"></span>
+                                </a>
+                                <ul class="show-notification">
+                                    <li>
+                                        <h6>Notifications</h6>
+                                        <label class="label label-danger">New</label>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="d-flex align-self-center img-radius" src="{% static 'assetsss/images/avatar-4.jpg' %}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="notification-user">John Doe</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="d-flex align-self-center img-radius" src="{% static 'assetsss/images/avatar-3.jpg' %}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="notification-user">Joseph William</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="d-flex align-self-center img-radius" src="{% static 'assetsss/images/avatar-4.jpg' %}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="notification-user">Sara Soudein</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="user-profile header-notification">
+                                <a href="#!">
+                                    <!--<img src="{% static 'assetsss/images/avatar-4.jpg' %}" class="img-radius" alt="User-Profile-Image">-->
+                                    <span>{{ user.username }}</span>
+                                    <i class="ti-angle-down"></i>
+                                </a>
+                                <ul class="show-notification profile-notification">
+                                    <li>
+                                        <a href="#!">
+                                            <i class="ti-settings"></i> Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="ti-user"></i> Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="ti-email"></i> My Messages
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="ti-lock"></i> Lock Screen
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/myauth/logout/">
+                                            <i class="ti-layout-sidebar-left"></i> Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                        <div class="pcoded-inner-navbar main-menu">
+                            <div class="">
+                                <div class="main-menu-header">
+                                   <!-- <img class="img-40 img-radius" src="{% static 'assetsss/images/avatar-4.jpg' %}" alt="User-Profile-Image">-->
+                                    <div class="user-details">
+                                        <span>{{ user.username }}</span>
+                                        <span id="more-details"><i class="ti-angle-down"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="main-menu-content">
+                                    <ul>
+                                        <li class="more-details">
+                                            <a href="#"><i class="ti-user"></i>View Profile</a>
+                                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                                            <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pcoded-search">
+                                <span class="searchbar-toggle">  </span>
+                                <div class="pcoded-search-box ">
+                                    <input type="text" placeholder="Search">
+                                    <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Layout</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="active">
+                                    <a href="http://127.0.0.1:8000/myauth/adminreg/">
+                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Users</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="http://127.0.0.1:8000/myauth/adminn/">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Customers</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="http://127.0.0.1:8000/myauth/sellerr/">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Sellers</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="http://127.0.0.1:8000/myauth/sellor_approval/">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Pending Approval</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="http://127.0.0.1:8000/myauth/admin_prodview/">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View Product Details</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!--<li class=" ">
+                                            <a href="button.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Button</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="tabs.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Tabs</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="color.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Color</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="label-badge.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Label Badge</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="tooltip.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Tooltip</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="typography.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Typography</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="notification.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Notification</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="icon-themify.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Icon</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>-->
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Forms &amp; Tables</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li>
+                                    <a href="form-elements-component.html">
+                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Form Components</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="bs-basic-table.html">
+                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Basic Table</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Chart &amp; Maps</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li>
+                                    <a href="chart.html">
+                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Chart</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="map-google.html">
+                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Maps</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Pages</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="auth-normal-sign-in.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Login</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="auth-sign-up.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Register</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="sample-page.html">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Sample Page</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                            </ul>
+
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.other">Other</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Menu Levels</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Menu Level 2.1</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">Menu Level 2.2</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                        <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">Menu Level 3.1</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-23">Menu Level 2.3</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+
+
+
+
 {% load static %}
 
 
@@ -138,60 +648,313 @@
                                                                             <div class="colo">
                                                                                 <h2 class="font-effect-fire">Add Delivery Boy</h2>
                                                                             </div>
-                                                                            <form action="{% url 'register_delivery_boy' %}" method="post">
+                                                                            <form id="deliveryBoyForm" action="{% url 'register_delivery_boy' %}" method="post" onsubmit="return validateForm()">
                                                                                 {% csrf_token %}
                                                                                 <div class="form-group">
                                                                                     <label for="firstname">First Name:</label>
                                                                                     <input type="text" id="firstname" name="first_name" placeholder="Enter your first name" required>
+                                                                                    <div class="error" id="firstnameError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="lastname">Last Name:</label>
                                                                                     <input type="text" id="lastname" name="last_name" placeholder="Enter your last name" required>
+                                                                                    <div class="error" id="lastnameError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="email">Email:</label>
                                                                                     <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                                                                                    <div class="error" id="emailError"></div>
                                                                                 </div>
-                                                                                <!-- <div class="form-group">
-                                                                                    <label for="password">Password:</label>
-                                                                                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                                                                                </div> -->
                                                                                 <div class="form-group">
                                                                                     <label for="contactno">Contact No:</label>
                                                                                     <input type="text" id="contactno" name="contact_no" placeholder="Enter your contact number" required>
+                                                                                    <div class="error" id="contactnoError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="address">Address:</label>
                                                                                     <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                                                                                    <div class="error" id="addressError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="vehicle">Vehicle Type:</label>
                                                                                     <input type="text" id="vehicle" name="vehicle_type" placeholder="Enter your vehicle type" required>
+                                                                                    <div class="error" id="vehicleError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="vehiclereg">Vehicle Registration No:</label>
                                                                                     <input type="text" id="vehiclereg" name="registration" placeholder="Enter your vehicle registration number" required>
+                                                                                    <div class="error" id="vehicleregError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="deliveryzones">Delivery Zones:</label>
                                                                                     <input type="text" id="deliveryzones" name="delivery_zones" placeholder="Enter delivery zones" required>
+                                                                                    <div class="error" id="deliveryzonesError"></div>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="availability">Availability Timing:</label>
                                                                                     <input type="text" id="availability" name="availability_timings" placeholder="Enter availability timing" required>
+                                                                                    <div class="error" id="availabilityError"></div>
                                                                                 </div>
                                                                                 <center><button type="submit">Register</button></center>
                                                                             </form><br>
                                                                             <center><p>OR</p></center> 
                                                                             <center>
                                                                                 <div class="styled-link">
-                                                                                    <a style="color: #3498db" href="http://127.0.0.1:8000/myauth/delivery_add_excel/" >Add Multiple Delivery Boys</a>
+                                                                                    <a style="color: #3498db" href="http://127.0.0.1:8000/myauth/delivery_add_excel/">Add Multiple Delivery Boys</a>
                                                                                 </div>
                                                                             </center> 
                                                                         </div>
                                                                     </div>
+                                                                
+                                                                    <script>
+                                                                        // Function to validate First Name
+                                                                        function validateFirstName() {
+                                                                            var firstname = document.getElementById('firstname').value;
+                                                                            var firstnameError = document.getElementById('firstnameError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            firstnameError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for letters only
+                                                                            var lettersOnly = /^[A-Za-z]+$/;
+                                                                
+                                                                            if (firstname === "") {
+                                                                                firstnameError.textContent = 'First Name is required';
+                                                                                return false;
+                                                                            } else if (!lettersOnly.test(firstname)) {
+                                                                                firstnameError.textContent = 'Only letters are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Last Name
+                                                                        function validateLastName() {
+                                                                            var lastname = document.getElementById('lastname').value;
+                                                                            var lastnameError = document.getElementById('lastnameError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            lastnameError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for letters only
+                                                                            var lettersOnly = /^[A-Za-z]+$/;
+                                                                
+                                                                            if (lastname === "") {
+                                                                                lastnameError.textContent = 'Last Name is required';
+                                                                                return false;
+                                                                            } else if (!lettersOnly.test(lastname)) {
+                                                                                lastnameError.textContent = 'Only letters are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Email
+                                                                        function validateEmail() {
+                                                                            var email = document.getElementById('email').value;
+                                                                            var emailError = document.getElementById('emailError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            emailError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for lowercase email
+                                                                            var emailPattern = /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                                                                
+                                                                            if (email === "") {
+                                                                                emailError.textContent = 'Email is required';
+                                                                                return false;
+                                                                            } else if (!emailPattern.test(email)) {
+                                                                                emailError.textContent = 'Invalid email format';
+                                                                                return false;
+                                                                            } else if (email.includes('..')) {
+                                                                                emailError.textContent = 'Consecutive dots are not allowed in the email';
+                                                                                return false;
+                                                                            } else {
+                                                                                // Convert email to lowercase
+                                                                                document.getElementById('email').value = email.toLowerCase();
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Contact No
+                                                                        function validateContactNo() {
+    var contactno = document.getElementById('contactno').value;
+    var contactnoError = document.getElementById('contactnoError');
+
+    // Clear previous error message
+    contactnoError.textContent = '';
+
+    // Regular expression pattern for digits only
+    var digitsOnly = /^\d+$/;
+
+    if (contactno === "") {
+        contactnoError.textContent = 'Contact No is required';
+        return false;
+    } else if (!digitsOnly.test(contactno)) {
+        contactnoError.textContent = 'Only digits are allowed';
+        return false;
+    } else if (contactno.length !== 10) {
+        contactnoError.textContent = 'Contact No must be 10 digits';
+        return false;
+    } else if (contactno.includes(' ')) {
+        contactnoError.textContent = 'Spaces are not allowed';
+        return false;
+    } else if (contactno.includes('00')) {
+        contactnoError.textContent = 'Consecutive zeroes are not allowed';
+        return false;
+    }
+    return true;
+}
+
+                                                                
+                                                                        // Function to validate Address
+                                                                        function validateAddress() {
+                                                                            var address = document.getElementById('address').value;
+                                                                            var addressError = document.getElementById('addressError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            addressError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for letters only
+                                                                            var lettersOnly = /^[A-Za-z\s]+$/;
+                                                                
+                                                                            if (address === "") {
+                                                                                addressError.textContent = 'Address is required';
+                                                                                return false;
+                                                                            } else if (!lettersOnly.test(address)) {
+                                                                                addressError.textContent = 'Only letters are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Vehicle Type
+                                                                        function validateVehicleType() {
+                                                                            var vehicle = document.getElementById('vehicle').value;
+                                                                            var vehicleError = document.getElementById('vehicleError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            vehicleError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for letters only
+                                                                            var lettersOnly = /^[A-Za-z\s]+$/;
+                                                                
+                                                                            if (vehicle === "") {
+                                                                                vehicleError.textContent = 'Vehicle Type is required';
+                                                                                return false;
+                                                                            } else if (!lettersOnly.test(vehicle)) {
+                                                                                vehicleError.textContent = 'Only letters are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Vehicle Registration No
+                                                                        function validateVehicleReg() {
+                                                                            var vehiclereg = document.getElementById('vehiclereg').value;
+                                                                            var vehicleregError = document.getElementById('vehicleregError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            vehicleregError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for digits only
+                                                                            var digitsOnly = /^\d+$/;
+                                                                
+                                                                            if (vehiclereg === "") {
+                                                                                vehicleregError.textContent = 'Vehicle Registration No is required';
+                                                                                return false;
+                                                                            } else if (!digitsOnly.test(vehiclereg)) {
+                                                                                vehicleregError.textContent = 'Only digits are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate Delivery Zones
+                                                                        function validateDeliveryZones() {
+                                                                            var deliveryzones = document.getElementById('deliveryzones').value;
+                                                                            var deliveryzonesError = document.getElementById('deliveryzonesError');
+                                                                
+                                                                            // Clear previous error message
+                                                                            deliveryzonesError.textContent = '';
+                                                                
+                                                                            // Regular expression pattern for letters only
+                                                                            var lettersOnly = /^[A-Za-z\s]+$/;
+                                                                
+                                                                            if (deliveryzones === "") {
+                                                                                deliveryzonesError.textContent = 'Delivery Zones are required';
+                                                                                return false;
+                                                                            } else if (!lettersOnly.test(deliveryzones)) {
+                                                                                deliveryzonesError.textContent = 'Only letters are allowed';
+                                                                                return false;
+                                                                            }
+                                                                            return true;
+                                                                        }
+                                                                
+                                                                        // Function to validate form on submission
+                                                                        function validateForm() {
+                                                                            return (
+                                                                                validateFirstName() &&
+                                                                                validateLastName() &&
+                                                                                validateEmail() &&
+                                                                                validateContactNo() &&
+                                                                                validateAddress() &&
+                                                                                validateVehicleType() &&
+                                                                                validateVehicleReg() &&
+                                                                                validateDeliveryZones()
+                                                                            );
+                                                                        }
+                                                                        
+                                                                        // Event listeners for real-time validation
+                                                                        document.getElementById('firstname').addEventListener('input', validateFirstName);
+                                                                        document.getElementById('lastname').addEventListener('input', validateLastName);
+                                                                        document.getElementById('email').addEventListener('input', validateEmail);
+                                                                        document.getElementById('contactno').addEventListener('input', validateContactNo);
+                                                                        document.getElementById('address').addEventListener('input', validateAddress);
+                                                                        document.getElementById('vehicle').addEventListener('input', validateVehicleType);
+                                                                        document.getElementById('vehiclereg').addEventListener('input', validateVehicleReg);
+                                                                        document.getElementById('deliveryzones').addEventListener('input', validateDeliveryZones);
+                                                                    </script>
                                                                 </body>
+                                                                
                                                                 </html>
-                                                                                                                    
 
 
+
+
+                                                                <!-- Required Jquery -->
+<script type="text/javascript" src="{% static 'assetsss/js/jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assetsss/js/jquery-ui/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assetsss/js/popper.js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assetsss/js/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- jquery slimscroll js -->
+<script type="text/javascript" src="{% static 'assetsss/js/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+<!-- modernizr js -->
+<script type="text/javascript" src="{% static 'assetsss/js/modernizr/modernizr.js' %}"></script>
+<!-- am chart -->
+<script src="{% static 'assetsss/pages/widget/amchart/amcharts.min.js' %}"></script>
+<script src="{% static 'assetsss/pages/widget/amchart/serial.min.js' %}"></script>
+<!-- Todo js -->
+<script type="text/javascript " src="{% static 'assetsss/pages/todo/todo.js ' %}"></script>
+<!-- Custom js -->
+<script type="text/javascript" src="{% static 'assetsss/pages/dashboard/custom-dashboard.js' %}"></script>
+<script type="text/javascript" src="{% static 'assetsss/js/script.js' %}"></script>
+<script type="text/javascript " src="{% static 'assetsss/js/SmoothScroll.js' %}"></script>
+<script src="{% static 'assetsss/js/pcoded.min.js' %}"></script>
+<script src="{% static 'assetsss/js/demo-12.js' %}"></script>
+<script src="{% static 'assetsss/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script>
+var $window = $(window);
+var nav = $('.fixed-button');
+    $window.scroll(function(){
+        if ($window.scrollTop() >= 200) {
+         nav.addClass('active');
+     }
+     else {
+         nav.removeClass('active');
+     }
+ });
+</script>
+</body>
+
+</html>

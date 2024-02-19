@@ -166,6 +166,7 @@ path('payment_success/', views.payment_success, name='payment_success'),
 
     path('add_delivery_boys/',views.add_delivery_boys,name="add_delivery_boys"),
     path('delivery_login/',views.delivery_login,name="delivery_login"),
+    path('Change_password/', views.Change_password, name='Change_password'),
 
 
  #purchase history view
@@ -178,6 +179,7 @@ path('payment_success/', views.payment_success, name='payment_success'),
 path('delivery_add_excel/', views.delivery_add_excel, name='delivery_add_excel'),
 #count not correct
  path('adminreg/', views.dashboardd, name='dashboardd'),
+
 
 ]
 

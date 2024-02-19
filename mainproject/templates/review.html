@@ -628,8 +628,8 @@
                                                       <div class="card">
                                                           <img src="{{ product.image_1.url  }}"  style="max-width: 200px; max-height: 200px;">
                                                           <div class="card-content">
-                                                            <td><a href="http://127.0.0.1:8000/myauth/prod_detail_review/{{ product.id }}"><button>View reviews</button></a></td>
-                                                            <h3 >{{ product.product_name }}</h3>
+                                                            <td><a href="http://127.0.0.1:8000/myauth/prod_detail_review/{{ product.id }}" class="view-reviews-btn">View reviews</a></td><br><br>
+                                                           <br> <h3 >{{ product.product_name }}</h3>
                                                               <div class="about-product">
                                                                   <p><strong>About Product:</strong> {{ product.about_product }}</p>
                                                               </div>
@@ -648,8 +648,37 @@
                                                           </div>
                                                       </div>
                                                       {% endfor %}
+
                                                   </div>
                                               </div>
+                                              <style>
+                                                /* Button styles */
+                                                .view-reviews-btn {
+                                                    display: inline-block;
+                                                    padding: 10px 20px;
+                                                    background-color: #007bff; /* Primary color */
+                                                    color: #fff;
+                                                    border: none;
+                                                    border-radius: 5px;
+                                                    cursor: pointer;
+                                                    transition: background-color 0.3s ease;
+                                                    text-decoration: none; /* Remove underline */
+                                                    position: relative;
+                                                }
+                                            
+                                                .view-reviews-btn::after {
+                                                    content: "\2192"; /* Unicode arrow character */
+                                                    font-size: 12px;
+                                                    position: absolute;
+                                                    right: 8px;
+                                                    top: 50%;
+                                                    transform: translateY(-50%);
+                                                }
+                                            
+                                                .view-reviews-btn:hover {
+                                                    background-color: #0056b3; /* Darker shade on hover */
+                                                }
+                                            </style>
                                           </body>
                                           </html>
                                           
