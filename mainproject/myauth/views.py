@@ -2,7 +2,9 @@ import datetime
 import json
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import pandas as pd
-
+from django.contrib.auth.hashers import make_password
+from .models import DeliveryBoy
+# from .forms import DeliveryBoyForm
 
 import razorpay
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -183,6 +185,9 @@ def handlelogin(request):
                 elif myuser.role=='ADMIN':
                           
                           return redirect('adminreg')
+                elif myuser.role=='DELIVERYBOY':
+                          
+                          return redirect('delivery_login')
                           
         else:
                 messages.error(request,"Invalid credential")
@@ -1841,3 +1846,91 @@ def prod_detail_review(request, product_id):
         'subcategories': subcategories
     })
     #return render(request,'product_revieww.html')   
+
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
+from django.db import IntegrityError
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from .models import DeliveryBoy
+import threading
+
+def sendmail_in_thread(subject, html_message, to_email):
+    email = EmailMessage(subject, strip_tags(html_message), to=to_email)
+    email.content_subtype = "html"
+    email.send()
+
+def register_delivery_boy(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        contact_number = request.POST.get('contact_no')
+        address = request.POST.get('address')
+        vehicle_type = request.POST.get('vehicle_type')
+        registration_number = request.POST.get('registration')
+        delivery_zones = request.POST.get('delivery_zones')
+        availability_timings = request.POST.get('availability_timings')
+
+        random_password = get_user_model().objects.make_random_password()
+
+        try:
+            # Attempt to create a new user
+            user = get_user_model().objects.create_user(
+                first_name=first_name,
+                last_name=last_name,
+                username=email,
+                email=email,
+                password=random_password,
+                role=get_user_model().Role.DELIVERYBOY
+            )
+
+            # Create the delivery boy with the provided contact number
+            delivery_boy = DeliveryBoy.objects.create(
+                user=user,
+                contact_number=contact_number,
+                address=address,
+                vehicle_type=vehicle_type,
+                registration_number=registration_number,
+                delivery_zones=delivery_zones,
+                availability_timings=availability_timings
+            )
+            
+
+            # Send email with the random password
+            subject = 'Welcome to the Delivery Service'
+            html_message = render_to_string('email_to_deliveryboy.html', {'user': user, 'password': random_password})
+            to_email = [email]
+
+            # Use a thread to send the email asynchronously
+            email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
+            email_thread.start()
+
+            # Redirect to a success URL or page upon successful registration
+            messages.success(request, 'Delivery boys added successfully.')
+
+        except IntegrityError:
+            # Handle any IntegrityError
+            # For example, you can redirect the user to a different page or display an error message
+            messages.success(request, 'Delivery boys added not successfully.')
+
+    # Render the registration page template
+    return render(request, 'delivery_boy_registration.html')
+
+
+
+
+#delivery login
+def delivery_login(request):
+    
+   return render(request,'delivery_dashboard.html')
+
+

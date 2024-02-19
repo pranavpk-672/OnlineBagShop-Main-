@@ -76,6 +76,7 @@ path('prodetailview_index/<int:product_id>/', views.prodetailview_index, name='p
     path('productallview/', views.productallview, name='productallview'),
     path('productallview_index/', views.productallview_index,name="productallview_index"),
     path('productscategorylist_index/<int:category_id>/', views.productscategorylist_index,name="productscategorylist_index"),
+    path('register_delivery_boy/', views.register_delivery_boy, name='register_delivery_boy'),
 
 
 
@@ -164,6 +165,8 @@ path('payment_success/', views.payment_success, name='payment_success'),
     path('deliveryboy_registration/', views.deliveryboy_registration, name='deliveryboy_registration'),
 
     path('add_delivery_boys/',views.add_delivery_boys,name="add_delivery_boys"),
+    path('delivery_login/',views.delivery_login,name="delivery_login"),
+
 
  #purchase history view
     path('purchasing_histor/', views.purchasing_histor, name='purchasing_histor'),
