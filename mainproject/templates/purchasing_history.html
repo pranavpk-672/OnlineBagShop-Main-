@@ -434,43 +434,65 @@
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Purchasing History</title>
-    <style>
-        /* CSS styles */
-        .bbody {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <div class="bbody">
-
-    <div class="container">
-        <h2>User Purchasing History</h2>
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>User Purchasing History</title>
+                        <style>
+                            /* CSS styles */
+                            .bbody {
+                                font-family: Arial, sans-serif;
+                                margin: 0;
+                                padding: 20px;
+                            }
+                            .container {
+                                max-width: 1000px;
+                                margin: auto;
+                                position: relative;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                            }
+                            table, th, td {
+                                border: 1px solid #ddd;
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
+                            .download-btn {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                margin-top: 20px;
+                                background-color: #007bff;
+                                color: #fff;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                            }
+                            .download-btn:hover {
+                                background-color: #0056b3;
+                            }
+                            .download-btn i {
+                                margin-right: 5px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="bbody">
+                            <div class="container">
+                                <h2>User Purchasing History</h2>
+                                <div class="bn">
+                                    <button class="download-btn" onclick="downloadCSV()"><i class="fa fa-download"></i> Download as Excel</button>
+                                </div><br><br>
         <table>
             <tr>
                 <th>Username</th>
@@ -507,6 +529,53 @@
         </table>
     </div>
 </div>
+<script>
+    function downloadCSV() {
+        // Get table and table headings
+        var table = document.querySelector('table');
+        var rows = table.querySelectorAll('tr');
+        var headings = [];
+        table.querySelectorAll('th').forEach(function(th) {
+            // Exclude the "Product Details" heading
+            if (th.textContent !== "Product Details") {
+                headings.push(th.textContent);
+            }
+        });
+        
+        // Initialize CSV content with table headings
+        var csvContent = headings.join(',') + '\n';
+        
+        // Loop through table rows
+        rows.forEach(function(row) {
+            var rowData = [];
+            row.querySelectorAll('td').forEach(function(cell, index) {
+                // Exclude the last cell (Product Details)
+                if (index < row.querySelectorAll('td').length - 1) {
+                    rowData.push(cell.textContent);
+                }
+            });
+            csvContent += rowData.join(',') + '\n';
+        });
+        
+        // Create a Blob object and initiate file download
+        var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, 'purchasing_history.csv');
+        } else {
+            var link = document.createElement('a');
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'purchasing_history.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+</script>
+
 
 </body>
 </html>

@@ -642,7 +642,7 @@ def sellerr(request):
     context = {'user_profiles': user_profiles}
     return render(request,'seller_view.html',context)
 
-def activate_user(request, user_id):
+def activate_seller(request, user_id):
     user = User.objects.get(id=user_id)
     user.is_active = True
     user.save()
@@ -652,9 +652,9 @@ def activate_user(request, user_id):
     from_email = 'hsree524@gmail.com'
     recipient_list = [user.email]
     send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)
-    return redirect('/myauth/adminn/')
+    return redirect('/myauth/sellerr/')
 
-def deactivate_user(request, user_id):
+def deactivate_seller(request, user_id):
     user = User.objects.get(id=user_id)
     if user.is_superuser:
         return HttpResponse("You cannot deactivat the admin.")
@@ -667,7 +667,7 @@ def deactivate_user(request, user_id):
     recipient_list = [user.email]
     send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)
     # Send an email to the user here
-    return redirect('/myauth/adminn/')
+    return redirect('/myauth/sellerr/')
 
 #sellerview2
 def sellviews(request):
@@ -1967,5 +1967,133 @@ def Change_password(request):
 
 
 
+# from reportlab.pdfgen import canvas
+# from .models import user_payment
 
+# def generate_user_payment_pdf(request, user_id):
+#     # Get the user object
+#     user = User.objects.get(id=user_id)
+
+#     # Get the user's payment objects
+#     user_payments = user_payment.objects.filter(user=user)
+
+#     # Create a PDF response
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = f'filename="{user.username}_payment_history.pdf"'
+
+#     # Create the PDF content
+#     p = canvas.Canvas(response)
+#     p.drawString(100, 800, f"Payment History for User: {user.username}")
+
+#     # Add user payment details to the PDF
+#     y_position = 780
+#     for payment in user_payments:
+#         p.drawString(100, y_position, f"Amount: Rs{payment.amount}")
+#         p.drawString(100, y_position - 20, f"Date and Time: {payment.datetime}")
+#         p.drawString(100, y_position - 40, f"Order ID Data: {payment.order_id_data}")
+#         p.drawString(100, y_position - 60, f"Payment ID Data: {payment.payment_id_data}")
+#         y_position -= 100  # Adjust vertical position for the next payment details
+#         # Add more details as needed
+
+#     # Save the PDF content
+#     p.showPage()
+#     p.save()
+
+#     return response
+
+
+#payment detailes pdf download
+
+
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+
+from .models import user_payment
+
+def generate_user_latest_payment_pdf(request, user_id):
+    # Get the latest payment for the user
+    latest_payment = user_payment.objects.filter(user_id=user_id).latest('datetime')
+
+    # Create a PDF buffer
+    buffer = HttpResponse(content_type='application/pdf')
+    buffer['Content-Disposition'] = f'filename="{latest_payment.user.username}_latest_payment.pdf"'
+
+    # Create a PDF document
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    # Define data for the PDF
+    data = [
+        ["Amount", latest_payment.amount],
+        ["Date and Time", latest_payment.datetime],
+        ["Order ID Data", latest_payment.order_id_data],
+        ["Payment ID Data", latest_payment.payment_id_data]
+    ]
+
+    # Create a table with data
+    table = Table(data, colWidths=[200, 200])
+    table.setStyle(TableStyle([
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey)
+    ]))
+
+    # Add table to the PDF document
+    doc.build([Paragraph(f" Payment Details for User: {latest_payment.user.username}", styles['Title']), table])
+
+    return buffer
+
+
+
+#delivery boy view in admin dashboard
+def delivery_vieww(request):
+    delivery_boys = DeliveryBoy.objects.all()
+    return render(request,'deliveryboy_view.html', {'delivery_boys': delivery_boys})  
+
+
+
+#deliveryboy view and activate and deactivate 
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+def activate_delivery_boy(request, delivery_boy_id):
+    delivery_boy = get_object_or_404(DeliveryBoy, id=delivery_boy_id)
+    delivery_boy.user.is_active = True
+    delivery_boy.user.save()
+
+    # Send activation email
+    send_mail(
+        'Your account has been activated',
+        'Dear {},\n\nYour account has been activated.'.format(delivery_boy.user.get_full_name()),
+        'your_email@example.com',  # Set your email here
+        [delivery_boy.user.email],
+        fail_silently=False,
+    )
+
+    messages.success(request, f"{delivery_boy.user.get_full_name} has been activated.")
+    return redirect('delivery_vieww')
+
+def deactivate_delivery_boy(request, delivery_boy_id):
+    delivery_boy = get_object_or_404(DeliveryBoy, id=delivery_boy_id)
+    delivery_boy.user.is_active = False
+    delivery_boy.user.save()
+
+    # Send deactivation email
+    send_mail(
+        'Your account has been deactivated',
+        'Dear {},\n\nYour account has been deactivated.'.format(delivery_boy.user.get_full_name()),
+        'your_email@example.com',  # Set your email here
+        [delivery_boy.user.email],
+        fail_silently=False,
+    )
+
+    messages.success(request, f"{delivery_boy.user.get_full_name} has been deactivated.")
+    return redirect('delivery_vieww')
 

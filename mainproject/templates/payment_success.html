@@ -221,6 +221,7 @@ https://templatemo.com/tm-559-zay-shop
         <div class="success-container">
             <h1>Payment Successful</h1>
             <p>Your payment has been processed successfully.</p>
+            <a href="{% url 'generate_user_latest_payment_pdf' user_id=request.user.id %}" class="btn btn-primary" download>Download Latest Payment PDF</a>
             <p>Thank you for choosing our service!</p>
             <a href="/myauth/home" class="back-link">Return to Home</a>
         </div>

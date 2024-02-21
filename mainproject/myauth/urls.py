@@ -137,8 +137,8 @@ path('payment_success/', views.payment_success, name='payment_success'),
 #activate and  deactivate
     path('activate_user/<int:user_id>/', views.activate_user, name='activate_user'),
     path('deactivate_user/<int:user_id>/', views.deactivate_user, name='deactivate_user'),
-    #     path('activate_seller/<int:user_id>/', views.activate_seller, name='activate_seller'),
-    # path('deactivate_seller/<int:user_id>/', views.deactivate_seller, name='deactivate_sellerr'),
+        path('activate_seller/<int:user_id>/', views.activate_seller, name='activate_seller'),
+    path('deactivate_seller/<int:user_id>/', views.deactivate_seller, name='deactivate_seller'),
 
     path('payment_history/', views.payment_history, name='payment_history'),
 
@@ -179,7 +179,12 @@ path('payment_success/', views.payment_success, name='payment_success'),
 path('delivery_add_excel/', views.delivery_add_excel, name='delivery_add_excel'),
 #count not correct
  path('adminreg/', views.dashboardd, name='dashboardd'),
+#  path('generate-pdf/<int:user_id>/', views.generate_user_payment_pdf, name='generate_user_payment_pdf'),
+path('generate-latest-payment-pdf/<int:user_id>/', views.generate_user_latest_payment_pdf, name='generate_user_latest_payment_pdf'),
 
+ path('delivery_vieww/', views.delivery_vieww, name='delivery_vieww'),
+ path('activate_delivery_boy/<int:delivery_boy_id>/', views.activate_delivery_boy, name='activate_delivery_boy'),
+ path('deactivate_delivery_boy/<int:delivery_boy_id>/', views.deactivate_delivery_boy, name='deactivate_delivery_boy'),
 
 ]
 
