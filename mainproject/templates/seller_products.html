@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ seller.username }}'s Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            display: block;
+            width: 120px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image img {
+            width: 110%;
+            height: 350px; /* Set the height as needed */
+            object-fit: cover; /* Maintain aspect ratio and cover container */
+            border-radius: 8px;
+        }
+
+        .product-details {
+            margin-top: 10px;
+        }
+
+        .product-details strong {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ seller.username }}'s Products</h1>
+
+        <a href="{% url 'sellers_item' %}" class="back-btn">Back to Sellers List</a>
+
+        <div class="product-grid">
+            {% for product in seller_products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ product.image_1.url }}" alt="{{ product.product_name }}">
+                    </div>
+                    <div class="product-details">
+                        <strong>Product Name:</strong> {{ product.product_name }}<br>
+                        <strong>Brand:</strong> {{ product.brand_name }}<br>
+                        <strong>Brand:</strong> {{ product.about_product }}<br>
+
+                        <strong>Stock:</strong> {{ product.stock }}<br>
+                        <strong>Price:</strong> ${{ product.current_price }}<br>
+                        <!-- Display other product details as needed -->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

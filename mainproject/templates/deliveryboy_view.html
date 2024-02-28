@@ -1,3 +1,7 @@
+
+
+
+
 <!-- templates/delivery_boys_list.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +32,7 @@
       .btn {
         padding: 0.5rem 1rem;
       }
-
+                                       
       .btn-deactivate {
         color: #fff;
         background-color: #dc3545;
@@ -51,6 +55,10 @@
         <tr>
           <th>Name</th>
           <th>Contact Number</th>
+          <th>Address</th>
+          <th>Vehicle Type</th>
+          <th>Vehicle Registration Number</th>
+          <th>Delivery Zones</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -60,6 +68,10 @@
           <tr>
             <td>{{ delivery_boy.user.get_full_name }}</td>
             <td>{{ delivery_boy.contact_number }}</td>
+            <td>{{ delivery_boy.address }}</td>
+            <td>{{ delivery_boy.vehicle_type }}</td>
+            <td>{{ delivery_boy.registration_number }}</td>
+            <td>{{ delivery_boy.delivery_zones }}</td>
             {% if delivery_boy.user.is_active %}
             <td>Active</td>
             {% else %}
@@ -84,3 +96,5 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+

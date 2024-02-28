@@ -427,6 +427,29 @@
                                             </a>
                                         </li>       
                     </nav>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+
+                                    <div class="page-body">
+                                        <div class="row">
+
+                                            <style>
+                                                body {
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    height: 100vh; /* Set body height to full viewport height */
+                                                }
+                                            
+                                                .pcoded-main-container {
+                                                    background-image: url('{% static 'assets/img/blur.jpg' %}');
+                                                    background-size: cover; /* Cover the entire element */
+                                                    background-position: center; /* Center the background image */
+                                                    /* You can add more background properties as needed */
+                                                }
+                                            </style>
+
 
 
 
@@ -439,6 +462,7 @@
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
                         <title>User Purchasing History</title>
                         <style>
                             /* CSS styles */
@@ -484,6 +508,16 @@
                             .download-btn i {
                                 margin-right: 5px;
                             }
+                            .product-details-link {
+    color: #007bff; /* Change the color as needed */
+    text-decoration: none;
+    display: inline-block;
+}
+
+.product-details-link i {
+    margin-left: 5px; /* Adjust the spacing between text and arrow */
+}
+
                         </style>
                     </head>
                     <body>
@@ -521,7 +555,9 @@
                 <td>{{ payment.product.seller_id.username }}</td> -->
                 <td>{{ payment.amount }}</td>
                 <td>{{ payment.datetime }}</td>
-                <td><a href="http://127.0.0.1:8000/myauth/cart_items_list/{{ payment.cart }}">Product Details</a></td>
+                <!-- <td><a href="http://127.0.0.1:8000/myauth/cart_items_list/{{ payment.cart }}">Product Details</a></td> -->
+                <td><a href="http://127.0.0.1:8000/myauth/cart_items_list/{{ payment.cart }}" class="product-details-link">Product Details <i class="fas fa-arrow-right"></i></a></td>
+
 
 
             </tr>

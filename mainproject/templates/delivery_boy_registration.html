@@ -696,6 +696,9 @@
                                                                                     <div class="error" id="availabilityError"></div>
                                                                                 </div>
                                                                                 <center><button type="submit">Register</button></center>
+                                                                                {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
                                                                             </form><br>
                                                                             <center><p>OR</p></center> 
                                                                             <center>

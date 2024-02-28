@@ -84,6 +84,12 @@ path('cartt/', views.cartt, name='cartt'),
 path('admin_prodview/', views.admin_prodview, name='admin_prodview'),
 path('reviews/', views.admin_proddview, name='reviews'),
 path('prod_detail_review/<int:product_id>/', views.prod_detail_review, name='prod_detail_review'),
+path('notification_view/', views.notification_view, name='notification_view'),
+path('sellers_item/', views.sellers_item, name='sellers_item'),
+path('seller-products/<int:seller_id>/', views.seller_products_view, name='seller_products_view'),
+
+
+
 
 
 
@@ -167,6 +173,8 @@ path('payment_success/', views.payment_success, name='payment_success'),
     path('add_delivery_boys/',views.add_delivery_boys,name="add_delivery_boys"),
     path('delivery_login/',views.delivery_login,name="delivery_login"),
     path('Change_password/', views.Change_password, name='Change_password'),
+    path('delivery_password/', views.delivery_password, name='delivery_password'),
+
 
 
  #purchase history view

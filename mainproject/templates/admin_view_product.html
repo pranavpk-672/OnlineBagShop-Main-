@@ -559,6 +559,46 @@
                                                     letter-spacing: 2px;
                                                     padding-bottom: 10px;
                                                 }
+                                                .search-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.category-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.brand-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
                                              </style>
                                           </head>
                                           <body>
@@ -566,6 +606,23 @@
                                                 <div class="heading">
                                                     <h1 style="color: #ffffff;" class="font-effect-fire">ProductS List</h1>
                                                 </div>
+                                                <form method="GET" class="search-form">
+                                                    <input type="text" name="q" placeholder="Search..." class="search-input">
+                                                    <select name="category" class="category-select">
+                                                        <option value="">All Categories</option>
+                                                        {% for category in distinct_categories %}
+                                                        <option value="{{ category }}">{{ category }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <select name="brand" class="brand-select">
+                                                        <option value="">All Brands</option>
+                                                        {% for brand in distinct_brands %}
+                                                        <option value="{{ brand }}">{{ brand }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <button type="submit" class="search-btn">Search</button>
+                                                </form>
+                                                
                                                 <div class="card-container">
                                                       {% for product in products %}
                                                       <div class="card">

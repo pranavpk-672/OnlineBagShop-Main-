@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sellers List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        li h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .seller-details {
+            margin-bottom: 10px;
+        }
+        .seller-details strong {
+            color: #555;
+        }
+        .view-products-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .view-products-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Sellers</h1>
+    
+    <ul>
+        {% for seller in sellers %}
+            <li>
+                <h2>{{ seller.username }}</h2>
+                <div class="seller-details">
+                    <strong>Email:</strong> {{ seller.email }}<br>
+                    <strong>First Name:</strong> {{ seller.first_name }}<br>
+                    <strong>Last Name:</strong> {{ seller.last_name }}<br>
+                    {% if seller.sellerprofile %}
+                        <strong>Phone No:</strong> {{ seller.sellerprofile.phone }}<br>
+                        <strong>Company Name:</strong> {{ seller.sellerprofile.company_name }}<br>
+                        <strong>GST:</strong> {{ seller.sellerprofile.gst }}<br>
+                        <strong>Address:</strong> {{ seller.sellerprofile.address }}<br>
+
+                        <!-- Include other seller profile details as needed -->
+                    {% else %}
+                        <strong>No additional profile details available.</strong>
+                    {% endif %}
+                </div>
+                <form action="{% url 'seller_products_view' seller.id %}" method="GET">
+                    <button type="submit" class="view-products-btn">View Products</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

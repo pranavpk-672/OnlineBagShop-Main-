@@ -132,7 +132,6 @@
 
                                     {% for user in last_three_users %}
                                     <li>
-
                                         <div class="media">
                                             <img class="d-flex align-self-center img-radius" src="{% static 'assets/img/notification.png' %}" alt="Generic placeholder image">
                                             <div class="media-body">
@@ -142,8 +141,6 @@
                                                 <span class="notification-time">{{ user.current_date }}</span>
                                             </div>
                                         </div>
-
-
                                     </li>
                                 {% endfor %}
 
@@ -318,7 +315,7 @@
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/sellers_item/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"> Seller's Item </span>
                                                 <span class="pcoded-mcaret"></span>
@@ -575,7 +572,7 @@
                                                             <i class="icofont icofont-fast-delivery bg-c-blue card1-icon"></i>
                                                             <!-- <i class="icofont-category"></i> -->
                                                             <span class="text-c-blue f-w-600">View Deliveryboy Details</span>
-                                                            <h4>{{approvcount}}</h4>
+                                                            <h4>{{delivery_boy_count}}</h4>
                                                             <div>
                                                                 <span class="f-left m-t-10 text-muted">
                                                                     <!-- <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Just update-->
@@ -588,22 +585,27 @@
 
 
                                             <div class="col-md-6 col-xl-3">
-                                                <a href="" class="card-link">
+                                                <a href="http://127.0.0.1:8000/myauth/notification_view/" class="card-link">
                                                     <div class="card widget-card-1">
                                                         <div class="card-block-small">
-                                                            <i class="icofont icofont-notification bg-c-pink card1-icon"></i>
-                                                            <!-- <i class="icofont-category"></i> -->
-                                                            <span class="text-c-pink f-w-600">Notifications</span>
-                                                            <h4>{{approvcount}}</h4>
+                                                            <i class="icofont icofont-notification bg-c-pink card1-icon"></i> 
+                                                            <!-- <i class="icofont-category"></i>  -->
+                                                           <span class="text-c-pink f-w-600">Notifications</span>
+                                                            <h4>{{notificationcount}}</h4>
                                                             <div>
-                                                                <span class="f-left m-t-10 text-muted">
-                                                                    <!-- <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Just update-->
+                                                                <span class="f-left m-t-10 text-muted"> 
+                                                                     <!-- <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Just update--> 
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </div>
+                                            </div> 
+
+
+                                           
+
+                                            
                                             
 
 

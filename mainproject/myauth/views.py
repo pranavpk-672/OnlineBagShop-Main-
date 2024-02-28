@@ -1,11 +1,15 @@
 import datetime
 import io
 import json
+from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import pandas as pd
 from django.contrib.auth.hashers import make_password
+from requests import request
 from .models import DeliveryBoy
 # from .forms import DeliveryBoyForm
+from .models import Notification
+
 
 import razorpay
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -14,6 +18,8 @@ from django.db.models import Q
 from .models import User
 from .models import *
 from django.db.models import Subquery, OuterRef
+from .models import category
+
 
 from django.db.models import Sum
 from django.contrib.auth import authenticate, login, logout
@@ -263,6 +269,7 @@ def adminreg(request):
 
     approvcount = SellerProfile.objects.filter().count()
     productcount = Product.objects.filter().count()
+    notificationcount = Notification.objects.filter().count()
 
     # Get the last three users from the notifications table
     last_three_notifications = Notification.objects.order_by('-id')[:3]
@@ -275,7 +282,8 @@ def adminreg(request):
         'delivery_boy_count': delivery_boy_count,
         'last_three_users': last_three_users,
         'approvcount': approvcount,
-        'productcount' : productcount
+        'productcount' : productcount,
+        'notificationcount' : notificationcount
     }
     
     # Render the HTML template
@@ -300,6 +308,7 @@ class ActivateAccountView(View):
 
 
 #user view
+@login_required     
 def adminn(request):
     User = get_user_model()
     user_profiles = User.objects.filter(role='CUSTOMER')
@@ -634,6 +643,7 @@ def seller_profile_update(request):
 
 
 #seller view
+@login_required
 def sellerr(request):
     User = get_user_model()
     user_profiles = User.objects.filter(role='SELLER')
@@ -1084,14 +1094,136 @@ def cartt(request):
 
 
 #Admin view products
+@login_required
+
 def admin_prodview(request):
-     products = Product.objects.all()
-     return render(request, 'admin_view_product.html', {'products': products})
+    # Retrieve all products by default
+    products = Product.objects.all()
+
+    # Handling search functionality
+    query = request.GET.get('q')
+    if query:
+        # Filter products by product_name containing the query string
+        products = products.filter(product_name__icontains=query)
+
+    # Handling filter functionality
+    # You can add more filter options as needed
+    filters = {}
+    category_name = request.GET.get('category')
+    subcategory_name = request.GET.get('subcategory')
+    brand_name = request.GET.get('brand')  # Added for brand filtering
+    if category_name:
+        # Filter products by category name
+        products = products.filter(category_id__category_name=category_name)
+        filters['category'] = category_name
+    if subcategory_name:
+        # Filter products by subcategory name
+        products = products.filter(category_id__sub_category__sub_category_name=subcategory_name)
+        filters['subcategory'] = subcategory_name
+    if brand_name:
+        # Filter products by brand name
+        products = products.filter(brand_name=brand_name)
+        filters['brand'] = brand_name
+
+    # Pass distinct category names, subcategory names, and brand names to the template for the dropdown menus
+    distinct_categories = category.objects.values_list('category_name', flat=True).distinct()
+    # distinct_subcategories = SubCategory.objects.values_list('sub_category_name', flat=True).distinct()
+    distinct_brands = Product.objects.values_list('brand_name', flat=True).distinct()
+
+    # Pass the filter options to the template
+    context = {
+        'products': products,
+        'filters': filters,
+        'distinct_categories': distinct_categories,
+        # 'distinct_subcategories': distinct_subcategories,
+        'distinct_brands': distinct_brands,
+    }
+
+    return render(request, 'admin_view_product.html', context)
+
+
+
+# def admin_prodview(request):
+#      products = Product.objects.all()
+#      return render(request, 'admin_view_product.html', {'products': products})
+
+# def admin_prodview(request):
+#     # Retrieve all products by default
+#     products = Product.objects.all()
+
+#     # Handling search functionality
+#     query = request.GET.get('q')
+#     if query:
+#         # Filter products by product_name containing the query string
+#         products = products.filter(product_name__icontains=query)
+
+#     # Handling filter functionality
+#     # You can add more filter options as needed
+#     filters = {}
+#     category = request.GET.get('category')
+#     if category:
+#         products = products.filter(category_id=category)
+#         filters['category'] = category
+
+#     # Pass the filter options to the template
+#     context = {
+#         'products': products,
+#         'filters': filters,
+#     }
+
+#     return render(request, 'admin_view_product.html', context)
+
 
 #Admin view products
+@login_required
+# def admin_proddview(request):
+#      products = Product.objects.all()
+#      return render(request, 'review.html', {'products': products})
+@login_required
 def admin_proddview(request):
-     products = Product.objects.all()
-     return render(request, 'review.html', {'products': products})
+    # Retrieve all products by default
+    products = Product.objects.all()
+
+    # Handling search functionality
+    query = request.GET.get('q')
+    if query:
+        # Filter products by product_name containing the query string
+        products = products.filter(product_name__icontains=query)
+
+    # Handling filter functionality
+    # You can add more filter options as needed
+    filters = {}
+    category_name = request.GET.get('category')
+    subcategory_name = request.GET.get('subcategory')
+    brand_name = request.GET.get('brand')  # Added for brand filtering
+    if category_name:
+        # Filter products by category name
+        products = products.filter(category_id__category_name=category_name)
+        filters['category'] = category_name
+    if subcategory_name:
+        # Filter products by subcategory name
+        products = products.filter(category_id__sub_category__sub_category_name=subcategory_name)
+        filters['subcategory'] = subcategory_name
+    if brand_name:
+        # Filter products by brand name
+        products = products.filter(brand_name=brand_name)
+        filters['brand'] = brand_name
+
+    # Pass distinct category names, subcategory names, and brand names to the template for the dropdown menus
+    distinct_categories = category.objects.values_list('category_name', flat=True).distinct()
+    # distinct_subcategories = SubCategory.objects.values_list('sub_category_name', flat=True).distinct()
+    distinct_brands = Product.objects.values_list('brand_name', flat=True).distinct()
+
+    # Pass the filter options to the template
+    context = {
+        'products': products,
+        'filters': filters,
+        'distinct_categories': distinct_categories,
+        # 'distinct_subcategories': distinct_subcategories,
+        'distinct_brands': distinct_brands,
+    }
+
+    return render(request, 'review.html', context)
 
 #seller view products
 # def seller_prodview(request):
@@ -1595,6 +1727,11 @@ def list_reviews(request):
 def reviews(request):
     return render(request,'review.html')
 
+
+
+
+
+
 def product_review_page(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product_name_d = product.product_name  # Fetching the product name
@@ -1668,20 +1805,21 @@ def deliveryboy_registration(request):
 
 
 #purchase history
+@login_required
 def purchasing_history(request):
     purchasing_history = user_payment.objects.select_related('user').all()
     return render(request, 'purchasing_history.html', {'purchasing_history': purchasing_history})
 
-
+@login_required
 def purchasing_histor(request):
     return render(request,'purchasing_history.html')
 
-
+@login_required
 def product_purchase_details(request):
     
     return render(request,'product_buy_details.html')
 
-
+@login_required
 def product_cart_details(request, cart_id):
 
 
@@ -1720,6 +1858,8 @@ def add_delivery_boys(request):
         try:
             df = pd.read_excel(xl_sheet)
 
+            success_message_displayed = False  # Flag to track if success message has been displayed
+
             for _, row in df.iterrows():
                 # Create a unique username and password for each delivery boy
                 username = row['Email']
@@ -1751,25 +1891,29 @@ def add_delivery_boys(request):
                     availability_timings=availability_timings
                 )
 
-                # Send an email to the delivery boy with their password
-                subject = 'Welcome to the Delivery Service'
-                html_message = render_to_string('email_to_deliveryboy.html', {
-                    'firstname': row['Firstname'],
-                    'password': password,
-                })
-                to_email = [row['Email']]
+                if not success_message_displayed:
+                    # Send an email to the delivery boy with their password
+                    subject = 'Welcome to the Delivery Service'
+                    html_message = render_to_string('email_to_deliveryboy.html', {
+                        'firstname': row['Firstname'],
+                        'password': password,
+                    })
+                    to_email = [row['Email']]
 
-                # Use a thread to send the email asynchronously
-                email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
-                email_thread.start()
+                    # Use a thread to send the email asynchronously
+                    email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
+                    email_thread.start()
 
-                # Notify the user that delivery boys were added successfully
-                messages.success(request, 'Delivery boys added successfully.')
+                    # Notify the user that delivery boys were added successfully
+                    messages.success(request, 'Delivery boys added successfully.')
+                    success_message_displayed = True  # Update flag to indicate success message has been displayed
 
         except Exception as e:
             messages.error(request, f'Error processing the Excel sheet: {e}')
 
     return render(request, 'delivery_boy_excel.html')
+
+
 
 
 
@@ -1930,9 +2074,16 @@ def register_delivery_boy(request):
 
 
 #delivery login
-def delivery_login(request):
+# def delivery_login(request):
     
-   return render(request,'delivery_dashboard.html')
+#    return render(request,'delivery_dashboard.html')
+@login_required
+def delivery_login(request):
+    # Check if the delivery boy has already updated their password
+    if request.user.deliveryboy.has_updated_password:
+        return render(request, 'delivery_dashboard.html')  # Assuming 'delivery_login.html' is your login page
+    else:
+        return redirect('delivery_password')
 
 
 
@@ -1962,7 +2113,31 @@ def Change_password(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
+def delivery_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
 
+        if new_password == confirm_password:
+            user = request.user
+            user.set_password(new_password)
+            user.save()
+
+            # Update session to prevent the user from being logged out
+            update_session_auth_hash(request, user)
+
+            # Update the DeliveryBoy instance to mark that password is updated
+            delivery_boy = DeliveryBoy.objects.get(user=user)
+            delivery_boy.has_updated_password = True
+            delivery_boy.save()
+
+            messages.success(request, 'Password changed successfully.')
+            return redirect('delivery_login')
+        else:
+            messages.error(request, 'Passwords do not match.')
+            return redirect('delivery_password')  # Redirect back to the password change page if passwords don't match
+    else:
+        return render(request, 'delivery_password.html')
 
 
 
@@ -2003,7 +2178,6 @@ def Change_password(request):
 
 
 #payment detailes pdf download
-
 
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
@@ -2050,9 +2224,11 @@ def generate_user_latest_payment_pdf(request, user_id):
 
 
 #delivery boy view in admin dashboard
+@login_required
 def delivery_vieww(request):
     delivery_boys = DeliveryBoy.objects.all()
     return render(request,'deliveryboy_view.html', {'delivery_boys': delivery_boys})  
+
 
 
 
@@ -2097,3 +2273,48 @@ def deactivate_delivery_boy(request, delivery_boy_id):
     messages.success(request, f"{delivery_boy.user.get_full_name} has been deactivated.")
     return redirect('delivery_vieww')
 
+
+
+
+
+def notification_view(request):
+    # Retrieve all notifications from the database
+    notifications = Notification.objects.all()
+
+    # Pass the notifications to the template context
+    context = {
+        'notifications': notifications,
+    }
+
+    # Render the HTML template
+    return render(request, 'notification_view.html', context)
+
+
+
+#sellers item view
+
+def sellers_item(request):
+    # Retrieve all sellers
+    sellers = User.objects.filter(role='SELLER')
+    
+    context = {
+        'sellers': sellers,
+    }
+    
+    return render(request, 'sellers_item.html', context)
+
+
+
+def seller_products_view(request, seller_id):
+    # Retrieve the seller based on the seller_id
+    seller = User.objects.get(id=seller_id)
+
+    # Retrieve products added by the seller
+    seller_products = Product.objects.filter(seller_id=seller_id)
+
+    context = {
+        'seller': seller,
+        'seller_products': seller_products,
+    }
+
+    return render(request, 'seller_products.html', context)

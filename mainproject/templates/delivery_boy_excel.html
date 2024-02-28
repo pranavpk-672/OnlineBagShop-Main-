@@ -527,13 +527,48 @@
             <input type="file" name="xl_sheet" accept=".xlsx, .xls">
             <br>
            <center> <button type="submit">Add Delivery Boys</button></center>
+
             <!-- Display messages (success or error) -->
             {% for message in messages %}
                 <div class="message">{{ message }}</div>
             {% endfor %}
         </form>
+
+        <br><button onclick="downloadCSV()" class="download-button">Download CSV Template</button>
     </div>
 </div>
+<script>
+    function downloadCSV() {
+        // Define the fields and data for the CSV
+        var fields = ['Firstname', 'Lastname','Contact Number','Address','Vehicle Type','Registration Number','Delivery Zones','Availability Timings','Email'];
+        var data = [
+            
+        ];
+
+        // Format the CSV content
+        var csvContent = "" 
+                         + fields.join(',') + '\n'
+                         + data.map(row => row.join(',')).join('\n');
+
+        // Create a blob with the CSV content
+        var blob = new Blob([csvContent], { type: 'text/csv' });
+
+        // Create a temporary link element
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+
+        // Set the filename for the download
+        link.download = 'data.csv';
+
+        // Append the link to the body and trigger the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up by removing the link from the DOM
+        document.body.removeChild(link);
+    }
+</script>
+
 
 </body>
 </html>

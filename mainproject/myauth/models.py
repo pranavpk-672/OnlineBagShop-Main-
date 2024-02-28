@@ -153,6 +153,8 @@ class DeliveryBoy(models.Model):
     registration_number = models.CharField(max_length=20)
     delivery_zones = models.TextField()
     availability_timings = models.CharField(max_length=100)
+    has_updated_password = models.BooleanField(default=False)  # New field to track password update
+
 
 
 class Notification(models.Model):
