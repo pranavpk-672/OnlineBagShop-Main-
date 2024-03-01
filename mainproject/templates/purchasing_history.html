@@ -318,7 +318,7 @@
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/sellers_item/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"> Seller's Item </span>
                                                 <span class="pcoded-mcaret"></span>
@@ -477,10 +477,12 @@
                                 position: relative;
                             }
                             table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-bottom: 20px;
-                            }
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 20px;
+                                    margin-left: 100px; /* Add this line */
+                                }
+
                             table, th, td {
                                 border: 1px solid #ddd;
                                 padding: 8px;
@@ -490,23 +492,25 @@
                                 background-color: #f2f2f2;
                             }
                             .download-btn {
-                                position: absolute;
-                                top: 0;
-                                right: 0;
-                                margin-top: 20px;
-                                background-color: #007bff;
-                                color: #fff;
-                                border: none;
-                                padding: 10px 20px;
-                                border-radius: 5px;
-                                cursor: pointer;
-                                transition: background-color 0.3s ease;
-                            }
+    position: absolute;
+    top: 0;
+    right: -80px; /* Adjust this value to move it more to the right */
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
                             .download-btn:hover {
                                 background-color: #0056b3;
                             }
                             .download-btn i {
                                 margin-right: 5px;
+
                             }
                             .product-details-link {
     color: #007bff; /* Change the color as needed */
@@ -517,13 +521,21 @@
 .product-details-link i {
     margin-left: 5px; /* Adjust the spacing between text and arrow */
 }
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
 
+}
                         </style>
                     </head>
                     <body>
                         <div class="bbody">
                             <div class="container">
-                                <h2>User Purchasing History</h2>
+                               <center> <h2>User Purchasing History</h2> </center>
                                 <div class="bn">
                                     <button class="download-btn" onclick="downloadCSV()"><i class="fa fa-download"></i> Download as Excel</button>
                                 </div><br><br>

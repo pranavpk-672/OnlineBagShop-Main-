@@ -189,10 +189,10 @@ path('delivery_add_excel/', views.delivery_add_excel, name='delivery_add_excel')
  path('adminreg/', views.dashboardd, name='dashboardd'),
 #  path('generate-pdf/<int:user_id>/', views.generate_user_payment_pdf, name='generate_user_payment_pdf'),
 path('generate-latest-payment-pdf/<int:user_id>/', views.generate_user_latest_payment_pdf, name='generate_user_latest_payment_pdf'),
-
  path('delivery_vieww/', views.delivery_vieww, name='delivery_vieww'),
  path('activate_delivery_boy/<int:delivery_boy_id>/', views.activate_delivery_boy, name='activate_delivery_boy'),
  path('deactivate_delivery_boy/<int:delivery_boy_id>/', views.deactivate_delivery_boy, name='deactivate_delivery_boy'),
+ path('generate_coupon/',views.generate_coupon, name='generate_coupon'),
 
 ]
 

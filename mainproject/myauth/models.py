@@ -166,6 +166,13 @@ class Notification(models.Model):
 
     # Other fields and methods for your model as needed
 
+class Coupon(models.Model):
+    coupon_code = models.CharField(max_length=8, unique=True)
+    discount_percentage = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Coupon: {self.coupon_code}, Discount: {self.discount_percentage}%"
+
    
    
 

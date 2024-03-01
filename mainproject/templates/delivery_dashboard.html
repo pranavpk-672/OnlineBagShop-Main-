@@ -240,6 +240,8 @@ https://templatemo.com/tm-559-zay-shop
         }
 
         
+
+        
         
     
        
@@ -290,6 +292,11 @@ https://templatemo.com/tm-559-zay-shop
         
     </header>
     <!-- Your page content goes here -->
+    <center>
+    {% for message in messages %}
+    <div class="message">{{ message }}</div>
+{% endfor %}
+</center>
     
 </body>
 

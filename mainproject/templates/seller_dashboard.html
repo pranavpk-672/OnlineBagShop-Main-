@@ -68,9 +68,9 @@ https://templatemo.com/tm-559-zay-shop
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">About</a>
                         </li>
@@ -260,6 +260,8 @@ https://templatemo.com/tm-559-zay-shop
             <nav>
                 <ul>
                     <li><a href="http://127.0.0.1:8000/myauth/seller_prodview/">View Product</a></li>
+                    <!-- <li><a href="http://127.0.0.1:8000/myauth/seller_prodview/">Generate Coupon</a></li> -->
+
                     
                     <li class="dropdown">
                         <a href="#">Sell Product</a>
@@ -277,7 +279,7 @@ https://templatemo.com/tm-559-zay-shop
                                 <div class="user dropdown-content">
                                     <a href="">Profile</a>
                                     <a href="">View Cart</a>
-                                    <a href="">View Wishlist</a>
+                                    <a href="">Create Coupon</a>
                                     <a href="/myauth/logout/">Logout</a>
                                 </div>
                             </li>
@@ -292,4 +294,154 @@ https://templatemo.com/tm-559-zay-shop
 
 {% endblock form %}
 <!--demoheader close-->
+
+
+
+
+
+
+
+
+<!-- generate_coupon.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Coupon</title>
+</head>
+<body>
+    <h2>Generate Coupon</h2>
+    <form method="post" action="{% url 'generate_coupon' %}">
+        {% csrf_token %}
+        <button type="submit">Generate Coupon</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!-- coupon_generated.html -->
+
+<!-- coupon_generated.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Generated</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .coupon {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #00A9E0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .coupon h2 {
+            margin-top: 0;
+            color: #00A9E0;
+            text-align: center;
+        }
+
+        .coupon p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+
+        .qr-code {
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="coupon">
+        <h2>Coupon Generated</h2>
+        <p>Your coupon code is: <strong>{{ coupon_code }}</strong></p>
+        <p>Discount Percentage: <strong>{{ discount_percentage }}%</strong></p>
+        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" class="qr-code">
+        <p>Scan the QR code to view details</p>
+    </div>
+</body>
+</html> -->
+
+
+
+<!-- coupon_generated.html -->
+
+<!-- coupon_generated.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Generated</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .coupon {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #00A9E0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .coupon h2 {
+            margin-top: 0;
+            color: #00A9E0;
+            text-align: center;
+        }
+
+        .coupon p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+
+        .qr-code {
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="coupon">
+        <h2>Coupon Generated</h2>
+        <p>Your coupon code is: <strong>{{ coupon.coupon_code }}</strong></p>
+        <p>Discount Percentage: <strong>{{ coupon.discount_percentage }}%</strong></p>
+        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" class="qr-code">
+        <p>Scan the QR code to view details</p>
+    </div>
+</body>
+</html>
 

@@ -5,6 +5,7 @@ from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import pandas as pd
 from django.contrib.auth.hashers import make_password
+import qrcode
 from requests import request
 from .models import DeliveryBoy
 # from .forms import DeliveryBoyForm
@@ -129,7 +130,8 @@ def signup(request):
             pass
 
         myuser = User.objects.create_user(first_name=fname,last_name=lname,email=email,password=password,username=email,role='CUSTOMER')
-
+        
+        
         #authentication
         myuser.is_active=False
 
@@ -270,6 +272,7 @@ def adminreg(request):
     approvcount = SellerProfile.objects.filter().count()
     productcount = Product.objects.filter().count()
     notificationcount = Notification.objects.filter().count()
+    
 
     # Get the last three users from the notifications table
     last_three_notifications = Notification.objects.order_by('-id')[:3]
@@ -1852,8 +1855,9 @@ def sendmail_in_thread(subject, html_message, to_email):
 import pandas as pd
 
 def add_delivery_boys(request):
-    if request.method == 'POST' and request.FILES['xl_sheet']:
+    if request.method == 'POST' and 'xl_sheet' in request.FILES:
         xl_sheet = request.FILES['xl_sheet']
+
 
         try:
             df = pd.read_excel(xl_sheet)
@@ -1912,6 +1916,9 @@ def add_delivery_boys(request):
             messages.error(request, f'Error processing the Excel sheet: {e}')
 
     return render(request, 'delivery_boy_excel.html')
+
+
+
 
 
 
@@ -2220,6 +2227,19 @@ def generate_user_latest_payment_pdf(request, user_id):
     doc.build([Paragraph(f" Payment Details for User: {latest_payment.user.username}", styles['Title']), table])
 
     return buffer
+    
+
+    # views.py
+
+# views.py
+
+# views.py
+
+
+
+
+
+
 
 
 
@@ -2318,3 +2338,108 @@ def seller_products_view(request, seller_id):
     }
 
     return render(request, 'seller_products.html', context)
+
+
+
+
+
+
+
+ # views.py
+
+from django.shortcuts import render
+from django.utils.crypto import get_random_string
+
+import base64
+
+# def generate_coupon(request):
+#     if request.method == 'POST':
+#         # Generate a random coupon code
+#         coupon_code = get_random_string(length=8)
+        
+#         # Define the discount percentage
+#         discount_percentage = 20  # Adjust as needed
+        
+#         # Generate the QR code containing the coupon details
+#         qr = qrcode.QRCode(
+#             version=1,
+#             error_correction=qrcode.constants.ERROR_CORRECT_L,
+#             box_size=10,
+#             border=4,
+#         )
+#         qr.add_data(f"Coupon Code: {coupon_code}\nDiscount Percentage: {discount_percentage}%")
+#         qr.make(fit=True)
+#         qr_img = qr.make_image(fill_color="black", back_color="white")
+
+#         # Convert the QR code image to Base64 string
+#         buffer = io.BytesIO()
+#         qr_img.save(buffer, format='PNG')
+#         qr_image_base64 = base64.b64encode(buffer.getvalue()).decode()
+
+#         # Render the coupon template with the coupon code and discount percentage
+#         return render(request, 'seller_dashboard.html', {'coupon_code': coupon_code, 'discount_percentage': discount_percentage, 'qr_code_base64': qr_image_base64})
+#     else:
+#         return render(request, 'seller_dashboard.html')
+
+
+
+
+
+# views.py
+
+# views.py
+
+from django.shortcuts import render
+from django.utils.crypto import get_random_string
+import qrcode
+from io import BytesIO
+from django.core.files.base import ContentFile
+from .models import Coupon
+import base64
+
+def generate_coupon(request):
+    if request.method == 'POST':
+        # Generate a random coupon code
+        coupon_code = get_random_string(length=8)
+        
+        # Define the discount percentage
+        discount_percentage = 20  # Adjust as needed
+        
+        # Generate the QR code containing the coupon details
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(f"Coupon Code: {coupon_code}\nDiscount Percentage: {discount_percentage}%")
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+
+        # Convert the QR code image to bytes
+        buffer = BytesIO()
+        qr_img.save(buffer, format='PNG')
+        qr_image_bytes = buffer.getvalue()
+
+        # Convert the QR code image bytes to base64
+        qr_image_base64 = base64.b64encode(qr_image_bytes).decode('utf-8')
+
+        # Save the coupon details to the database
+        coupon = Coupon.objects.create(coupon_code=coupon_code, discount_percentage=discount_percentage)
+
+        # Render the coupon template with the coupon code, discount percentage, and QR code
+        return render(request, 'seller_dashboard.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
+    else:
+        return render(request, 'seller_dashboard.html')
+
+
+
+
+
+
+
+
+
+
+
+

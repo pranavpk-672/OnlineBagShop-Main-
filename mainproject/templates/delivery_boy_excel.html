@@ -124,8 +124,27 @@
                                     <li>
                                         <h6>Notifications</h6>
                                         <label class="label label-danger">New</label>
+                                    
                                     </li>
                                     <li>
+                                        <p>Recent Seller Registration</p>
+                                    </li>
+
+                                    {% for user in last_three_users %}
+                                    <li>
+                                        <div class="media">
+                                            <img class="d-flex align-self-center img-radius" src="{% static 'assets/img/notification.png' %}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="notification-user">{{ user.name }}</h5>
+                                                <h5 class="notification-user">{{ user.username }}</h5>
+                                                <!-- <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p> -->
+                                                <span class="notification-time">{{ user.current_date }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                                    <!-- <li>
                                         <div class="media">
                                             <img class="d-flex align-self-center img-radius" src="{% static 'assetsss/images/avatar-4.jpg' %}" alt="Generic placeholder image">
                                             <div class="media-body">
@@ -154,7 +173,7 @@
                                                 <span class="notification-time">30 minutes ago</span>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
                             <li class="user-profile header-notification">
@@ -270,7 +289,7 @@
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Category View</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>-->
+                                        </li> -->
                                        
                                       
                                      
@@ -289,16 +308,16 @@
                                             </a> -->
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/reviews/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Reviews</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/sellers_item/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Notifications </span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"> Seller's Item </span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a> 
                                         </li>
@@ -310,9 +329,9 @@
                                             </a> -->
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="http://127.0.0.1:8000/myauth/purchasing_history/">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Typography</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Purchase History</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -404,16 +423,30 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        </div>
+                                      </nav>
+                                      <div class="pcoded-content">
+                                        <div class="pcoded-inner-content">
+                                            <div class="main-body">
+                                                <div class="page-wrapper">
+                
+                                                    <div class="page-body">
+                                                        <div class="row">
+                
+                                                            <!-- <style>
+                                                                body {
+                                                                    margin: 0;
+                                                                    padding: 0;
+                                                                    height: 100vh; /* Set body height to full viewport height */
+                                                                }
+                                                            
+                                                                .pcoded-main-container {
+                                                                    background-image: url('{% static 'assets/img/blur.jpg' %}');
+                                                                    background-size: cover; /* Cover the entire element */
+                                                                    background-position: center; /* Center the background image */
+                                                                    /* You can add more background properties as needed */
+                                                                }
+                                                            </style> -->
 
-
-                                        <div class="pcoded-content">
-                                            <div class="pcoded-inner-content">
-                                                <div class="main-body">
-                                                    <div class="page-wrapper">
-                    
-                                                        <div class="page-body">
-                                                            <div class="row">
                                                                 <style>
                                                                     body {
                                                                         margin: 0;
@@ -438,6 +471,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Delivery Boys</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
     <style>
         /* .bodyy {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -505,6 +539,29 @@
         font-family: "Sofia", sans-serif;
         font-size: 50px;
         }
+        .download-button {
+    margin-left: 250px;
+
+    background: linear-gradient(135deg, #1471ab, #d87be4); /* Gradient background */
+    border: none;
+    color: #fff; /* White text */
+    padding: 8px 20px; /* Reduced padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px; /* Reduced font size */
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.download-button:hover {
+    background: linear-gradient(135deg, #108bc4, #F09819); /* Gradient background on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Adjusted shadow on hover */
+}
+
+
     </style>
 </head>
 <br><br><br><br><br>
@@ -514,15 +571,29 @@
 <body>
     <div class="bodyy">
 
-    <div class="container">
+        <br><br><br><br><br>
+        <br><br><br><br><br><div class="container">
         <form method="post" action="http://127.0.0.1:8000/myauth/add_delivery_boys/" enctype="multipart/form-data">
             {% csrf_token %}
             <br>
             <div class="con">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
 
             <h1 style="color: #ffffff;" class="font-effect-fire">Add Delivery Boys</h1>
             </div>
             <!-- Display a button to trigger the file input -->
+            <button onclick="downloadExcel()" class="download-button" style="position: relative; padding-right: 40px;">
+                Download Excel Template  
+                <span style="position: absolute; top: 30%; right: 10px; transform: translateY(-50%);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="38" height="18" fill="#fff" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M7.646 11.854a.5.5 0 0 1-.708 0l-4-4a.5.5 0 1 1 .708-.708L7 10.293V1.5a.5.5 0 0 1 1 0v8.793l3.354-3.353a.5.5 0 0 1 .708.708l-4 4z"/>
+                        <path d="M0 15.5A.5.5 0 0 1 .5 15H15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </span>
+            </button><br><br>
+            
+            
             <br>
             <input type="file" name="xl_sheet" accept=".xlsx, .xls">
             <br>
@@ -534,31 +605,38 @@
             {% endfor %}
         </form>
 
-        <br><button onclick="downloadCSV()" class="download-button">Download CSV Template</button>
+        <!-- <br><button onclick="downloadCSV()" class="download-button">Download CSV Template</button> -->
     </div>
 </div>
+
+
 <script>
-    function downloadCSV() {
-        // Define the fields and data for the CSV
-        var fields = ['Firstname', 'Lastname','Contact Number','Address','Vehicle Type','Registration Number','Delivery Zones','Availability Timings','Email'];
-        var data = [
-            
-        ];
+    function downloadExcel() {
+        // Define the fields and data for the Excel file
+        var fields = ['Firstname', 'Lastname', 'Contact Number', 'Address', 'Vehicle Type', 'Registration Number', 'Delivery Zones', 'Availability Timings', 'Email'];
+        var data = [];
 
-        // Format the CSV content
-        var csvContent = "" 
-                         + fields.join(',') + '\n'
-                         + data.map(row => row.join(',')).join('\n');
+        // Create a new workbook
+        var wb = XLSX.utils.book_new();
 
-        // Create a blob with the CSV content
-        var blob = new Blob([csvContent], { type: 'text/csv' });
+        // Add a worksheet to the workbook
+        var ws = XLSX.utils.aoa_to_sheet([fields]);
+
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, "DeliveryBoys");
+
+        // Write the workbook to a binary string
+        var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+        // Convert the binary string to a Blob
+        var blob = new Blob([s2ab(wbout)], {type: 'application/octet-stream'});
 
         // Create a temporary link element
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
 
         // Set the filename for the download
-        link.download = 'data.csv';
+        link.download = 'delivery_boys.xlsx';
 
         // Append the link to the body and trigger the download
         document.body.appendChild(link);
@@ -566,6 +644,14 @@
 
         // Clean up by removing the link from the DOM
         document.body.removeChild(link);
+    }
+
+    // Function to convert a string to an ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
     }
 </script>
 
