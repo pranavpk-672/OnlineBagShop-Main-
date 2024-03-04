@@ -475,18 +475,19 @@
                                                     }
                                             
                                                     form {
-                                                        width: 40%;
+                                                        width: 70%;
                                                         max-width: 800px;
-                                                        margin: 20px auto;
+                                                        /* margin: 20px auto; */
                                                         background-color: #ffffff;
                                                         padding: 40px;
                                                         border-radius: 15px;
                                                         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                                                        margin-left: 3%; /* Adjust this value as needed to move the form towards the left */
+                                                        margin-left: 40%; /* Adjust this value as needed to move the form towards the left */
 
                                                     }
                                             
                                                     h2 {
+                                                        margin-left: 470px;
                                                         text-align: center;
                                                         color: #3498db;
                                                     }
@@ -573,6 +574,9 @@ h2 {
   color: transparent;
   font-weight: bold;
 }
+.form-form{
+    flex-direction: column;
+}
                                                 </style>
                                             </head>
                                             <!DOCTYPE html>
@@ -630,29 +634,34 @@ h2 {
                                                 </script>
                                             </head>
                                             <body>
-                                                <h2>Add Sub-Category</h2>
-                                                <br><br><br><br>
-                                            
-                                                <form method="post" action="{% url 'add_sub_category' category_instance.id %}" enctype="multipart/form-data" onsubmit="return validateForm()">
-                                                    {% csrf_token %}
-                                            
-                                                    <input type="hidden" name="type" value="post">
-                                            
-                                                    <label for="sub_category_name">Sub-Category Name:</label>
-                                                    <input type="text" id="sub_category_name" name="sub_category_name" required oninput="validateSubCategoryName()">
-                                                    <p id="sub_category_name_error" style="color: red;"></p><br>
-                                            
-                                                    <label for="sub_category_description">Sub-Category Description:</label>
-                                                    <textarea id="sub_category_description" name="sub_category_description" required oninput="validateSubCategoryDescription()"></textarea>
-                                                    <p id="sub_category_description_error" style="color: red;"></p><br>
-                                            
-                                                    <label for="sub_category_picture">Sub-Category Picture:</label>
-                                                    <input type="file" name="sub_category_picture" accept="image/*"><br>
-                                            
-                                                    <input type="submit" value="Add Sub-Category">
-                                                </form>
-                                            
-                                                <a href="{% url 'category_list' %}">Back to Category List</a>
+                                                <div class="form-form">
+                                                   <div>
+
+                                                       <h2>Add Sub-Category</h2>
+                                                    </div>
+                                                    <br><br><br><br>
+                                                    
+                                                    <form method="post" action="{% url 'add_sub_category' category_instance.id %}" enctype="multipart/form-data" onsubmit="return validateForm()">
+                                                        {% csrf_token %}
+                                                        
+                                                        <input type="hidden" name="type" value="post">
+                                                        
+                                                        <label for="sub_category_name">Sub-Category Name:</label>
+                                                        <input type="text" id="sub_category_name" name="sub_category_name" required oninput="validateSubCategoryName()">
+                                                        <p id="sub_category_name_error" style="color: red;"></p><br>
+                                                        
+                                                        <label for="sub_category_description">Sub-Category Description:</label>
+                                                        <textarea id="sub_category_description" name="sub_category_description" required oninput="validateSubCategoryDescription()"></textarea>
+                                                        <p id="sub_category_description_error" style="color: red;"></p><br>
+                                                        
+                                                        <label for="sub_category_picture">Sub-Category Picture:</label>
+                                                        <input type="file" name="sub_category_picture" accept="image/*"><br>
+                                                        
+                                                        <input type="submit" value="Add Sub-Category">
+                                                    </form>
+                                                    
+                                                    <a href="{% url 'category_list' %}">Back to Category List</a>
+                                            </div>
                                             </body>
                                             </html>
                                             

@@ -467,10 +467,10 @@
                                                     }
                                             
                                                     form {
-    width: 40%;
+    width: 80%;
     max-width: 1200px;
     margin: 20px auto;
-    margin-left: 5%; /* Adjust this value as needed to move the form towards the left */
+    margin-left: 40%; /* Adjust this value as needed to move the form towards the left */
     background-color: #ffffff;
     padding: 60px;
     border-radius: 20px;
@@ -539,6 +539,7 @@
                                                         color: #3498db; /* Blue color */
                                                     }
                                                     input[type="submit"] {
+
     width: 180px; /* Adjust the width as needed */
     height: 60px; /* Adjust the height as needed */
     font-size: 14px; /* Adjust the font size as needed */
@@ -555,6 +556,15 @@ h2 {
   color: transparent;
   font-weight: bold;
 }
+.form-form {
+    flex-direction: column;
+    /* background-color: #3498db; */
+}
+.head {
+    margin-left: 500px;
+    align-items: center;
+}
+
 
                                                         
                                                         
@@ -566,7 +576,7 @@ h2 {
                                             <head>
                                                 <meta charset="UTF-8">
                                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                                <title>Add Category</title>
+                                                <title class="head">Add Category</title>
                                                 <style>
                                                     /* Add your styles here if needed */
                                                 </style>
@@ -617,36 +627,43 @@ h2 {
                                                 </script>
                                             </head>
                                             <body>
-                                                <h2>Add Category</h2>
-                                            
-                                                {% if error_message %}
-                                                    <p style="color: red;">{{ error_message }}</p>
-                                                {% endif %}
-                                                
-                                                <form method="post" action="/myauth/add_category/" enctype="multipart/form-data" onsubmit="return validateForm()">
-                                                    {% csrf_token %}
-                                            
-                                                    <label for="category_name">Category Name:</label>
-                                                    <input type="text" id="category_name" name="category_name" required oninput="validateCategoryName()">
-                                                    <p id="category_name_error" style="color: red;"></p><br>
-                                            
-                                                    <label for="category_description">Category Description:</label>
-                                                    <textarea id="category_description" name="category_description" required oninput="validateCategoryDescription()"></textarea>
-                                                    <p id="category_description_error" style="color: red;"></p><br>
-                                            
-                                                    <label for="category_picture">Category Picture:</label>
-                                                    <input type="file" name="category_picture" accept="image/*"><br>
-                                            
+                                                <div class="form-form">
+                                                   <div class="">
+
+                                                       <h2 class="head">Add Category</h2>
+                                                    </div>
+                                                    
+
+                                                        {% if error_message %}
+                                                        <p style="color: red;">{{ error_message }}</p>
+                                                        {% endif %}
+                                                        
+                                                        <form method="post" action="/myauth/add_category/" enctype="multipart/form-data" onsubmit="return validateForm()">
+                                                        {% csrf_token %}
+                                                        
+                                                        <label for="category_name">Category Name:</label>
+                                                        <input type="text" id="category_name" name="category_name" required oninput="validateCategoryName()">
+                                                        <p id="category_name_error" style="color: red;"></p><br>
+                                                        
+                                                        <label for="category_description">Category Description:</label>
+                                                        <textarea id="category_description" name="category_description" required oninput="validateCategoryDescription()"></textarea>
+                                                        <p id="category_description_error" style="color: red;"></p><br>
+                                                        
+                                                        <label for="category_picture">Category Picture:</label>
+                                                        <input type="file" name="category_picture" accept="image/*"><br>
+                                                        
                                                     <input type="submit"  value="Add Category">
                                                 </form>
+                                                    
+                                            </div>
                                             </body>
                                             </html>
                                             
                                             
                                             
-
-
-
+                                            
+                                            
+                                            
 
 
 

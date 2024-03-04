@@ -193,6 +193,18 @@ path('generate-latest-payment-pdf/<int:user_id>/', views.generate_user_latest_pa
  path('activate_delivery_boy/<int:delivery_boy_id>/', views.activate_delivery_boy, name='activate_delivery_boy'),
  path('deactivate_delivery_boy/<int:delivery_boy_id>/', views.deactivate_delivery_boy, name='deactivate_delivery_boy'),
  path('generate_coupon/',views.generate_coupon, name='generate_coupon'),
+path('coupon/',views.coupon, name='coupon'),
+# path('coupon_list/',views.coupon_list, name='coupon_list'),
+    path('coupon_list/', views.display_seller_coupons, name='seller_coupons'),
+
+
+
+# path('seller_product_user_view/', views.seller_product_user_view, name='seller_product_user_view'),
+
+path('seller_product_user_view/', views.list_purchased_users_of_seller, name='list_purchased_users_of_seller'),
+path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, name='view_purchased_products'),
+
+
 
 ]
 

@@ -169,6 +169,9 @@ class Notification(models.Model):
 class Coupon(models.Model):
     coupon_code = models.CharField(max_length=8, unique=True)
     discount_percentage = models.PositiveIntegerField()
+    seller_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    visibility = models.BooleanField(default=True)  # New field
+
 
     def __str__(self):
         return f"Coupon: {self.coupon_code}, Discount: {self.discount_percentage}%"

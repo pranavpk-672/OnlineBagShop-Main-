@@ -1,8 +1,11 @@
+from collections import Counter
 import datetime
 import io
+from itertools import count
 import json
 from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from numpy import count_nonzero
 import pandas as pd
 from django.contrib.auth.hashers import make_password
 import qrcode
@@ -10,6 +13,10 @@ from requests import request
 from .models import DeliveryBoy
 # from .forms import DeliveryBoyForm
 from .models import Notification
+
+from django.db.models.functions import Left
+from django.db.models import Count, Max
+
 
 
 import razorpay
@@ -742,6 +749,22 @@ def delete_seller(request, seller_id):
     send_mail(subject, message, from_email, recipient_list, fail_silently=False)
     return redirect('sellor_approval')
 
+# @never_cache
+# @login_required(login_url="handlelogin")
+# #seller approval
+# def seller_dashboard(request):
+#     try:
+#         seller_profile = request.user.sellerprofile
+#         if seller_profile.is_approved:
+#             return render(request, 'seller_dashboard.html')
+#         else:
+#             messages.success(request, 'Your profile is pending admin approval.')
+#             return redirect('sellersig')  # Redirect to the sellersign view
+#     except SellerProfile.DoesNotExist:
+#         messages.success(request, 'You do not have a seller profile.')
+#         return redirect('sellersig')
+
+
 @never_cache
 @login_required(login_url="handlelogin")
 #seller approval
@@ -749,7 +772,61 @@ def seller_dashboard(request):
     try:
         seller_profile = request.user.sellerprofile
         if seller_profile.is_approved:
-            return render(request, 'seller_dashboard.html')
+            # Get count of total products under the seller
+            total_products = Product.objects.filter(seller_id=request.user).count()
+
+            # Get top selling products
+            top_selling_products = Product.objects.filter(seller_id=request.user)\
+                .annotate(total_sold=Count('cart_items'))\
+                .order_by('-total_sold')[:6]
+
+            # Get last sold product and its purchased quantities
+            last_sold_product = Product.objects.filter(seller_id=request.user)\
+                .annotate(last_sold=Max('cart_items__id'))\
+                .order_by('-last_sold').first()
+
+            # Get purchased quantities of the last sold product
+            if last_sold_product:
+                purchased_quantities = Cart_items.objects.filter(product=last_sold_product).count()
+            else:
+                purchased_quantities = 0
+
+            seller_products = Product.objects.filter(seller_id=request.user)
+
+            # Get cart items sold by the seller
+            seller_cart_items_ids = Cart_items.objects.filter(product__in=seller_products).values_list('id', flat=True)
+
+            # Get carts containing seller's items
+            seller_carts = Cart.objects.filter(cart_items__id__in=seller_cart_items_ids)
+
+            # Get total amount from user payments for seller's carts
+            total_amount = user_payment.objects.filter(cart__in=seller_carts).aggregate(total_amount=Sum('amount'))['total_amount'] or 0
+
+
+
+            seller_products = Product.objects.filter(seller_id=request.user)
+
+            # Get cart items sold by the seller
+            seller_cart_items_ids = Cart_items.objects.filter(product__in=seller_products).values_list('id', flat=True)
+
+            # Get carts containing seller's items
+            seller_carts = Cart.objects.filter(cart_items__id__in=seller_cart_items_ids)
+
+            # Get total purchases of seller's products from user payments
+            total_purchases_user_payments = user_payment.objects.filter(cart__in=seller_carts).count()
+            # Get one product with stock less than or equal to 2
+            low_stock_product = Product.objects.filter(seller_id=request.user, stock__lte=2).first()
+
+            context = {
+                'total_products': total_products,
+                'top_selling_products': top_selling_products,
+                'last_sold_product': last_sold_product,
+                'purchased_quantities': purchased_quantities,
+                'total_amount': total_amount,
+                'total_purchases_user_payments': total_purchases_user_payments,
+                'low_stock_product': low_stock_product
+            }
+            return render(request, 'seller_dashboard.html', context)
         else:
             messages.success(request, 'Your profile is pending admin approval.')
             return redirect('sellersig')  # Redirect to the sellersign view
@@ -1668,6 +1745,13 @@ def paymenthandler(request):
                             product.stock -= ordered_quantity
                             product.save()
 
+                            if product.stock <= 2:
+                                # Send email to the seller
+                                seller_email = product.seller_id.email
+                                subject = 'Low Stock Alert'
+                                message = f'Your product {product.product_name} is running low on stock. Current stock: {product.stock}'
+                                sender_email = settings.EMAIL_HOST_USER
+                                send_mail(subject, message, sender_email, [seller_email])
                     # capture the payment
                     # razorpay_client.payment.capture(payment_id, 321)
                     # render success page on successful capture of payment
@@ -1846,6 +1930,78 @@ def delivery_add_excel(request):
 
 
 #delivery boy registration 
+# from django.core.mail import EmailMessage
+
+# def sendmail_in_thread(subject, html_message, to_email):
+#     email = EmailMessage(subject, html_message, to=to_email)
+#     email.content_subtype = "html"
+#     email.send()
+# import pandas as pd
+
+# def add_delivery_boys(request):
+#     if request.method == 'POST' and 'xl_sheet' in request.FILES:
+#         xl_sheet = request.FILES['xl_sheet']
+
+
+#         try:
+#             df = pd.read_excel(xl_sheet)
+
+#             success_message_displayed = False  # Flag to track if success message has been displayed
+
+#             for _, row in df.iterrows():
+#                 # Create a unique username and password for each delivery boy
+#                 username = row['Email']
+#                 password = User.objects.make_random_password()
+
+#                 user = User.objects.create_user(
+#                     username=username,
+#                     email=row['Email'],
+#                     password=password,
+#                     first_name=row['Firstname'],
+#                     last_name=row['Lastname'],
+#                     role='DELIVERYBOY'
+#                 )
+
+#                 contact_number = row['Contact Number']
+#                 address = row['Address']
+#                 vehicle_type = row['Vehicle Type']
+#                 registration_number = row['Registration Number']
+#                 delivery_zones = row['Delivery Zones']
+#                 availability_timings = row['Availability Timings']
+
+#                 delivery_boy = DeliveryBoy.objects.create(
+#                     user=user,
+#                     contact_number=contact_number,
+#                     address=address,
+#                     vehicle_type=vehicle_type,
+#                     registration_number=registration_number,
+#                     delivery_zones=delivery_zones,
+#                     availability_timings=availability_timings
+#                 )
+
+#                 if not success_message_displayed:
+#                     # Send an email to the delivery boy with their password
+#                     subject = 'Welcome to the Delivery Service'
+#                     html_message = render_to_string('email_to_deliveryboy.html', {
+#                         'firstname': row['Firstname'],
+#                         'password': password,
+#                     })
+#                     to_email = [row['Email']]
+
+#                     # Use a thread to send the email asynchronously
+#                     email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
+#                     email_thread.start()
+
+#                     # Notify the user that delivery boys were added successfully
+#                     messages.success(request, 'Delivery boys added successfully.')
+#                     success_message_displayed = True  # Update flag to indicate success message has been displayed
+
+#         except Exception as e:
+#             messages.error(request, f'Error processing the Excel sheet: {e}')
+
+#     return render(request, 'delivery_boy_excel.html')
+
+
 from django.core.mail import EmailMessage
 
 def sendmail_in_thread(subject, html_message, to_email):
@@ -1858,14 +2014,11 @@ def add_delivery_boys(request):
     if request.method == 'POST' and 'xl_sheet' in request.FILES:
         xl_sheet = request.FILES['xl_sheet']
 
-
         try:
             df = pd.read_excel(xl_sheet)
-
             success_message_displayed = False  # Flag to track if success message has been displayed
 
             for _, row in df.iterrows():
-                # Create a unique username and password for each delivery boy
                 username = row['Email']
                 password = User.objects.make_random_password()
 
@@ -1895,27 +2048,25 @@ def add_delivery_boys(request):
                     availability_timings=availability_timings
                 )
 
-                if not success_message_displayed:
-                    # Send an email to the delivery boy with their password
-                    subject = 'Welcome to the Delivery Service'
-                    html_message = render_to_string('email_to_deliveryboy.html', {
-                        'firstname': row['Firstname'],
-                        'password': password,
-                    })
-                    to_email = [row['Email']]
+                # Send an email to each delivery boy with their password
+                subject = 'Welcome to the Delivery Service'
+                html_message = render_to_string('email_to_deliveryboy.html', {
+                    'firstname': row['Firstname'],
+                    'password': password,
+                })
+                to_email = [row['Email']]
 
-                    # Use a thread to send the email asynchronously
-                    email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
-                    email_thread.start()
+                # Use a thread to send the email asynchronously
+                email_thread = threading.Thread(target=sendmail_in_thread, args=(subject, html_message, to_email))
+                email_thread.start()
 
-                    # Notify the user that delivery boys were added successfully
-                    messages.success(request, 'Delivery boys added successfully.')
-                    success_message_displayed = True  # Update flag to indicate success message has been displayed
-
+            # Notify the user that delivery boys were added successfully
+            messages.success(request, 'Delivery boys added successfully.')
         except Exception as e:
             messages.error(request, f'Error processing the Excel sheet: {e}')
 
     return render(request, 'delivery_boy_excel.html')
+
 
 
 
@@ -2389,6 +2540,50 @@ import base64
 
 # views.py
 
+# from django.shortcuts import render
+# from django.utils.crypto import get_random_string
+# import qrcode
+# from io import BytesIO
+# from django.core.files.base import ContentFile
+# from .models import Coupon
+# import base64
+
+# def generate_coupon(request):
+#     if request.method == 'POST':
+#         # Generate a random coupon code
+#         coupon_code = get_random_string(length=8)
+        
+#         # Define the discount percentage
+#         discount_percentage = 20  # Adjust as needed
+        
+#         # Generate the QR code containing the coupon details
+#         qr = qrcode.QRCode(
+#             version=1,
+#             error_correction=qrcode.constants.ERROR_CORRECT_L,
+#             box_size=10,
+#             border=4,
+#         )
+#         qr.add_data(f"Coupon Code: {coupon_code}\nDiscount Percentage: {discount_percentage}%")
+#         qr.make(fit=True)
+#         qr_img = qr.make_image(fill_color="black", back_color="white")
+
+#         # Convert the QR code image to bytes
+#         buffer = BytesIO()
+#         qr_img.save(buffer, format='PNG')
+#         qr_image_bytes = buffer.getvalue()
+
+#         # Convert the QR code image bytes to base64
+#         qr_image_base64 = base64.b64encode(qr_image_bytes).decode('utf-8')
+
+#         # Save the coupon details to the database
+#         coupon = Coupon.objects.create(coupon_code=coupon_code, discount_percentage=discount_percentage)
+
+#         # Render the coupon template with the coupon code, discount percentage, and QR code
+#         return render(request, 'coupon.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
+#     else:
+#         return render(request, 'coupon.html')
+
+
 from django.shortcuts import render
 from django.utils.crypto import get_random_string
 import qrcode
@@ -2423,14 +2618,59 @@ def generate_coupon(request):
 
         # Convert the QR code image bytes to base64
         qr_image_base64 = base64.b64encode(qr_image_bytes).decode('utf-8')
+        seller_id_data = request.user  # Assuming you are using the built-in User model for authentication
+
 
         # Save the coupon details to the database
-        coupon = Coupon.objects.create(coupon_code=coupon_code, discount_percentage=discount_percentage)
+        coupon = Coupon.objects.create(coupon_code=coupon_code, discount_percentage=discount_percentage , seller_id=seller_id_data)
 
         # Render the coupon template with the coupon code, discount percentage, and QR code
-        return render(request, 'seller_dashboard.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
+        return render(request, 'coupon.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
     else:
-        return render(request, 'seller_dashboard.html')
+        return render(request, 'coupon.html')
+
+
+
+
+
+# views.py
+
+# views.py
+
+# views.py
+
+@login_required
+def list_purchased_users_of_seller(request):
+    if request.user.role == User.Role.SELLER:  # Check if the current user is a seller
+        purchased_users = User.objects.filter(cart_items__product__seller_id=request.user).distinct()
+        context = {
+            'purchased_users': purchased_users
+        }
+        return render(request, 'seller_products_purchase_users.html', context)
+    else:
+        # If the current user is not a seller, redirect or handle accordingly
+        # For example:
+        return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
+
+
+
+
+def seller_product_user_view(request):
+    return render(request,'seller_products_purchase_users.html') 
+@login_required
+def view_purchased_products(request, user_id):
+    if request.user.role == User.Role.SELLER:  # Check if the current user is a seller
+        user = User.objects.get(id=user_id)
+        purchased_products = Product.objects.filter(cart_items__user=user)
+        context = {
+            'user': user,
+            'purchased_products': purchased_products
+        }
+        return render(request, 'view_purchased_products.html', context)
+    else:
+        # Handle unauthorized access
+        return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
+    
 
 
 
@@ -2442,4 +2682,31 @@ def generate_coupon(request):
 
 
 
+
+
+def coupon(request):
+    return render(request,'coupon.html') 
+
+
+
+# def coupon_list(request):
+#     return render(request,'seller_coupon_list.html') 
+
+
+
+from django.shortcuts import render
+from .models import Coupon
+
+def display_seller_coupons(request):
+    # Assuming the user is logged in and is a seller
+    user = request.user
+    print(user)  
+
+
+    
+    # Retrieve coupons for the seller
+    coupons = Coupon.objects.filter(seller_id=user.id, visibility=True)
+    
+    # Pass the coupons to the template for display
+    return render(request, 'seller_coupon_list.html', {'coupons': coupons})
 

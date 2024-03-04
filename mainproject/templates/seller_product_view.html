@@ -32,6 +32,8 @@ https://templatemo.com/tm-559-zay-shop
     .design{
     display: flex;
     flex-direction: column;
+    height: 200px;
+    width: 250px;
     }
     .button_upd{
     width: 100%;
@@ -87,9 +89,9 @@ https://templatemo.com/tm-559-zay-shop
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/myauth/seller_dashboard/">Home</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">About</a>
                         </li>
@@ -175,6 +177,268 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </nav>
     <!-- Close Header -->
+
+
+
+
+        <!--demo header-->
+        {% block style %}
+
+        <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Website Header</title>
+        <style>
+            /* Header styles */
+            header {
+                background-color: #2c621d;
+                color: #fff;
+                padding: 10px 0;
+            }
+    
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+    
+            /* Navigation styles */
+            nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+    
+            nav ul li {
+                margin-right: 20px;
+            }
+    
+            nav ul li:last-child {
+                margin-right: 0;
+            }
+    
+            nav a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+            
+            }
+    
+            /* Dropdown styles */
+            .dropdown {
+                position: relative;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #333;
+                min-width: 120px;
+                z-index: 1;
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                padding: 10px;
+                text-align: center;
+                color: #fff;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: #555;
+            }
+            .user{
+                margin-left: 770px;
+            }
+    
+            
+            
+    
+    
+            .card {
+                width: 300px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0px 0px 15px #2c621d33;
+    }
+    
+    
+    
+      .content {
+        padding: 20px;
+      }
+    
+      .half-inside {
+        width: 100px;
+        height: 100px;
+        /* background-color: #ececec; */
+        position: absolute;
+        top: -30px;
+        left: -30px;
+        border-radius: 20%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* border-width: 2px;
+        border-style: solid;
+        border-color: green; */
+      }
+        
+    
+      .half-inside-d {
+        width: 100px;
+        height: 100px;
+         background-color: green; 
+        position: absolute;
+        top: -30px;
+        left: 30px;
+        border-radius: 20%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-width: 2px;
+        border-style: solid;
+        border-color: green;
+      }
+    
+    
+      .mt-cust {
+        margin-top: 2rem;
+      }
+    
+      .align-d {
+        width: 100%;
+        text-align: end;
+      }
+    
+      .gap-d {
+        gap: 4rem;
+      }
+    
+      .mt-d1 {
+        margin-top: 6rem;
+      }
+    
+      .mt-insd {
+        margin-top: 5rem;
+      }
+    
+      .cntr-d {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .mt-d12 {
+        margin-top: 6rem;
+      }
+    
+      .txt-d1 {
+        color: green;
+        font-weight: bold;
+      }
+    
+      .align-v-c {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        gap: 1rem;
+    
+      }
+           
+    
+      .glow-text {
+            color: red;
+            font-size: 24px;
+            text-shadow: 0 0 10px red;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+    
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px red;
+            }
+            to {
+                text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red, 0 0 50px red, 0 0 60px red;
+            }
+        }
+    
+    
+        .grad-text {
+      background: -webkit-linear-gradient(#0f5112, #2ede8c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    
+        }
+        </style>
+        {% endblock style %}
+        {% block form %}
+    </head>
+    <body>
+    
+    
+        
+        <header>
+    
+            
+    
+    
+            <div class="container">
+                <nav>
+                    <ul>
+                        <li><a href="http://127.0.0.1:8000/myauth/seller_prodview/">View Product</a></li>
+                        <!-- <li><a href="http://127.0.0.1:8000/myauth/seller_prodview/">Generate Coupon</a></li> -->
+    
+                        <li class="dropdown">
+                            <a href="#">Sell Product</a>
+                            
+            
+                            <div class="dropdown-content">
+                                <a href="http://127.0.0.1:8000/myauth/add_product/">Add product</a>
+                                <a href="http://127.0.0.1:8000/myauth/seller_product_user_view/">View product</a>
+                                <a href="http://127.0.0.1:8000/myauth/coupon_list/">View seller coupon</a>
+    
+    
+                                <!-- Add more category options here -->
+    
+                                <li class="dropdown">
+                                    <a class="user" href="#">
+                                        <img src="{{ user.sellerprofile.profile_picture.url }}"  style="width: 40px; height: 40px; border-radius: 50%;">
+                                        Hello, {{ user.first_name }}
+                                    </a>
+                                    <div class="user dropdown-content">
+                                        <!-- <a href="">Profile</a> -->
+                                        <!-- <a href="">View Cart</a> -->
+                                        <a href="http://127.0.0.1:8000/myauth/coupon/">Create Coupon</a>
+                                        <a href="/myauth/logout/">Logout</a>
+                                    </div>
+                                </li>
+    
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <!-- Your page content goes here -->
+    </body>
+    </html>
+    
+    {% endblock form %}
+    <!--demoheader close-->
+    
 
 
     <div class="container mt-5">
