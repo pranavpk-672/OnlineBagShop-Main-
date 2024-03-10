@@ -154,6 +154,253 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </nav>
     <!-- Close Header -->
+
+
+
+
+     <!--demo header-->
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Website Header</title>
+     <style>
+         /* Header styles */
+         header {
+             background-color: #2c621d;
+             color: #fff;
+             padding: 10px 0;
+         }
+ 
+         .container {
+             max-width: 1200px;
+             margin: 0 auto;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+ 
+         /* Navigation styles */
+         nav ul {
+             list-style: none;
+             margin: 0;
+             padding: 0;
+             display: flex;
+         }
+ 
+         nav ul li {
+             margin-right: 20px;
+         }
+ 
+         nav ul li:last-child {
+             margin-right: 0;
+         }
+ 
+         nav a {
+             text-decoration: none;
+             color: #fff;
+             font-weight: bold;
+         }
+ 
+         /* Dropdown styles */
+         .dropdown {
+             position: relative;
+         }
+ 
+         .dropdown-content {
+             display: none;
+             position: absolute;
+             background-color: #333;
+             min-width: 120px;
+             z-index: 1;
+         }
+ 
+         .dropdown:hover .dropdown-content {
+             display: block;
+         }
+ 
+         .dropdown-content a {
+             padding: 10px;
+             text-align: center;
+             color: #fff;
+             text-decoration: none;
+             display: block;
+         }
+ 
+         .dropdown-content a:hover {
+             background-color: #555;
+         }
+ 
+         .user {
+             display: flex;
+             align-items: center;
+             margin-left: auto; /* Align to the right */
+         }
+ 
+         .user img {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             margin-right: 10px; /* Add some space between image and text */
+         }
+         header {
+            background-color: #2c621d;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back {
+           
+            padding: 10px;
+            display: flex; /* Use flex to align items horizontally */
+        }
+
+        .back ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .back ul li {
+            margin-right: 20px;
+        }
+
+        .back ul li:last-child {
+            margin-right: 0;
+        }
+
+        .back a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .user.dropdown {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .user.dropdown a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .user.dropdown img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #343a40;
+            min-width: 120px;
+            z-index: 1;
+        }
+
+        .user.dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+     </style>
+ </head>
+ 
+ <body>
+     <header>
+        <div class="container">
+            <div class="back">
+                <ul>
+                    <li><a href="http://127.0.0.1:8000/myauth/productallview/">All Collections </a></li>
+                    <li class="dropdown">
+                        <a href="#">Categories</a>
+                        <div class="dropdown-content">
+                            <!-- Categories loop -->
+                            {% for category in categories %}
+                            <a href="http://127.0.0.1:8000/myauth/productscategorylist/{{ category.id }}">{{ category.category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Sub-categories</a>
+                        <div class="dropdown-content">
+                            <!-- Subcategories loop -->
+                            {% for subcategory in subcategories %}
+                            <a href="http://127.0.0.1:8000/myauth/productssubcategorylist/{{ subcategory.id }}">{{ subcategory.sub_category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/4">Men</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/5">Women</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/6">Kids</a>
+                    </li>
+                  
+                    <li>
+                        <a href="#">Latest Collections</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="user dropdown">
+                <a href="#">
+                    {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+                    {% else %}
+                    <img src="{% static 'assets/img/pro.png' %}" alt="Default Profile Picture">
+                    {% endif %}
+                    Hello, {{ user.first_name }}
+                </a>
+                <div class="dropdown-content" style="margin-top: 215px;">
+                    <a href="/myauth/updateprofile/">Profile</a>
+                    <a href="/myauth/view_cart/">View Cart</a>
+                    <a href="/myauth/view_wishlist/">View Wishlist</a>
+                    <a href="/myauth/payment_history/">View History</a>
+                    <a href="/myauth/logout/">Logout</a>
+                </div>
+            </div>
+        </div>
+     </header>
+     <!-- Your page content goes here -->
+ </body>
+ 
+ </html>
+ 
+<!--demoheader close-->
+
+
+
+
     <br><br><br><br>
     <style>
   .head {
@@ -173,7 +420,7 @@ https://templatemo.com/tm-559-zay-shop
 
     <div class="head">
 
-    <center><h1 class="h1">WISHLIST ITEMS</h1></center>
+    <center><h1 class="grad-text"> YOUR WISHLIST ITEMS</h1></center>
     </div>
     <br><br><!DOCTYPE html>
 <html lang="en">
@@ -264,6 +511,13 @@ https://templatemo.com/tm-559-zay-shop
         .button-group {
             margin-top: 10px;
         }
+        .grad-text {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+
+    }
     </style>
 </head>
 <body>

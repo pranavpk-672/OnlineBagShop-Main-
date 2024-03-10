@@ -253,17 +253,33 @@ https://templatemo.com/tm-559-zay-shop
                 <p>No shipping address available. <a href="{% url 'updateprofile' %}">Add Address</a></p>
             {% endif %}
     
+             <input type="hidden" class="tprc" value="{{ total_price }}">
             <p>Total Price: {{ total_price }}</p>
 
     
             <button id="pay-btn">Checkout</button>
         </div>
     </div>
+
+
+    {% for index, coupons in seller_coupons.items %}
+    <h2>Coupons for Seller ID: {{ index }}</h2>
+    <ul>
+        {% for coupon in coupons %}
+            <li>Coupon Code: {{ coupon.coupon_code }}</li>
+            <li>Discount: {{ coupon.discount_percentage }}</li>
+            <li>Expiration Date: {{ coupon.expiration_date }}</li>
+            <button onclick="applyDiscount('{{coupon.discount_percentage}}')">Apply Coupon</button>
+        {% endfor %}
+    </ul>
+    <!-- Apply Button -->
+   
+{% endfor %}
     
 
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
+<!-- <script>
   var options = {
 
     key: "{{ key }}", 
@@ -287,6 +303,71 @@ https://templatemo.com/tm-559-zay-shop
             document.getElementById('addressDetails').style.display = 'none';
             document.getElementById('editAddressForm').style.display = 'block';
         });
-</script>
+
+
+
+        
+</script> -->
+
+
+
+<script>
+    var options = {
+  
+      key: "{{ key }}", 
+      amount: 5500, 
+      currency: "{{ currency }}",
+      name: "BAG EMPORIUM", 
+      order_id: "{{ razorpay_order_id }}", 
+      callback_url: "{{ callback_url }}",
+    };
+  
+   
+
+
+    function applyDiscount(discountPercentage) {
+    console.log(discountPercentage);
+
+    // Get the total price from the hidden input field
+    var totalPrice = parseFloat(document.querySelector('.tprc').value);
+    
+    // Calculate the discount amount
+    var discountAmount = totalPrice * (discountPercentage / 100);
+    
+    // Calculate the new amount after applying the discount
+    var newAmount = totalPrice - discountAmount;
+
+    // Update the amount in the options object
+ //   options.amount = newAmount.toFixed(2); 
+
+    console.log("New Total Amount After 20% Discount:", options.amount);
+}
+
+  
+    var rzp1 = new Razorpay(options);
+  
+    document.getElementById("pay-btn").onclick = function (e) {
+
+  
+      rzp1.open();
+      e.preventDefault();
+    };
+  
+    document.getElementById('editAddress').addEventListener('click', function() {
+              document.getElementById('addressDetails').style.display = 'none';
+              document.getElementById('editAddressForm').style.display = 'block';
+          });
+  
+  
+  
+          
+  </script> 
+  
+
+
+
+
+
+
 </body>
 </html>

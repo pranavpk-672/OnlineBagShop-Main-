@@ -94,7 +94,7 @@ class Product(models.Model):
     seller_id = models.ForeignKey(User, on_delete=models.DO_NOTHING,null=True, blank=True)
     capacity = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
-    material = models.CharField(max_length=255)   
+    material = models.CharField(max_length=255)       
     product_status = models.BooleanField(default=True)
     image_1 = models.ImageField(upload_to='product_main_images/', blank=True, null=True)
 
@@ -170,11 +170,21 @@ class Coupon(models.Model):
     coupon_code = models.CharField(max_length=8, unique=True)
     discount_percentage = models.PositiveIntegerField()
     seller_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
-    visibility = models.BooleanField(default=True)  # New field
+    visibility = models.BooleanField(default=True)
+    expiration_date = models.DateField(default='2099-12-31')  # Manually defining default value
 
 
-    def __str__(self):
+class CouponUsed(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon_id = models.ForeignKey(Coupon, on_delete=models.CASCADE)
+
+      
+
+
+def __str__(self):
         return f"Coupon: {self.coupon_code}, Discount: {self.discount_percentage}%"
+
+   
 
    
    

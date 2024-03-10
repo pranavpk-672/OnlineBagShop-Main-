@@ -1403,8 +1403,67 @@ def add_to_cart(request, product_id):
 
     return redirect('view_cart')
 
+# def view_cart(request):
+#     cart_items = Cart_items.objects.filter(user=request.user, cart_verify=False)
+
+# #starting count code
+#     user = request.user
+#     user_cartd = Cart.objects.filter(user=user)
+#     total_cart_items_count = 0
+#     for user_cart in user_cartd:
+#         cart_items_count = Cart_items.objects.filter(cart=user_cart, cart_verify=False).count()
+#         total_cart_items_count += cart_items_count
+# #ending count code
+
+#     if not cart_items.exists():
+#         # You can customize this part based on your requirements
+#         empty_cart_message = "Your cart is empty."
+#         categories = category.objects.all()
+#         subcategories = sub_category.objects.all()
+#         cart_items_count = 0  # Set count to 0 for an empty cart
+#         context = {'empty_cart_message': empty_cart_message, 'cart_items_count': total_cart_items_count,
+#                    'categories': categories, 'subcategories': subcategories}
+#         return render(request, 'cart.html', context)
+#     else: 
+#     # Calculate the total amount in paise
+#         total_amount_in_paise = sum(cart.product.current_price * 100 * cart.quantity for cart in cart_items)
+
+
+#         categories = category.objects.all()
+#         subcategories = sub_category.objects.all()
+#         cart_items_count = Cart_items.objects.filter(user=request.user, cart_verify=True).count()
+
+#         context = {'cart_items': cart_items, 'total_amount_in_paise': total_amount_in_paise,'cart_items_count': total_cart_items_count, 
+#                                                     'categories': categories, 'subcategories': subcategories}
+#         return render(request, 'cart.html', context)
+
+
+
+
+
 def view_cart(request):
     cart_items = Cart_items.objects.filter(user=request.user, cart_verify=False)
+
+    seller_coupons = {}
+
+    for cart_item in cart_items:
+     seller_id = cart_item.product.seller_id  # Assuming product has a foreign key to Seller
+    #  if seller_id not in seller_coupons:
+    #     # Fetch coupons associated with the seller and not expired
+    #     coupons = Coupon.objects.filter(seller_id=seller_id, expiration_date__gte=timezone.now())
+    #     seller_coupons[seller_id] = coupons
+     if seller_id not in seller_coupons:
+    # Fetch coupons associated with the seller and not expired
+        coupons = Coupon.objects.filter(seller_id=seller_id, expiration_date__gte=timezone.now())
+        
+        # Get the list of coupon IDs already used by the user
+        used_coupon_ids = CouponUsed.objects.filter(user=request.user).values_list('coupon_id', flat=True)
+        
+        # Filter out coupons that have already been used by the user
+        filtered_coupons = [coupon for coupon in coupons if coupon.id not in used_coupon_ids]
+        
+        seller_coupons[seller_id] = filtered_coupons
+
 
 #starting count code
     user = request.user
@@ -1434,8 +1493,11 @@ def view_cart(request):
         cart_items_count = Cart_items.objects.filter(user=request.user, cart_verify=True).count()
 
         context = {'cart_items': cart_items, 'total_amount_in_paise': total_amount_in_paise,'cart_items_count': total_cart_items_count, 
-                                                    'categories': categories, 'subcategories': subcategories}
+                                                    'categories': categories, 'subcategories': subcategories, 'seller_coupons': seller_coupons}
         return render(request, 'cart.html', context)
+
+
+
 
 
 #delete cart item
@@ -1448,7 +1510,7 @@ def delete_cartitem(request, cart_id):
     return redirect('view_cart')
 
 #view for wishlist
-
+   
 def add_to_wishlist(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
@@ -1605,21 +1667,132 @@ razorpay_client = razorpay.Client(
 
 
 
+# @login_required
+# def checkout_view(request):
+#     # Get items from the request
+#     items_json = request.GET.get('items', '[]')
+#     items = json.loads(items_json)
+
+
+
+#     for item in items:
+#         item_id = item.get('item_id')
+#         quantity = item.get('quantity')
+#         price = item.get('price')
+
+#         # Get the Cart_items instance
+#         cart_item = get_object_or_404(Cart_items, id=item_id) 
+
+
+
+#         # Update quantity and price
+#         cart_item.quantity = quantity
+#         cart_item.price = price
+#         cart_item.cart_verify = 1
+#         cart_item.save()
+#         cart_itemd = get_object_or_404(Cart_items, id=item_id)
+#         sessiondata = cart_itemd.cart_id
+
+#     # Retrieve the cart_id from the Cart_items instance
+#         request.session['cart_id'] = sessiondata 
+
+#     # Calculate total price
+#     total_price = sum(item['price'] for item in items)
+
+#     try:
+#         # Get user profile details
+#         profile = request.user.profile
+#         building_name = profile.building_name
+#         road_area = profile.road_area
+#         city = profile.city
+#         state = profile.state
+#         pincode = profile.pincode
+
+#         currency = "INR"
+
+#         request.session['amount'] = total_price
+    
+#         DATA = {
+#         "amount": total_price * 100,
+#         "currency": "INR",
+#         "receipt": "receipt#2",
+#         "notes": {
+#             "key1": "value3",
+#             "key2": "value2"
+#         }
+#         }
+#         # Create a Razorpay Order
+#         razorpay_order = razorpay_client.order.create(data=DATA)
+    
+#         # order id of newly created order.
+#         razorpay_order_id = razorpay_order['id']
+#         callback_url = '/myauth/paymenthandler/'
+    
+#         context = {}
+#         context['razorpay_order_id'] = "orderhfgrhyfgjrgf"
+#         context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+#         context['razorpay_amount'] = total_price
+#         context['currency'] = currency
+#         context['callback_url'] = callback_url
+
+#         context = {
+#             'building_name': building_name,
+#             'road_area': road_area,
+#             'city': city,
+#             'state': state,
+#             'pincode': pincode,
+#             'total_price': total_price,
+#             'currency': currency,
+#             'amount': total_price * 100,
+#             'key': settings.RAZOR_KEY_ID,
+#             'callback_url': callback_url,
+#             'razorpay_order_id': razorpay_order_id
+            
+#         }
+
+#         return render(request, 'checkout.html', context)
+#     except Profile.DoesNotExist:
+#         context = {
+#             'total_price': total_price * 100,
+#         }
+
+#         return render(request, 'checkout.html', context)
+    
+
+
+
+
 @login_required
 def checkout_view(request):
     # Get items from the request
     items_json = request.GET.get('items', '[]')
+    discountdata = request.GET.get('discountdata','')
+    cpid = request.GET.get('cpid', '')
+    request.session['cpid'] = cpid
+   
     items = json.loads(items_json)
 
 
+    seller_coupons = {}
 
     for item in items:
         item_id = item.get('item_id')
         quantity = item.get('quantity')
         price = item.get('price')
+        seller_id = item.get('seller_id')
 
         # Get the Cart_items instance
         cart_item = get_object_or_404(Cart_items, id=item_id) 
+
+        if seller_id:
+            if seller_id not in seller_coupons:
+                # Fetch coupons associated with the seller and not expired
+                coupons = Coupon.objects.filter(seller_id=seller_id, expiration_date__gte=timezone.now())
+                seller_coupons[seller_id] = coupons
+
+
+
+
 
 
 
@@ -1637,6 +1810,17 @@ def checkout_view(request):
     # Calculate total price
     total_price = sum(item['price'] for item in items)
 
+    
+
+    if not discountdata:
+      total_price_after_discount = total_price
+    else:
+      discount_multiplier = (100 - int(discountdata) ) / 100
+      total_price_after_discount = total_price * discount_multiplier
+
+# Reduce total price by the discount percentage
+  #  total_price_after_discount = total_price * discount_multiplier
+
     try:
         # Get user profile details
         profile = request.user.profile
@@ -1651,7 +1835,7 @@ def checkout_view(request):
         request.session['amount'] = total_price
     
         DATA = {
-        "amount": total_price * 100,
+        "amount": int(total_price_after_discount) *100,
         "currency": "INR",
         "receipt": "receipt#2",
         "notes": {
@@ -1679,14 +1863,17 @@ def checkout_view(request):
             'city': city,
             'state': state,
             'pincode': pincode,
-            'total_price': total_price,
+            'total_price': int(total_price_after_discount),
             'currency': currency,
-            'amount': total_price * 100,
+            'amount': int(total_price_after_discount) *100,
             'key': settings.RAZOR_KEY_ID,
             'callback_url': callback_url,
-            'razorpay_order_id': razorpay_order_id
+            'razorpay_order_id': razorpay_order_id,
+            'seller_coupons': seller_coupons
             
         }
+
+        print(seller_coupons)
 
         return render(request, 'checkout.html', context)
     except Profile.DoesNotExist:
@@ -1695,7 +1882,12 @@ def checkout_view(request):
         }
 
         return render(request, 'checkout.html', context)
-    
+
+
+
+
+
+
 
 @csrf_exempt
 def paymenthandler(request):
@@ -1752,9 +1944,20 @@ def paymenthandler(request):
                                 message = f'Your product {product.product_name} is running low on stock. Current stock: {product.stock}'
                                 sender_email = settings.EMAIL_HOST_USER
                                 send_mail(subject, message, sender_email, [seller_email])
+
                     # capture the payment
                     # razorpay_client.payment.capture(payment_id, 321)
                     # render success page on successful capture of payment
+                    if 'cpid' in request.session and request.session['cpid']:
+                        cpid = request.session['cpid']
+
+                        coupon_id = int(cpid)  # Extract the ID of the Coupon object
+                        user = request.user  # Assuming you have authenticated users
+                        coupon = get_object_or_404(Coupon, pk=coupon_id)
+                        coupon_used = CouponUsed.objects.create(user=user, coupon_id=coupon)
+                        # Optionally, you can clear the 'cpid' from the session after use
+                        request.session.pop('cpid')
+
                     return redirect('payment_success')
                 except Exception as capture_error:
                     # if there is an error while capturing payment.
@@ -1769,7 +1972,62 @@ def paymenthandler(request):
         # if other than POST request is made.
         return JsonResponse({'error': 'Only POST requests are allowed'}, status=400)
 
+# from myauth.utils import send_whatsapp_message  # Assuming you have a function to send WhatsApp messages
 
+# @csrf_exempt
+# def paymenthandler(request):
+#     if request.method == "POST":
+#         try:
+#             payment_id = request.POST.get('razorpay_payment_id', '')
+#             razorpay_order_id = request.POST.get('razorpay_order_id', '')
+#             signature = request.POST.get('razorpay_signature', '')
+
+#             params_dict = {
+#                 'razorpay_order_id': razorpay_order_id,
+#                 'razorpay_payment_id': payment_id,
+#                 'razorpay_signature': signature
+#             }
+
+#             result = razorpay_client.utility.verify_payment_signature(params_dict)
+            
+#             if result is not None:
+#                 try:
+#                     current_datetime = timezone.now()
+#                     user_payment_instance = user_payment.objects.create(
+#                         user=request.user,
+#                         cart=request.session.get('cart_id'),
+#                         amount=request.session.get('amount'),
+#                         datetime=current_datetime,
+#                         order_id_data=razorpay_order_id,
+#                         payment_id_data=payment_id
+#                     )
+                    
+#                     cart = get_object_or_404(Cart, id=request.session.get('cart_id'))
+#                     cart_items = Cart_items.objects.filter(cart=cart)
+
+#                     for cart_item in cart_items:
+#                         product = cart_item.product
+#                         ordered_quantity = cart_item.quantity
+
+#                         if ordered_quantity <= product.stock:
+#                             product.stock -= ordered_quantity
+#                             product.save()
+
+#                             if product.stock <= 2:
+#                                 # Send WhatsApp message to the seller
+#                                 seller_phone_number = product.seller_id.sellerprofile.phone
+#                                 message = f'Your product {product.product_name} is running low on stock. Current stock: {product.stock}'
+#                                 send_whatsapp_message(seller_phone_number, message)
+
+#                     return redirect('payment_success')
+#                 except Exception as capture_error:
+#                     return JsonResponse({'error': str(capture_error)}, status=500)
+#             else:
+#                 return JsonResponse({'error': 'Signature verification failed'}, status=400)
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=500)
+#     else:
+#         return JsonResponse({'error': 'Only POST requests are allowed'}, status=400)
 def payment_success(request):
     return render(request,'payment_success.html')
 
@@ -2618,26 +2876,50 @@ def generate_coupon(request):
 
         # Convert the QR code image bytes to base64
         qr_image_base64 = base64.b64encode(qr_image_bytes).decode('utf-8')
-        seller_id_data = request.user  # Assuming you are using the built-in User model for authentication
 
+        # Assuming you are using the built-in User model for authentication
+        seller_id_data = request.user  
 
         # Save the coupon details to the database
-        coupon = Coupon.objects.create(coupon_code=coupon_code, discount_percentage=discount_percentage , seller_id=seller_id_data)
+        coupon = Coupon.objects.create(
+            coupon_code=coupon_code,
+            discount_percentage=discount_percentage,
+            seller_id=seller_id_data,
+            expiration_date='2099-12-31'  # Manually defining default expiration date
+        )
 
         # Render the coupon template with the coupon code, discount percentage, and QR code
         return render(request, 'coupon.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
     else:
-        return render(request, 'coupon.html')
+        return render(request, 'generate_coupon.html')
 
 
 
 
+
+
+# views.py
 
 # views.py
 
 # views.py
 
-# views.py
+# @login_required
+# def list_purchased_users_of_seller(request):
+#     if request.user.role == User.Role.SELLER:  # Check if the current user is a seller
+#         purchased_users = User.objects.filter(cart_items__product__seller_id=request.user).distinct()
+#         context = {
+#             'purchased_users': purchased_users
+#         }
+#         return render(request, 'seller_products_purchase_users.html', context)
+#     else:
+#         # If the current user is not a seller, redirect or handle accordingly
+#         # For example:
+#         return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
+    
+
+
+
 
 @login_required
 def list_purchased_users_of_seller(request):
@@ -2651,38 +2933,79 @@ def list_purchased_users_of_seller(request):
         # If the current user is not a seller, redirect or handle accordingly
         # For example:
         return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
+    
 
 
 
 
 def seller_product_user_view(request):
     return render(request,'seller_products_purchase_users.html') 
+
+
+# def view_purchased_products(request, user_id):
+#     if request.user.role == User.Role.SELLER:  # Check if the current user is a seller
+#         user = User.objects.get(id=user_id)
+#         purchased_products = Product.objects.filter(cart_items__user=user)
+#         context = {
+#             'user': user,
+#             'purchased_products': purchased_products
+#         }
+#         return render(request, 'view_purchased_products.html', context)
+#     else:
+#         # Handle unauthorized access
+#         return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
 @login_required
 def view_purchased_products(request, user_id):
     if request.user.role == User.Role.SELLER:  # Check if the current user is a seller
         user = User.objects.get(id=user_id)
         purchased_products = Product.objects.filter(cart_items__user=user)
+
+        # Handling search functionality
+        query = request.GET.get('q')
+        if query:
+            # Filter purchased products by product_name containing the query string
+            purchased_products = purchased_products.filter(product_name__icontains=query)
+
+        # Handling filter functionality
+        # You can add more filter options as needed
+        filters = {}
+        category_name = request.GET.get('category')
+        subcategory_name = request.GET.get('subcategory')
+        brand_name = request.GET.get('brand')  # Added for brand filtering
+        if category_name:
+            # Filter purchased products by category name
+            purchased_products = purchased_products.filter(category_id__category_name=category_name)
+            filters['category'] = category_name
+        if subcategory_name:
+            # Filter purchased products by subcategory name
+            purchased_products = purchased_products.filter(category_id__sub_category__sub_category_name=subcategory_name)
+            filters['subcategory'] = subcategory_name
+        if brand_name:
+            # Filter purchased products by brand name
+            purchased_products = purchased_products.filter(brand_name=brand_name)
+            filters['brand'] = brand_name
+
+        # Pass distinct category names, subcategory names, and brand names to the template for the dropdown menus
+        distinct_categories = category.objects.values_list('category_name', flat=True).distinct()
+        # distinct_subcategories = SubCategory.objects.values_list('sub_category_name', flat=True).distinct()
+        distinct_brands = Product.objects.values_list('brand_name', flat=True).distinct()
+
+        # Pass the filter options to the template
         context = {
             'user': user,
-            'purchased_products': purchased_products
+            'purchased_products': purchased_products,
+            'filters': filters,
+            'distinct_categories': distinct_categories,
+            # 'distinct_subcategories': distinct_subcategories,
+            'distinct_brands': distinct_brands,
         }
         return render(request, 'view_purchased_products.html', context)
     else:
         # Handle unauthorized access
         return render(request, 'error_page.html', {'error_message': 'You are not authorized to view this page.'})
-    
 
 
-
-
-
-
-
-
-
-
-
-
+       
 
 def coupon(request):
     return render(request,'coupon.html') 
@@ -2709,4 +3032,55 @@ def display_seller_coupons(request):
     
     # Pass the coupons to the template for display
     return render(request, 'seller_coupon_list.html', {'coupons': coupons})
+
+
+
+#seller view their product review
+def seller_view_review(request):
+    return render(request,'seller_view_product_reviews.html') 
+
+
+
+
+#seller view their product review
+#seller view their product review
+def seller_view_notification(request):
+    low_stock_products = Product.objects.filter(seller_id=request.user, stock__lte=2)
+    
+    context = {
+        'low_stock_products': low_stock_products
+    }
+    
+    return render(request, 'seller_notification.html', context)
+
+
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Coupon
+
+def delete_coupon(request, coupon_id):
+    # Retrieve the coupon object
+    coupon = get_object_or_404(Coupon, pk=coupon_id)
+
+    # Check if the coupon has already been used (visibility is False)
+    if not coupon.visibility:
+        # If the coupon has already been used, return JsonResponse indicating it cannot be deleted
+        return JsonResponse({'message': 'Coupon has already been used and cannot be deleted.'}, status=400)
+
+    # If the coupon has not been used, delete it from the database
+    coupon.delete()
+
+    # Return JsonResponse indicating successful deletion
+    return JsonResponse({'message': 'Coupon deleted successfully.'})
+
+
+
+
+
+
+
+
 

@@ -18,3 +18,22 @@ class TokenGenerator(PasswordResetTokenGenerator):
         )
 
 generate_token = TokenGenerator()
+
+
+
+
+
+# from twilio.rest import Client
+# from django.conf import settings
+
+# def send_whatsapp_message(to, body):
+#     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+#     from_whatsapp = f"whatsapp:{settings.WHATSAPP_SENDER_NUMBER}"
+#     to_whatsapp = f"whatsapp:{to}"
+#     message = client.messages.create(
+#         body=body,
+#         from_=from_whatsapp,
+#         to=to_whatsapp
+#     )
+#     return message.sid
+

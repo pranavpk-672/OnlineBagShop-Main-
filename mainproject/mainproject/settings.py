@@ -163,3 +163,28 @@ MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 RAZOR_KEY_ID = "rzp_test_UWsnOOpJ8l5HSD"
 RAZOR_KEY_SECRET = "f35ZNp66fSEQVhGztOacN0jD"
+
+
+
+# import os
+
+# # Twilio settings
+# TWILIO_ACCOUNT_SID = "AC8fcdf818298078a47a3082888ff7efad"
+# TWILIO_AUTH_TOKEN = "d3383323f054163c10249e413e7579df"
+
+# # WhatsApp sender number
+# WHATSAPP_SENDER_NUMBER = "+17144646848"
+
+
+
+
+
+
+
+# # Check if Twilio credentials are set
+# if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN]):
+#     raise ValueError("Twilio Account SID and Auth Token are required.")
+
+# # Check if WhatsApp sender number is set
+# if not WHATSAPP_SENDER_NUMBER:
+#     raise ValueError("WhatsApp sender number is required.")

@@ -196,6 +196,9 @@ path('generate-latest-payment-pdf/<int:user_id>/', views.generate_user_latest_pa
 path('coupon/',views.coupon, name='coupon'),
 # path('coupon_list/',views.coupon_list, name='coupon_list'),
     path('coupon_list/', views.display_seller_coupons, name='seller_coupons'),
+    path('seller_view_review/', views.seller_view_review, name='seller_view_review'),
+
+    path('seller_view_notification/', views.seller_view_notification, name='seller_view_notification'),
 
 
 
@@ -203,6 +206,8 @@ path('coupon/',views.coupon, name='coupon'),
 
 path('seller_product_user_view/', views.list_purchased_users_of_seller, name='list_purchased_users_of_seller'),
 path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, name='view_purchased_products'),
+    path('delete_coupon/<int:coupon_id>/', views.delete_coupon, name='delete_coupon'),
+
 
 
 

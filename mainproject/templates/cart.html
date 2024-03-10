@@ -385,6 +385,7 @@ https://templatemo.com/tm-559-zay-shop
                     <a href="/myauth/updateprofile/">Profile</a>
                     <a href="/myauth/view_cart/">View Cart</a>
                     <a href="/myauth/view_wishlist/">View Wishlist</a>
+                    <a href="/myauth/payment_history/">View History</a>
                     <a href="/myauth/logout/">Logout</a>
                 </div>
             </div>
@@ -490,11 +491,18 @@ https://templatemo.com/tm-559-zay-shop
             display: flex;
             margin-top: 20px;
         }
+        .grad-text {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+
+    }
     </style>
 </head>
 <body>
     <div class="body_design">
-    <h1> Cart Items</h1>
+    <br><h1 class="grad-text">YOUR CART ITEMS</h1><br>
 
     <table>
         <thead>
@@ -529,6 +537,11 @@ https://templatemo.com/tm-559-zay-shop
 
                     <input type="hidden" class="item_id" value="{{ item.id }}">
 
+                    <input type="hidden" class="seller_id" value="{{ item.product.seller_id_id}}">
+
+
+                    <!-- <p>{{ item.product.seller_id_id}}</p> -->
+
                     
                     <button class="decrement-btn">-</button>
                     <button class="increment-btn">+</button>
@@ -561,6 +574,22 @@ https://templatemo.com/tm-559-zay-shop
     
     <p id="total-price">Total Price: ₹<span id="total-price-value"></span></p>
 
+    <p id="coupondata"></p>
+
+    {% for index, coupons in seller_coupons.items %}
+    <h2>Coupons for Seller ID: {{ index }}</h2>
+    <ul>
+        {% for coupon in coupons %}
+            <li>Coupon Code: {{ coupon.coupon_code }}</li>
+            <li>Discount: {{ coupon.discount_percentage }}</li>
+            <li>Expiration Date: {{ coupon.expiration_date }}</li>
+            <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
+        {% endfor %}
+    </ul>
+    <!-- Apply Button -->
+   
+{% endfor %}
+
     <div class="buttons-container">
         <a href="/myauth/home/">
             <button class="">Back to Shopping</button>
@@ -590,8 +619,19 @@ https://templatemo.com/tm-559-zay-shop
         </form>   </div> -->
     <script>
 
+var appliedDiscount = "";
+var cpid = "";
 
+function applyDiscount(discountPercentage, id) {
+    console.log(id);
+        // Set coupondata to "discount_percentage applied"
+        document.getElementById("coupondata").innerText = discountPercentage + "% applied";
 
+        // Store the discount_percentage inside a variable
+         appliedDiscount = discountPercentage;
+         cpid = id;
+        // You can use the appliedDiscount variable as needed
+    }
 
 
 
@@ -625,18 +665,22 @@ checkoutBtn.addEventListener('click', function(event) {
         const itemId = parseInt(row.querySelector('.item_id').value);
         const quantity = parseInt(row.querySelector('.quantity').value);
         const price = parseFloat(row.querySelector('.update_price').value);
+        const seller = parseInt(row.querySelector('.seller_id').value);
+
 
         items.push({
             "item_id": itemId,
             "quantity": quantity,
-            "price": price
+            "price": price,
+            "seller_id": seller
+
         });
     });
 
     // You can now use the 'items' array to send JSON data to your backend.
     console.log(items);
 
-    window.location.href = `/myauth/checkout/?items=${encodeURIComponent(JSON.stringify(items))}`;
+    window.location.href = `/myauth/checkout/?items=${encodeURIComponent(JSON.stringify(items))}&discountdata=${appliedDiscount}&cpid=${cpid}`;
 });
 
             function updateItemPrice(item, quantity) {

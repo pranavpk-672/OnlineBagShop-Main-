@@ -599,6 +599,13 @@ https://templatemo.com/tm-559-zay-shop
             line-height: 1.2; /* Adjust line height for readability */
             text-align: center; /* Center-align the text */
         }
+        .grad-text {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+
+    }
 
         </style>
       
@@ -606,7 +613,7 @@ https://templatemo.com/tm-559-zay-shop
 
         <div class="head">
 
-           <br><br> <center><h1 class="h1">SIMILAR PRODUCTS</h1></center>
+           <br><br> <center><h1 class="grad-text">SIMILAR PRODUCTS</h1></center>
             </div>
 
                 {% for item in similarproducts %}
