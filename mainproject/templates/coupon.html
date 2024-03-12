@@ -304,9 +304,6 @@ https://templatemo.com/tm-559-zay-shop
 
 
 <!-- generate_coupon.html -->
-
-<!-- generate_coupon.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -320,94 +317,124 @@ https://templatemo.com/tm-559-zay-shop
     <!-- Include Bootstrap Datepicker CSS and JS files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script>
-        // Initialize datepicker
-        $(document).ready(function(){
-            $('#datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true
-            });
-        });
-    </script>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Generate Coupon</h5>
-                <form method="post" action="{% url 'generate_coupon' %}">
-                    {% csrf_token %}
-                    <!-- Add date picker input field -->
-                    <div class="form-group">
-                        <label for="datepicker">Select Date:</label>
-                        <input type="text" class="form-control" id="datepicker" name="selected_date" placeholder="YYYY-MM-DD" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Generate Coupon</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
-
-
-
-
-
-
-<!-- coupon_generated.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coupon Generated</title>
     <style>
+        /* Custom styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
 
-        .coupon {
-            max-width: 400px;
+        .coupon-container {
+            max-width: 1200px;
+            width: 1200px;
             margin: 50px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .coupon-form {
+            width: 45%;
             padding: 20px;
             background-color: #fff;
-            border: 2px solid #00A9E0;
+            border: 2px solid #0f6448;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 410px;
+        }
+
+        .coupon-info {
+            width: 45%;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #0f6448;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .coupon h2 {
-            margin-top: 0;
-            color: #00A9E0;
-            text-align: center;
-        }
-
-        .coupon p {
-            margin: 10px 0;
-            font-size: 16px;
-            color: #333;
-            text-align: center;
-        }
-
-        .qr-code {
+        .coupon-info img {
             display: block;
             margin: 20px auto;
             width: 200px;
             height: 200px;
         }
+
+        /* Right arrow styles */
+        .right-arrow {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid #0f6448;
+        }
+
+        .right-arrow:before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid #17c525;
+        }
+        .card-title {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="coupon">
-        <h2>Coupon Generated</h2>
-        <p>Your coupon code is: <strong>{{ coupon.coupon_code }}</strong></p>
-        <p>Discount Percentage: <strong>{{ coupon.discount_percentage }}%</strong></p>
-        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" class="qr-code">
-        <p>Scan the QR code to view details</p>
+    <div class="container mt-5">
+        <div class="coupon-container">
+            <!-- Left container for Generate Coupon form -->
+            <div class="coupon-form">
+                <center><h3 class="card-title">Generate Coupon</h3><br></center>
+                <form method="post" action="{% url 'generate_coupon' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="datepicker">Select Date:</label>
+                        <input type="text" class="form-control" id="datepicker" name="selected_date" placeholder="YYYY-MM-DD" required>
+                    </div><br>
+                    <div class="form-group">
+                        <label for="percentage">Select Percentage:</label>
+                        <input type="range" class="form-control-range" id="percentage" name="selected_percentage" min="0" max="100" step="1" value="0">
+                        <output for="percentage" id="percentageOutput">0%</output>
+                    </div><br><br>
+                    <center><button type="submit" class="btn btn-primary">Generate Coupon</button></center>
+                </form>
+            </div>
+            <!-- Right arrow -->
+            <div class="right-arrow"></div>
+            <!-- Right container for Coupon Generated information -->
+            <div class="coupon-info">
+               <center><h3 class="card-title">Coupon Generated</h3></center> <br>
+                <p>Your coupon code is : <strong>{{ coupon.coupon_code }}</strong></p>
+                <p>Discount Percentage : <strong>{{ coupon.discount_percentage }}%</strong></p>
+                <p>Expiration date : <strong>{{ coupon.expiration_date }}</strong></p>
+
+                <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" style="height: 100px; width: 100px;">
+                <p>Scan the QR code to view details</p>
+            </div>
+        </div>
     </div>
+    <script>
+        // JavaScript code for updating percentage output
+        const percentageInput = document.getElementById('percentage');
+        const output = document.getElementById('percentageOutput');
+        
+        percentageInput.addEventListener('input', function() {
+            output.textContent = this.value + '%';
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+

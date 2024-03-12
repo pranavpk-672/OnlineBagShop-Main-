@@ -581,7 +581,7 @@ https://templatemo.com/tm-559-zay-shop
     <ul>
         {% for coupon in coupons %}
             <li>Coupon Code: {{ coupon.coupon_code }}</li>
-            <li>Discount: {{ coupon.discount_percentage }}</li>
+            <li>Discount: {{ coupon.discount_percentage }}%</li>
             <li>Expiration Date: {{ coupon.expiration_date }}</li>
             <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
         {% endfor %}

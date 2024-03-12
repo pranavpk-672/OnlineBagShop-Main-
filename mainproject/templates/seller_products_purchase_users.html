@@ -527,7 +527,10 @@ https://templatemo.com/tm-559-zay-shop
             <div class="lli">
 
                 <li>
-                    <span class="username">{{ user.username }}</span>
+                    <span class="username">{{ user.first_name }} {{ user.last_name }}</span>
+                    <!-- <p>{{ user.phone }} </p> -->
+                    <!-- <span class="username">{{ user.first_name }} </span>
+                    <span class="username">{{ user.first_name }} </span> -->
                     <form action="{% url 'view_purchased_products' user.id %}" method="GET">
                         <button type="submit">View Purchased Products <i class="fas fa-arrow-right button-icon"></i></button>
                     </form>

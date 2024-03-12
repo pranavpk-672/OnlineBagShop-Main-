@@ -2850,14 +2850,62 @@ from django.core.files.base import ContentFile
 from .models import Coupon
 import base64
 
+# def generate_coupon(request):
+#     if request.method == 'POST':
+#         # Generate a random coupon code
+#         coupon_code = get_random_string(length=8)
+        
+#         # Define the discount percentage
+#         discount_percentage = 20  # Adjust as needed
+        
+#         # Generate the QR code containing the coupon details
+#         qr = qrcode.QRCode(
+#             version=1,
+#             error_correction=qrcode.constants.ERROR_CORRECT_L,
+#             box_size=10,
+#             border=4,
+#         )
+#         qr.add_data(f"Coupon Code: {coupon_code}\nDiscount Percentage: {discount_percentage}%")
+#         qr.make(fit=True)
+#         qr_img = qr.make_image(fill_color="black", back_color="white")
+
+#         # Convert the QR code image to bytes
+#         buffer = BytesIO()
+#         qr_img.save(buffer, format='PNG')
+#         qr_image_bytes = buffer.getvalue()
+
+#         # Convert the QR code image bytes to base64
+#         qr_image_base64 = base64.b64encode(qr_image_bytes).decode('utf-8')
+
+#         # Assuming you are using the built-in User model for authentication
+#         seller_id_data = request.user  
+
+#         # Save the coupon details to the database
+#         coupon = Coupon.objects.create(
+#             coupon_code=coupon_code,
+#             discount_percentage=discount_percentage,
+#             seller_id=seller_id_data,
+#             expiration_date='2099-12-31'  # Manually defining default expiration date
+#         )
+
+#         # Render the coupon template with the coupon code, discount percentage, and QR code
+#         return render(request, 'coupon.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
+#     else:
+#         return render(request, 'generate_coupon.html')
+
+
 def generate_coupon(request):
     if request.method == 'POST':
+        # Retrieve form data
+        selected_date = request.POST.get('selected_date')
+        selected_percentage = request.POST.get('selected_percentage')
+
         # Generate a random coupon code
         coupon_code = get_random_string(length=8)
         
-        # Define the discount percentage
-        discount_percentage = 20  # Adjust as needed
-        
+        # Convert the selected_percentage to an integer
+        discount_percentage = int(selected_percentage)
+
         # Generate the QR code containing the coupon details
         qr = qrcode.QRCode(
             version=1,
@@ -2885,12 +2933,13 @@ def generate_coupon(request):
             coupon_code=coupon_code,
             discount_percentage=discount_percentage,
             seller_id=seller_id_data,
-            expiration_date='2099-12-31'  # Manually defining default expiration date
+            expiration_date=selected_date
         )
 
         # Render the coupon template with the coupon code, discount percentage, and QR code
         return render(request, 'coupon.html', {'coupon': coupon, 'qr_code_base64': qr_image_base64})
     else:
+        # Render the form template
         return render(request, 'generate_coupon.html')
 
 
@@ -3057,9 +3106,29 @@ def seller_view_notification(request):
 
 
 
+
+
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .models import Coupon
+
+# def delete_coupon(request, coupon_id):
+#     # Retrieve the coupon object
+#     coupon = get_object_or_404(Coupon, pk=coupon_id)
+
+#     # Check if the coupon has already been used (visibility is False)
+#     if not coupon.visibility:
+#         # If the coupon has already been used, return JsonResponse indicating it cannot be deleted
+#         return JsonResponse({'message': 'Coupon has already been used and cannot be deleted.'}, status=400)
+
+#     # If the coupon has not been used, delete it from the database
+#     coupon.delete()
+
+#     # Return JsonResponse indicating successful deletion
+#     return JsonResponse({'message': 'Coupon deleted successfully.'})
+
+
 
 def delete_coupon(request, coupon_id):
     # Retrieve the coupon object
@@ -3073,9 +3142,19 @@ def delete_coupon(request, coupon_id):
     # If the coupon has not been used, delete it from the database
     coupon.delete()
 
-    # Return JsonResponse indicating successful deletion
-    return JsonResponse({'message': 'Coupon deleted successfully.'})
+    # Redirect the user to the specified URL after successful deletion
+    return redirect('/myauth/coupon_list/')
 
+# def delete_coupon(request, coupon_id):
+#     # Retrieve the coupon object
+#     coupon = get_object_or_404(Coupon, pk=coupon_id)
+
+#     # Set the visibility of the coupon to False
+#     coupon.visibility = False
+#     coupon.save()
+
+#     # Redirect the user to a specific URL after updating the visibility
+#     return redirect('/myauth/coupon_list/')
 
 
 

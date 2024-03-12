@@ -331,18 +331,19 @@ https://templatemo.com/tm-559-zay-shop
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Seller Coupons</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-            .bodyy {
-                font-family: Arial, sans-serif;
+            .bbody {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background-color: #f8f9fa;
                 margin: 0;
                 padding: 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                min-height: 100vh;
+                min-height: 70vh;
             }
-            .containerx {
+            .containerr {
                 max-width: 800px;
                 margin: 20px;
                 padding: 20px;
@@ -379,6 +380,9 @@ https://templatemo.com/tm-559-zay-shop
                 color: #777;
                 margin-bottom: 10px;
             }
+            .expiration-date {
+                color: #777;
+            }
             .delete-button {
                 background-color: #dc3545;
                 color: white;
@@ -386,60 +390,48 @@ https://templatemo.com/tm-559-zay-shop
                 padding: 8px 16px;
                 border-radius: 4px;
                 cursor: pointer;
+                transition: background-color 0.3s ease;
             }
             .delete-button:hover {
                 background-color: #c82333;
             }
+            .delete-button i {
+                margin-right: 5px;
+            }
+            .grad-text {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+
+    }
         </style>
     </head>
-    <body>
-        <div class="bodyy">
-            <div class="containerx">
-                <h1>Your Coupons</h1>
-    
-                <ul class="coupon-list">
-                    {% for coupon in coupons %}
-                    <li class="coupon-item">
-                        <div class="coupon-details">
-                            <div class="coupon-code">Coupon Code: {{ coupon.coupon_code }}</div>
-                            <div class="discount-percentage">Discount Percentage: {{ coupon.discount_percentage }}%</div>
-                            <!-- Add any additional coupon details you want to display -->
-                        </div>
-                        <!-- <button class="delete-button" onclick="deleteCoupon('{{ coupon.id }}')">Delete</button> -->
-                        <a href="http://127.0.0.1:8000/myauth/delete_coupon/{{ coupon.id }}/" class="delete-button" id="deleteCoupon{{ coupon.id }}">Delete</a>
+    <div class="bbody">
 
-                    </li>
-                    {% empty %}
-                    <li class="empty-coupons">No coupons available.</li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <body>
+        <div class="containerr">
+            <h1 class="grad-text">Your Coupons</h1>
+    
+            <ul class="coupon-list">
+                {% for coupon in coupons %}
+                <li class="coupon-item">
+                    <div class="coupon-details">
+                        <div class="coupon-code">Coupon Code: {{ coupon.coupon_code }}</div>
+                        <div class="discount-percentage">Discount Percentage: {{ coupon.discount_percentage }}%</div>
+                        <div class="expiration-date">Expiration Date: {{ coupon.expiration_date }}</div>
+                    </div>
+                    <a href="http://127.0.0.1:8000/myauth/delete_coupon/{{ coupon.id }}/" class="delete-button" id="deleteCoupon{{ coupon.id }}"><i class="fas fa-trash-alt"></i>Delete</a>
+                </li>
+                {% empty %}
+                <li class="empty-coupons">No coupons available.</li>
+                {% endfor %}
+            </ul>
         </div>
     
-        <script>
-            function deleteCoupon(couponId) {
-                // You can perform AJAX request here to delete the coupon with given couponId
-                // Example AJAX request using fetch API:
-                fetch(`/delete-coupon/${couponId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Reload the page to reflect the changes
-                        window.location.reload();
-                    } else {
-                        // Handle error
-                        console.error('Failed to delete coupon');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     </body>
+</div>
     </html>
+    
     
