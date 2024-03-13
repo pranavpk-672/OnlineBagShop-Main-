@@ -126,7 +126,7 @@ class  user_payment(models.Model):
     datetime = models.TextField(default="empty")
     order_id_data = models.TextField(default="empty")
     payment_id_data = models.TextField(default="empty")
-
+   
 
 #model for wishlist
 class Wishlist(models.Model):

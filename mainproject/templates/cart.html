@@ -428,9 +428,11 @@ https://templatemo.com/tm-559-zay-shop
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            margin-right: 300px;
+
         }
 
         th, td {
@@ -471,7 +473,7 @@ https://templatemo.com/tm-559-zay-shop
             display: inline-block;
             margin-right: 10px;
         }
-
+       
         .increment-btn:hover,
         .decrement-btn:hover,
         .remove-btn:hover,
@@ -479,6 +481,8 @@ https://templatemo.com/tm-559-zay-shop
         .back-btn:hover {
             background-color: #45a049;
         }
+        
+
 
         #total-price {
             font-size: 24px;
@@ -487,10 +491,7 @@ https://templatemo.com/tm-559-zay-shop
             align-self: flex-end;
         }
 
-        .buttons-container {
-            display: flex;
-            margin-top: 20px;
-        }
+        
         .grad-text {
   background: -webkit-linear-gradient(#0f5112, #2ede8c);
   -webkit-background-clip: text;
@@ -498,11 +499,82 @@ https://templatemo.com/tm-559-zay-shop
   font-weight: bold;
 
     }
+
+    /* Add this CSS to adjust the layout */
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.coupon-section {
+    flex-grow: 1; /* Takes remaining space */
+    margin-left: 20px; /* Adjust margin as needed */
+}
+
+/* Adjust other styles as needed */
+.total {
+    margin-left: 1100px;
+}
+
+.table-container {
+    width: 100%; /* Adjust width as needed */
+}
+
+
+.coupon-section {
+    border: 2px dashed #ccc; /* Border style */
+    padding: 20px; /* Add some padding */
+    background-color: #fff; /* Background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+    border-radius: 10px; /* Rounded corners */
+    max-width: 300px; /* Limit the maximum width */
+    margin-left: 20px; /* Add some margin */
+}
+
+.coupon-section h2 {
+    font-size: 18px; /* Heading font size */
+    margin-bottom: 10px; /* Add some space below the heading */
+}
+
+.coupon-section ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+}
+
+.coupon-section li {
+    margin-bottom: 5px; /* Add some space between list items */
+}
+
+.coupon-section button {
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.coupon-section button:hover {
+    background-color: #45a049; /* Change button color on hover */
+}
+
+.pay {
+    margin-left: 1000px;
+}
+
     </style>
 </head>
 <body>
     <div class="body_design">
     <br><h1 class="grad-text">YOUR CART ITEMS</h1><br>
+    <div class="cart-container">
+        <div class="table-container">
+
+
+
 
     <table>
         <thead>
@@ -561,44 +633,63 @@ https://templatemo.com/tm-559-zay-shop
                 
                 <form class="delete-form" method="POST" action="{% url 'prodetailview' item.product.id %}">
                     {% csrf_token %}
-                    <button type="button" class="remove-btn" style="width: 100px; height: 40px;">View Details</button>
+                    <div class="detail">
+                    <button type="button" class="remove-btn" style="width: 100px; height: 70px;">View Details</button></div>
                 </form>
                   
                 </td>
+                
             </tr>
             {% endfor %}
             
 
         </tbody>
+        
     </table>
+    <p id="total-price" class="total">Total Price: ₹<span id="total-price-value"></span></p>
+    <div class="pay">
+    <a href="/myauth/home/">
+        <button class="">Back to Shopping</button>
+    </a>
+
+    <!-- Add a margin to create space -->
+    <span style="margin-right: 10px;"></span>
+    <button class="checkout-btn">Checkout</button>
+</div>
+</div>
+<div class="coupon-section">
+
+    <div class="coupon-section">
+        <!-- Coupon section -->
+        {% for index, coupons in seller_coupons.items %}
+        <h2>Coupons for Seller ID: {{ index }}</h2>
+        <ul>
+            {% for coupon in coupons %}
+                <li >Coupon Code: {{ coupon.coupon_code }}</li>
+                <li>Discount: {{ coupon.discount_percentage }}%</li>
+                <li>Expiration Date: {{ coupon.expiration_date }}</li>
+                <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
+                <li>-------------------------------------</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+
     
-    <p id="total-price">Total Price: ₹<span id="total-price-value"></span></p>
 
     <p id="coupondata"></p>
 
-    {% for index, coupons in seller_coupons.items %}
-    <h2>Coupons for Seller ID: {{ index }}</h2>
-    <ul>
-        {% for coupon in coupons %}
-            <li>Coupon Code: {{ coupon.coupon_code }}</li>
-            <li>Discount: {{ coupon.discount_percentage }}%</li>
-            <li>Expiration Date: {{ coupon.expiration_date }}</li>
-            <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
-        {% endfor %}
+   
     </ul>
     <!-- Apply Button -->
    
-{% endfor %}
-
+<div class="checkk">
     <div class="buttons-container">
-        <a href="/myauth/home/">
-            <button class="">Back to Shopping</button>
-        </a>
-    
-        <!-- Add a margin to create space -->
-        <span style="margin-right: 10px;"></span>
-        <button class="checkout-btn">Checkout</button>
-
+        
+    </div>
     
         <!-- <form action="https://www.example.com/payment/success/" method="POST">
             <script
