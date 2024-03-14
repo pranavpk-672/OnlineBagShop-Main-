@@ -199,6 +199,7 @@ path('coupon/',views.coupon, name='coupon'),
     path('seller_view_review/', views.seller_view_review, name='seller_view_review'),
 
     path('seller_view_notification/', views.seller_view_notification, name='seller_view_notification'),
+    path('download-pdf/', views.download_low_stock_products_pdf, name='download_low_stock_products_pdf'),
 
 
 

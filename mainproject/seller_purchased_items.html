@@ -1,0 +1,9 @@
+{% for purchase_record in purchase_history %}
+    <p>Product Name: {{ purchase_record.cart.product.product_name }}</p>
+    <p>Product Number: {{ purchase_record.cart.product.product_number }}</p>
+    <p>Stock: {{ purchase_record.cart.product.stock }}</p>
+    <p>Payment ID: {{ purchase_record.payment_id_data }}</p>
+    <p>Order ID: {{ purchase_record.order_id_data }}</p>
+    <p>Date of Purchase: {{ purchase_record.datetime }}</p>
+    <hr>
+{% endfor %}

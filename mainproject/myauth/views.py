@@ -19,6 +19,7 @@ from django.db.models import Count, Max
 
 
 
+
 import razorpay
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.core import serializers
@@ -2635,7 +2636,7 @@ def generate_user_latest_payment_pdf(request, user_id):
     # Add table to the PDF document
     doc.build([Paragraph(f" Payment Details for User: {latest_payment.user.username}", styles['Title']), table])
 
-    return buffer
+    return buffer 
     
 
     # views.py
@@ -2717,7 +2718,6 @@ def notification_view(request):
 
     # Render the HTML template
     return render(request, 'notification_view.html', context)
-
 
 
 #sellers item view
@@ -3102,6 +3102,33 @@ def seller_view_notification(request):
     
     return render(request, 'seller_notification.html', context)
 
+from django.http import HttpResponse
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
+def download_low_stock_products_pdf(request):
+    low_stock_products = Product.objects.filter(seller_id=request.user, stock__lte=2)
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="low_stock_products.pdf"'
+    
+    doc = SimpleDocTemplate(response, pagesize=letter)
+    table_data = [['Product Name','Brand', 'Stock','Product Number']]
+    for product in low_stock_products:
+        table_data.append([product.product_name,product.brand_name,product.stock, product.product_number])
+    
+    table = Table(table_data)
+    table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                               ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                               ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                               ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                               ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                               ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+                               ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+    
+    doc.build([table])
+    return response
 
 
 
@@ -3155,6 +3182,7 @@ def delete_coupon(request, coupon_id):
 
 #     # Redirect the user to a specific URL after updating the visibility
 #     return redirect('/myauth/coupon_list/')
+
 
 
 

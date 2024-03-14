@@ -381,6 +381,9 @@ https://templatemo.com/tm-559-zay-shop
   font-weight: bold;
 
     }
+    .col-6 {
+        margin-left: 1250px;
+    }
         </style>
     </head>
     <body>
@@ -453,9 +456,10 @@ https://templatemo.com/tm-559-zay-shop
 <center><h1 class="grad-text">Low Stock Products Details</h1></center>
 <p class="glow-text">These Products are Running Low on Stock......  Update the Stock Instantly..... </p>
 
-<div class="roww">
-    <div class="col-12">
-        <button class="btn btn-primary" onclick="exportToCSV('products.csv')">Download CSV</button>
+<div class="row">
+    <div class="col-6">
+        <button class="btn btn-primary" onclick="exportToCSV('products.csv')">Download In CSV</button>
+        <button class="btn btn-primary ml-2" onclick="downloadPDF()">Download In PDF</button>
     </div>
 </div>
 
@@ -491,6 +495,7 @@ https://templatemo.com/tm-559-zay-shop
         {% endif %}
     </div>
 </div>
+
 
 <style>
     /* Example CSS for high-end table design */
@@ -555,6 +560,7 @@ https://templatemo.com/tm-559-zay-shop
         border: 1px solid #dee2e6;
     }
 </style>
+
 <script>
     function exportToCSV(filename) {
         var csv = [];
@@ -578,6 +584,11 @@ https://templatemo.com/tm-559-zay-shop
         document.body.appendChild(downloadLink);
         downloadLink.click();
     }
+
+    function downloadPDF() {
+    window.location.href = '{% url "download_low_stock_products_pdf" %}';
+}
+    
 </script>
 
 

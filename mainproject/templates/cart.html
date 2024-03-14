@@ -534,7 +534,7 @@ https://templatemo.com/tm-559-zay-shop
 }
 
 .coupon-section h2 {
-    font-size: 18px; /* Heading font size */
+    font-size: 16px; /* Heading font size */
     margin-bottom: 10px; /* Add some space below the heading */
 }
 
@@ -662,13 +662,16 @@ https://templatemo.com/tm-559-zay-shop
     <div class="coupon-section">
         <!-- Coupon section -->
         {% for index, coupons in seller_coupons.items %}
-        <h2>Coupons for Seller ID: {{ index }}</h2>
         <ul>
             {% for coupon in coupons %}
+            <!-- <h2>Coupons for Seller ID: {{ index }}</h2> -->
+            <h2>    This is a special discount coupon provided by the seller '{{ index }}' for their products. Use this coupon to avail the discount..  </h2>
                 <li >Coupon Code: {{ coupon.coupon_code }}</li>
                 <li>Discount: {{ coupon.discount_percentage }}%</li>
                 <li>Expiration Date: {{ coupon.expiration_date }}</li>
-                <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
+                <!-- <button onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button> -->
+                <button id="applyCouponBtn" onclick="applyDiscount('{{ coupon.discount_percentage }}', '{{ coupon.id }}')">Apply Coupon</button>
+
                 <li>-------------------------------------</li>
             {% endfor %}
         </ul>
@@ -676,6 +679,7 @@ https://templatemo.com/tm-559-zay-shop
     </div>
 </div>
 </div>
+
 
 
     
@@ -717,11 +721,14 @@ function applyDiscount(discountPercentage, id) {
     console.log(id);
         // Set coupondata to "discount_percentage applied"
         document.getElementById("coupondata").innerText = discountPercentage + "% applied";
+        var popupMessage = discountPercentage + "% applied";
+    alert(popupMessage); // Show the pop-up message
 
         // Store the discount_percentage inside a variable
          appliedDiscount = discountPercentage;
          cpid = id;
         // You can use the appliedDiscount variable as needed
+        document.getElementById("applyCouponBtn").innerText = "Coupon Applied";
     }
 
 
@@ -849,6 +856,11 @@ checkoutBtn.addEventListener('click', function(event) {
 
             updateTotalPrice();
         });
+
+
+
+
+        
     </script>
     </div>
 </body>
