@@ -263,13 +263,7 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
-    .grad-text {
-  background: -webkit-linear-gradient(#0f5112, #2ede8c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-
-    }
+    
         </style>
     </head>
     <body>
@@ -370,255 +364,169 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller View Product Reviews</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/> -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>{{ product.product_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <style>
-        .bbody {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .containerr {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px 8px 0 0;
-        }
-        
-        .card-content {
-            padding: 20px;
-        }
-        
-        .card-content h3 {
-            margin-top: 0;
-            font-size: 1.5rem;
-            color: #333;
-        }
-        
-        .card-content p {
-            margin: 10px 0;
-            color: #333;
-            font-size: 1rem;
-
-        }
-        
-        .card-content strong {
-            color: #ffa200;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .about-product {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        .heading {
-          text-align: center;
-          margin-bottom: 20px;
-      }
-      
-      /* .heading h1 {
-          font-size: 36px;
-          font-weight: bold;
-          color: #1e1d1d;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding-bottom: 10px;
-      } */
-      .search-form {
-display: flex;
-align-items: center;
-margin-bottom: 20px;
-}
-
-.search-input {
-flex: 1;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
-margin-right: 10px;
-}
-
-.category-select {
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
-margin-right: 10px;
-}
-.brand-select {
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
-margin-right: 10px;
-}
-
-.search-btn {
-padding: 10px 20px;
-background-color: #007bff;
-color: #fff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-}
-
-.search-btn:hover {
-background-color: #0056b3;
-}
-/* h1 {
-color: white;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
-h1 {
-font-family: 'Poppins', sans-serif;
-font-size: 50px;
-background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
--webkit-background-clip: text;
-color: transparent;
-font-weight: bold;
-
-}*/
+        /* Your custom styles here */
+        .width-image {
+        width: 100%;
+    }
+    .img-data00 {
+        height: 20rem;
+    object-fit: contain;
+    }
+    .amt-data00 {
+        font-weight: bold;
+    color: #07ad07;
+    }
+    .align-btns-smlr {
+        display: flex;
+    justify-content: space-between;
+    }
+    .cart-btn {
+        background-color: green;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    }
+    .wishlist-btn {
+        background-color: #283f28;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    }
+    .smlr-prod {
+        box-shadow: 0px 1px 6px #3b3b3b9e;
+    border-radius: 1rem;
+    padding: 1rem;
+    }
+    .stars {
+        color: #ffc107;
+    font-size: 1.3rem;
+    }
+    .product-description {
+        font-family: 'Your Desired Font', sans-serif;
+        font-size: 18px;
+        font-weight: 100;
+        font-style: italic;
+        color: #333;
+        line-height: 1.6; /* Adjust the line height as needed */
+        letter-spacing: 1px; /* Adjust the letter spacing as needed */
+        text-align: justify; /* Adjust the text alignment as needed */
+        text-transform: capitalize; /* Adjust the text transformation as needed */
+        background-color: #f7f7f7; /* Add a background color if desired */
+        padding: 15px; /* Add padding to the text container */
+        border-radius: 10px; /* Add border radius for rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    }
+   
 .grad-text {
   background: -webkit-linear-gradient(#0f5112, #2ede8c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: bold; 
-  font-size: 50px;
+  font-weight: bold;
+  font-size: 40px;
 
 
     }
+    .bb {
+        margin-right: 260px;
+    }
+    .bbb {
+        margin-right: 380px;
+        font-weight:bolder;
 
-   </style>
+    }
+    </style>
 </head>
-<div class="bbody">
 <body>
-    <div class="containerr">
-      <div class="heading">
-          <h1 class="grad-text" >Products Reviews</h1>
-          <!-- <h1 style="color: #ffffff;" class="font-effect-fire">ProductS Reviews</h1> -->
+    <div class="container mt-3">
+        <a href="javascript:history.go(-1)" ><button class="cart-btn">Go back</button></a>
+        <div class="bbb"><br><br><br><br>
 
-      </div>
-     
-      <div class="card-container">
-          <form method="GET" class="search-form">
-              <input type="text" name="q" placeholder="Search..." class="search-input">
-              <select name="category" class="category-select">
-                  <option value="">All Categories</option>
-                  {% for category in distinct_categories %}
-                  <option value="{{ category }}">{{ category }}</option>
-                  {% endfor %}
-              </select>
-              <select name="brand" class="brand-select">
-                  <option value="">All Brands</option>
-                  {% for brand in distinct_brands %}
-                  <option value="{{ brand }}">{{ brand }}</option>
-                  {% endfor %}
-              </select>
-              <button type="submit" class="search-btn">Search</button>
-          </form>
-          
-          {% for product in seller_products %}
-          <div class="card">
-                <img src="{{ product.image_1.url  }}"  style="max-width: 200px; max-height: 200px;">
-                <div class="card-content">
-                  <td><a href="http://127.0.0.1:8000/myauth/seller/product/{{ product.id }}" class="view-reviews-btn">View reviews</a></td><br><br>
-                 <br> <h3 >{{ product.product_name }}</h3>
-                    <div class="about-product">
-                        <p><strong>About Product:</strong> {{ product.about_product }}</p>
-                    </div>
-                    <p><strong>Stock:</strong> {{ product.stock }}</p>
-                    <p><strong>Current Price:</strong> {{ product.current_price }}</p>
-                    <p><strong>Capacity:</strong> {{ product.capacity }}</p>
-                    <p><strong>Color:</strong> {{ product.color }}</p>
-                    <p><strong>Material:</strong> {{ product.material }}</p>
-                    <!-- <p><strong>Authentication Certificate:</strong> <a href="{{ product.authentication_certificate.url }}" target="_blank" class="btn">View Certificate <i class="fas fa-external-link-alt"></i></a></p>
-                    <h2>Additional Images</h2>
-                    <div class="additional-images">
-                        {% for image in product_images_list %}
-                        <img src="{{ image.image_data.url }}" alt="Additional Image" style="max-width: 200px; max-height: 200px;">
-                        {% endfor %}
-                    </div> -->
-                </div>
+        <strong>{{ product.product_name }}</strong>
+        </div>
+        <div class="bb">
+            <strong class="grad-text">Reviews</strong>
+        </div>
+
+    </div>
+    <div class="container">
+        <!-- <div class="row mt-44">
+            <div class="col-6">
+                <strong>{{ product.product_name }}</strong>
             </div>
-            {% endfor %}
-
+            <div class="col-6">
+                <strong class="grad-text">Reviews</strong>
+            </div>
+        </div> -->
+        <div class="row mt-4">
+            <div class="col-6">
+                <div class="col-12 smlr-prod p-3">
+                    <a href="{{ product.image_1.url }}" data-lightbox="product-images">
+                        <img class="width-image img-data00" src="{{ product.image_1.url }}" alt="Bag Image">
+                    </a>
+                </div>
+                <div class="row mt-4">
+                    {% for image in product_images.all %}
+                        <div class="col-3 card m-2 mt-3">
+                            <a href="{{ image.image_data.url }}" data-lightbox="product-images">
+                                <img class="width-image" src="{{ image.image_data.url }}" alt="Product Thumbnail">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <p class="product-description mt-4">{{ product.about_product }}</p>
+            </div>
+            <div class="col-6">
+                {% for review in reviews %}
+                    <div class="smlr-prod p-3">
+                        <strong>{{ review.review_username }}</strong>
+                        <p>
+                            {% if review.review_rating == 1 %}
+                                <div class="stars">★</div>
+                            {% elif review.review_rating == 2 %}
+                                <div class="stars">★★</div>
+                            {% elif review.review_rating == 3 %}
+                                <div class="stars">★★★</div>
+                            {% elif review.review_rating == 4 %}
+                                <div class="stars">★★★★</div>
+                            {% elif review.review_rating == 5 %}
+                                <div class="stars">★★★★★</div>
+                            {% endif %}
+                        </p>
+                        <p>{{ review.review_text }}</p>
+                        <i>Date: {{ review.dateinfo }}</i>
+                    </div>
+                {% empty %}
+                    <div>No reviews available.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    <style>
-      /* Button styles */
-      .view-reviews-btn {
-          display: inline-block;
-          padding: 10px 20px;
-          background-color: #007bff; /* Primary color */
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-          text-decoration: none; /* Remove underline */
-          position: relative;
-      }
-  
-      .view-reviews-btn::after {
-          content: "\2192"; /* Unicode arrow character */
-          font-size: 12px;
-          position: absolute;
-          right: 8px;
-          top: 50%;
-          transform: translateY(-50%);
-      }
-  
-      .view-reviews-btn:hover {
-          background-color: #0056b3; /* Darker shade on hover */
-      }
-  </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        // Initialize the lightbox
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true
+          // You can add more options as needed
+        });
+    </script>
 </body>
-</div>
 </html>

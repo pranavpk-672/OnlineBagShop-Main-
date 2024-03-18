@@ -586,7 +586,7 @@ https://templatemo.com/tm-559-zay-shop
         <!-- Add similar structure for other fields with corresponding validation functions -->
         
         <label for="current_price">Current Price:</label>
-<input type="number" name="current_price" id="current_price" step="0.01" required oninput="validateCurrentPrice()">
+<input type="number" name="current_price" id="current_price"  required oninput="validateCurrentPrice()">
 <div id="current_price_error" class="error"></div>
 
 
@@ -604,7 +604,7 @@ https://templatemo.com/tm-559-zay-shop
             {% endfor %}
         </select>
 
-        <label for="capacity">Capacity:</label>
+        <label for="capacity">Capacity (in Ltr):</label>
         <input type="text" name="capacity" id="capacity" required oninput="validateCapacity()">
         <div id="capacity_error" class="error"></div>
         
@@ -683,44 +683,109 @@ https://templatemo.com/tm-559-zay-shop
             }
         }
 
-       
+        function validateProductNumber() {
+    var productNumberInput = document.getElementById('product_number');
+    var productNumberError = document.getElementById('product_number_error');
+
+    // Regular expression allowing letters, digits, and special characters, but not only letters
+    var allowedCharacters = /^(?=.*[^A-Za-z])[A-Za-z\d\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
+
+    if (productNumberInput.value.trim() === '') {
+        productNumberError.textContent = 'Product Number is required';
+    } else if (!allowedCharacters.test(productNumberInput.value)) {
+        productNumberError.textContent = 'Only Letters are not allowed';
+    } else {
+        productNumberError.textContent = '';
+    }
+}
+
+
+
+        // function validateStock() {
+        //     var stockInput = document.getElementById('stock');
+        //     var stockError = document.getElementById('stock_error');
+
+        //     var digitsOnly = /^\d+$/;
+
+        //     if (isNaN(stockInput.value) || stockInput.value <= 0 || !digitsOnly.test(stockInput.value)) {
+        //         stockError.textContent = 'Please enter a valid stock value (only digits are allowed)';
+        //     } else {
+        //         stockError.textContent = '';
+        //     }
+        // }
+
         function validateStock() {
-            var stockInput = document.getElementById('stock');
-            var stockError = document.getElementById('stock_error');
+    var stockInput = document.getElementById('stock');
+    var stockError = document.getElementById('stock_error');
 
-            var digitsOnly = /^\d+$/;
+    // Regular expression to match up to 5 digits
+    var digitsUpToFive = /^\d{1,5}$/;
 
-            if (isNaN(stockInput.value) || stockInput.value <= 0 || !digitsOnly.test(stockInput.value)) {
-                stockError.textContent = 'Please enter a valid stock value (only digits are allowed)';
-            } else {
-                stockError.textContent = '';
-            }
-        }
+    if (isNaN(stockInput.value) || stockInput.value <= 0 || !digitsUpToFive.test(stockInput.value)) {
+        stockError.textContent = 'Please enter a valid stock value';
+    } else {
+        stockError.textContent = '';
+    }
+}
+
+
+        // function validateProductName() {
+        //     var productNameInput = document.getElementById('product_name');
+        //     var productNameError = document.getElementById('product_name_error');
+
+        //     var lettersOnly = /^[A-Za-z]+$/;
+
+        //     if (productNameInput.value.trim() === '') {
+        //         productNameError.textContent = 'Product Name is required';
+        //     } else if (!lettersOnly.test(productNameInput.value)) {
+        //         productNameError.textContent = 'Only letters are allowed in the Product Name';
+        //     } else {
+        //         productNameError.textContent = '';
+        //     }
+        // }
 
         function validateProductName() {
-            var productNameInput = document.getElementById('product_name');
-            var productNameError = document.getElementById('product_name_error');
+    var productNameInput = document.getElementById('product_name');
+    var productNameError = document.getElementById('product_name_error');
 
-            var lettersOnly = /^[A-Za-z]+$/;
+    // Regular expression allowing at least one letter and any combination of letters, digits, spaces, and special characters
+    var allowedCharacters = /^(?=.*[a-zA-Z])[a-zA-Z\d\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
 
-            if (productNameInput.value.trim() === '') {
-                productNameError.textContent = 'Product Name is required';
-            } else if (!lettersOnly.test(productNameInput.value)) {
-                productNameError.textContent = 'Only letters are allowed in the Product Name';
-            } else {
-                productNameError.textContent = '';
-            }
-        }
-        function validateBrandName() {
+    if (productNameInput.value.trim() === '') {
+        productNameError.textContent = 'Product Name is required';
+    } else if (!allowedCharacters.test(productNameInput.value)) {
+        productNameError.textContent = 'Only digits are not allowed';
+    } else {
+        productNameError.textContent = '';
+    }
+}
+
+
+//         function validateBrandName() {
+//     var brandNameInput = document.getElementById('brand_name');
+//     var brandNameError = document.getElementById('brand_name_error');
+
+//     var lettersOnly = /^[A-Za-z]+$/;
+
+//     if (brandNameInput.value.trim() === '') {
+//         brandNameError.textContent = 'Brand Name is required';
+//     } else if (!lettersOnly.test(brandNameInput.value)) {
+//         brandNameError.textContent = 'Only letters are allowed in the Brand Name';
+//     } else {
+//         brandNameError.textContent = '';
+//     }
+// }
+function validateBrandName() {
     var brandNameInput = document.getElementById('brand_name');
     var brandNameError = document.getElementById('brand_name_error');
 
-    var lettersOnly = /^[A-Za-z]+$/;
+    // Regular expression allowing letters and spaces
+    var lettersAndSpaces = /^[A-Za-z\s]+$/;
 
     if (brandNameInput.value.trim() === '') {
         brandNameError.textContent = 'Brand Name is required';
-    } else if (!lettersOnly.test(brandNameInput.value)) {
-        brandNameError.textContent = 'Only letters are allowed in the Brand Name';
+    } else if (!lettersAndSpaces.test(brandNameInput.value)) {
+        brandNameError.textContent = 'Only letters and spaces are allowed in the Brand Name';
     } else {
         brandNameError.textContent = '';
     }
@@ -728,16 +793,33 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
-     function validateAboutProduct() {
+
+//      function validateAboutProduct() {
+//     var aboutProductInput = document.getElementById('about_product');
+//     var aboutProductError = document.getElementById('about_product_error');
+
+//     var lettersAndSpacesOnly = /^[A-Za-z ]+$/;
+
+//     if (aboutProductInput.value.trim() === '') {
+//         aboutProductError.textContent = 'About Product is required';
+//     } else if (!lettersAndSpacesOnly.test(aboutProductInput.value)) {
+//         aboutProductError.textContent = 'Only letters and spaces are allowed in the About Product';
+//     } else {
+//         aboutProductError.textContent = '';
+//     }
+// }
+
+function validateAboutProduct() {
     var aboutProductInput = document.getElementById('about_product');
     var aboutProductError = document.getElementById('about_product_error');
 
-    var lettersAndSpacesOnly = /^[A-Za-z ]+$/;
+    // Regular expression to allow letters, spaces, and special characters, but no digits
+    var lettersSpacesAndSpecialCharsNoDigits = /^[^\d]*$/;
 
     if (aboutProductInput.value.trim() === '') {
-        aboutProductError.textContent = 'About Product is required';
-    } else if (!lettersAndSpacesOnly.test(aboutProductInput.value)) {
-        aboutProductError.textContent = 'Only letters and spaces are allowed in the About Product';
+        aboutProductError.textContent = 'Product Description is required';
+    } else if (!lettersSpacesAndSpecialCharsNoDigits.test(aboutProductInput.value)) {
+        aboutProductError.textContent = 'Only letters, spaces, and special characters are allowed in the Product Description';
     } else {
         aboutProductError.textContent = '';
     }
@@ -747,20 +829,39 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
-        function validateCurrentPrice() {
-            var currentPriceInput = document.getElementById('current_price');
-            var currentPriceError = document.getElementById('current_price_error');
 
-            var digitsOnly = /^\d+$/;
+        // function validateCurrentPrice() {
+        //     var currentPriceInput = document.getElementById('current_price');
+        //     var currentPriceError = document.getElementById('current_price_error');
 
-            if (currentPriceInput.value.trim() === '') {
-                currentPriceError.textContent = 'Current Price is required';
-            } else if (!digitsOnly.test(currentPriceInput.value)) {
-                currentPriceError.textContent = 'Only digits are allowed in the Current Price';
-            } else {
-                currentPriceError.textContent = '';
-            }
-        }
+        //     var digitsOnly = /^\d+$/;
+
+        //     if (currentPriceInput.value.trim() === '') {
+        //         currentPriceError.textContent = 'Current Price is required';
+        //     } else if (!digitsOnly.test(currentPriceInput.value)) {
+        //         currentPriceError.textContent = 'Only digits are allowed in the Current Price';
+        //     } else {
+        //         currentPriceError.textContent = '';
+        //     }
+        // }
+
+    function validateCurrentPrice() {
+    var currentPriceInput = document.getElementById('current_price');
+    var currentPriceError = document.getElementById('current_price_error');
+
+    var digitsOnly = /^\d+$/;
+
+    if (currentPriceInput.value.trim() === '') {
+        currentPriceError.textContent = 'Current Price is required';
+    } else if (!digitsOnly.test(currentPriceInput.value)) {
+        currentPriceError.textContent = 'Only valid digits are allowed';
+    } else if (currentPriceInput.value === '0') {
+        currentPriceError.textContent = 'Current Price cannot be 0';
+    } else {
+        currentPriceError.textContent = '';
+    }
+}
+
 
     //     function validateField(fieldName) {
     //     var inputField = document.getElementsByName(fieldName)[0];
@@ -778,21 +879,42 @@ https://templatemo.com/tm-559-zay-shop
     //     }
     // }
 
-    function validateCapacity() {
+//     function validateCapacity() {
+//     var capacityInput = document.getElementById('capacity');
+//     var capacityError = document.getElementById('capacity_error');
+
+//     // Regular expression to allow decimal numbers with optional integer part
+//     var decimalNumber = /^\d+(\.\d{1,2})?$/;
+
+//     if (capacityInput.value.trim() === '') {
+//         capacityError.textContent = 'Capacity is required';
+//     } else if (!decimalNumber.test(capacityInput.value)) {
+//         capacityError.textContent = 'Only digits are allowed';
+//     } else {
+//         capacityError.textContent = '';
+//     }
+// }
+function validateCapacity() {
     var capacityInput = document.getElementById('capacity');
     var capacityError = document.getElementById('capacity_error');
 
-    // Regular expression to allow decimal numbers with optional integer part
-    var decimalNumber = /^\d+(\.\d{1,2})?$/;
+    var capacityValue = capacityInput.value.trim();
 
-    if (capacityInput.value.trim() === '') {
+    // Regular expression to allow up to 2 digits without spaces
+    var upToTwoDigitsNoSpaces = /^\d{1,2}$/;
+
+    if (capacityValue === '') {
         capacityError.textContent = 'Capacity is required';
-    } else if (!decimalNumber.test(capacityInput.value)) {
-        capacityError.textContent = 'Only digits are allowed';
+    } else if (!upToTwoDigitsNoSpaces.test(capacityValue)) {
+        capacityError.textContent = 'Please enter a valid capacity (up to 2 digits without spaces)';
     } else {
         capacityError.textContent = '';
     }
 }
+
+
+
+
 
 
 
@@ -813,21 +935,37 @@ https://templatemo.com/tm-559-zay-shop
     }
 
 
-    function validateField(fieldName) {
-        var inputField = document.getElementsByName(fieldName)[0];
-        var errorElement = document.getElementById(fieldName + '_error');
+//     function validateField(fieldName) {
+//     var inputField = document.getElementsByName(fieldName)[0];
+//     var errorElement = document.getElementById(fieldName + '_error');
 
-        // Regular expression to allow only letters (both uppercase and lowercase)
-        var lettersOnly = /^[A-Za-z]+$/;
+//     // Regular expression to allow letters, spaces, and special characters
+//     var lettersSpacesAndSpecialChars = /^[A-Za-z\s\d!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
 
-        if (inputField.value.trim() === '') {
-            errorElement.textContent = 'Material is required';
-        } else if (!lettersOnly.test(inputField.value)) {
-            errorElement.textContent = 'Only letters are allowed in the Material';
-        } else {
-            errorElement.textContent = '';
-        }
+//     if (inputField.value.trim() === '') {
+//         errorElement.textContent = 'This field is required';
+//     } else if (!lettersSpacesAndSpecialChars.test(inputField.value)) {
+//         errorElement.textContent = 'Only letters, spaces, and special characters are allowed';
+//     } else {
+//         errorElement.textContent = '';
+//     }
+// }
+function validateField(fieldName) {
+    var inputField = document.getElementsByName(fieldName)[0];
+    var errorElement = document.getElementById(fieldName + '_error');
+
+    // Regular expression to allow letters, spaces, and special characters
+    var lettersSpacesAndSpecialChars = /^[A-Za-z\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
+
+    if (inputField.value.trim() === '') {
+        errorElement.textContent = 'This field is required';
+    } else if (!lettersSpacesAndSpecialChars.test(inputField.value)) {
+        errorElement.textContent = 'Only letters, spaces, and special characters are allowed';
+    } else {
+        errorElement.textContent = '';
     }
+}
+
 
         // Add similar validation functions for other fields
 

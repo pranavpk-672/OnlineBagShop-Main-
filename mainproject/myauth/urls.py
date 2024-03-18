@@ -210,6 +210,11 @@ path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, n
     path('delete_coupon/<int:coupon_id>/', views.delete_coupon, name='delete_coupon'),
 
 
+    path('purchase_orders/', views.purchase_orders, name='purchase_orders'),
+
+    path('seller/product/<int:product_id>/', views.seller_prod_detail_reviewsss, name='seller_product_detail'),
+    path('purchase-details/', views.purchase_detailsss, name='purchase_details'),
+        path('seller_display_product/', views.seller_display_product, name='seller_display_product'),
 
 
 ]

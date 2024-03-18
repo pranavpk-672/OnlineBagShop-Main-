@@ -3085,8 +3085,101 @@ def display_seller_coupons(request):
 
 
 #seller view their product review
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Product
+
+@login_required
 def seller_view_review(request):
-    return render(request,'seller_view_product_reviews.html') 
+    # Assuming the logged-in user is a seller
+    seller = request.user
+
+    # Filter products based on the seller_id field
+    seller_products = Product.objects.filter(seller_id=seller)
+
+    # Handling search functionality
+    query = request.GET.get('q')
+    if query:
+        # Filter products by product_name containing the query string
+        seller_products = seller_products.filter(product_name__icontains=query)
+
+    # Handling filter functionality
+    # You can add more filter options as needed
+    filters = {}
+    category_name = request.GET.get('category')
+    subcategory_name = request.GET.get('subcategory')
+    brand_name = request.GET.get('brand')
+    if category_name:
+        # Filter products by category name
+        seller_products = seller_products.filter(category_id__category_name=category_name)
+        filters['category'] = category_name
+    if subcategory_name:
+        # Filter products by subcategory name
+        seller_products = seller_products.filter(sub_category_id__sub_category_name=subcategory_name)
+        filters['subcategory'] = subcategory_name
+    if brand_name:
+        # Filter products by brand name
+        seller_products = seller_products.filter(brand_name=brand_name)
+        filters['brand'] = brand_name
+
+    # Pass distinct category names and brand names to the template for the dropdown menus
+    distinct_categories = category.objects.values_list('category_name', flat=True).distinct()
+    distinct_brands = Product.objects.values_list('brand_name', flat=True).distinct()
+
+    # Pass the filter options to the template
+    context = {
+        'seller_products': seller_products,
+        'filters': filters,
+        'distinct_categories': distinct_categories,
+        'distinct_brands': distinct_brands,
+    }
+
+    return render(request, 'seller_view_product_reviews.html', context)
+
+
+
+
+def seller_prod_detail_reviewsss(request, product_id):
+    # Get the product corresponding to the product_id
+    product = get_object_or_404(Product, id=product_id)
+
+    # Retrieve product images related to the product
+    product_images = product.product_images_set.all()
+
+    # Retrieve all categories and subcategories for navigation
+    categories = category.objects.all()
+    subcategories = sub_category.objects.all()
+
+    # Get similar products based on the subcategory of the current product
+    similar_products = Product.objects.filter(sub_category_id=product.sub_category_id).exclude(id=product_id)[:6]
+
+    # Retrieve reviews related to the product
+    reviews = product_review.objects.filter(product_id=product_id)
+
+    # Prepare review details to be passed to the template
+    review_details = []
+    for review in reviews:
+        user_name = None
+        if review.user:
+            user_name = review.user.first_name
+        review_details.append({
+            'review_text': review.description,
+            'review_username': user_name,
+            'review_rating': review.product_rating,
+            'dateinfo': review.created_at
+        })
+
+    return render(request, 'seller_view_product_reviewsss.html', {
+        'product': product,
+        'product_images': product_images,
+        'similar_products': similar_products,
+        'reviews': review_details,
+        'categories': categories,
+        'subcategories': subcategories
+    })
+
+
+
 
 
 
@@ -3102,10 +3195,12 @@ def seller_view_notification(request):
     
     return render(request, 'seller_notification.html', context)
 
+
 from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
 
 def download_low_stock_products_pdf(request):
     low_stock_products = Product.objects.filter(seller_id=request.user, stock__lte=2)
@@ -3114,21 +3209,41 @@ def download_low_stock_products_pdf(request):
     response['Content-Disposition'] = 'attachment; filename="low_stock_products.pdf"'
     
     doc = SimpleDocTemplate(response, pagesize=letter)
-    table_data = [['Product Name','Brand', 'Stock','Product Number']]
-    for product in low_stock_products:
-        table_data.append([product.product_name,product.brand_name,product.stock, product.product_number])
+    styles = getSampleStyleSheet()
+    elements = []
     
-    table = Table(table_data)
+    # Title
+    title = Paragraph('<b>Low Stock Products Report</b>', styles['Title'])
+    elements.append(title)
+    
+    data = []
+    data.append([Paragraph('<b>Product Name</b>', styles['Normal']),
+                 Paragraph('<b>Brand</b>', styles['Normal']),
+                 Paragraph('<b>Stock</b>', styles['Normal']),
+                 Paragraph('<b>Product Number</b>', styles['Normal'])])
+    
+    for i, product in enumerate(low_stock_products):
+        bg_color = colors.lightgrey if i % 2 == 0 else colors.white
+        data.append([Paragraph(product.product_name, styles['Normal']),
+                     Paragraph(product.brand_name, styles['Normal']),
+                     str(product.stock),
+                     product.product_number])
+    
+    table = Table(data)
     table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                               ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+                               ('BACKGROUND', (0, 1), (-1, -1), bg_color),
                                ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
     
-    doc.build([table])
+    elements.append(table)
+    
+    doc.build(elements)
     return response
+
+
 
 
 
@@ -3189,5 +3304,130 @@ def delete_coupon(request, coupon_id):
 
 
 
+def purchase_orders(request):
+    # Fetch user_payments
+    user_payments = user_payment.objects.all()
+    
+    # Create a list to store order details
+    orders = []
+    
+    # Loop through user_payments to fetch related Cart_items and Product details
+    for payment in user_payments:
+        cart_items = Cart_items.objects.filter(user=payment.user, cart=payment.cart)
+        for item in cart_items:
+            orders.append({
+                'user': payment.user,
+                'address': payment.user.profile.building_name + ", " + payment.user.profile.road_area,
+                'state': payment.user.profile.state,
+                'district': payment.user.profile.city,
+                'pincode': payment.user.profile.pincode,
+                'product_name': item.product.product_name,
+                'quantity': item.quantity,
+                'price': item.price
+            })
+    
+    context = {
+        'orders': orders
+    }
+    return render(request, 'purchase_orders.html', context)
 
 
+
+#seller virew purchase detail of their products
+
+
+from operator import itemgetter
+
+def purchase_detailsss(request):
+    # Assuming the logged-in user is a seller
+    seller = request.user
+
+    # Get all Cart_items associated with the seller's products
+    seller_cart_items = Cart_items.objects.filter(product__seller_id=seller)
+
+    # Create a list to store payment details, product name, username, and number of items for each seller's product
+    seller_details = []
+
+    # Iterate over each Cart_items object and fetch its associated payment details
+    for cart_item in seller_cart_items:
+        payment_details = user_payment.objects.filter(cart=cart_item.cart_id).first()
+        if payment_details:
+            # Fetch the username associated with the payment
+            username = payment_details.user.first_name
+            last_name = payment_details.user.last_name
+
+            # Append payment details, username, product name, and number of items to the list
+            seller_details.append({
+                'payment_details': payment_details,
+                'username': username,
+                'last_name': last_name,
+                'product_name': cart_item.product.product_name,
+                'product_number': cart_item.product.product_number,
+                'brand_name': cart_item.product.brand_name,
+                'stock': cart_item.product.stock,
+                'price': cart_item.product.current_price,
+                'image_1': cart_item.product.image_1,  # Add the main image URL to the dictionary
+                'num_items': cart_item.quantity
+            })
+
+    # Sort the seller_details list based on the order ID data of payment details
+    seller_details.sort(key=lambda x: x['payment_details'].order_id_data, reverse=True)
+
+    context = {
+        'seller_details': seller_details,
+    }
+
+    return render(request, 'purchase_details_by_seller_products.html', context)
+
+
+
+
+
+
+
+@login_required
+def seller_display_product(request):
+    # Assuming the logged-in user is a seller
+    seller = request.user
+
+    # Filter products based on the seller_id field
+    seller_products = Product.objects.filter(seller_id=seller)
+
+    # Handling search functionality
+    query = request.GET.get('q')
+    if query:
+        # Filter products by product_name containing the query string
+        seller_products = seller_products.filter(product_name__icontains=query)
+
+    # Handling filter functionality
+    # You can add more filter options as needed
+    filters = {}
+    category_name = request.GET.get('category')
+    subcategory_name = request.GET.get('subcategory')
+    brand_name = request.GET.get('brand')
+    if category_name:
+        # Filter products by category name
+        seller_products = seller_products.filter(category_id__category_name=category_name)
+        filters['category'] = category_name
+    if subcategory_name:
+        # Filter products by subcategory name
+        seller_products = seller_products.filter(sub_category_id__sub_category_name=subcategory_name)
+        filters['subcategory'] = subcategory_name
+    if brand_name:
+        # Filter products by brand name
+        seller_products = seller_products.filter(brand_name=brand_name)
+        filters['brand'] = brand_name
+
+    # Pass distinct category names and brand names to the template for the dropdown menus
+    distinct_categories = category.objects.values_list('category_name', flat=True).distinct()
+    distinct_brands = Product.objects.values_list('brand_name', flat=True).distinct()
+
+    # Pass the filter options to the template
+    context = {
+        'seller_products': seller_products,
+        'filters': filters,
+        'distinct_categories': distinct_categories,
+        'distinct_brands': distinct_brands,
+    }
+
+    return render(request, 'seller_products_product_view.html', context)
