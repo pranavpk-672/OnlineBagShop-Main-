@@ -324,7 +324,6 @@ https://templatemo.com/tm-559-zay-shop
                             </div>
                         </li>
                         </div>
-
                     </ul>
                 </nav>
                 <!-- Right Side: Profile and Logout Dropdown -->
@@ -351,32 +350,62 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Details by Seller Products</title>
+</head>
+<body>
+    <h1>Purchase Details by Seller Products</h1>
 
-
-
-
-
-
-<!-- 
-<form method="GET" action="{% url 'purchase_details' %}">
-    <div>
-        <label for="min_price">Minimum Price:</label>
-        <input type="number" id="min_price" name="min_price">
-    </div>
-    <div>
-        <label for="max_price">Maximum Price:</label>
-        <input type="number" id="max_price" name="max_price">
-    </div>
-    <div>
+    <!-- Date Range Filter Form -->
+    <form action="" method="get">
         <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date">
-    </div>
-    <div>
+        <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}">
         <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date">
-    </div>
-    <button type="submit">Filter</button>
-</form> -->
+        <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}">
+        <button type="submit">Apply Date Filter</button>
+    </form>
+
+    <!-- Price Range Filter Form -->
+    <form action="" method="get">
+        <label for="min_price">Min Price:</label>
+        <input type="number" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
+        <label for="max_price">Max Price:</label>
+        <input type="number" id="max_price" name="max_price" value="{{ request.GET.max_price }}">
+        <button type="submit">Apply Price Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Date Purchased</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in seller_details %}
+            <tr>
+                <td>{{ detail.product_name }}</td>
+                <td>{{ detail.brand_name }}</td>
+                <td>{{ detail.price }}</td>
+                <td>{{ detail.num_items }}</td>
+                <td>{{ detail.payment_details.datetime }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
 
 
 
@@ -467,6 +496,8 @@ https://templatemo.com/tm-559-zay-shop
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
+
+
 </head>
 <body>
     <br><h1 class="grad-text">Products Purchase Details</h1><br>

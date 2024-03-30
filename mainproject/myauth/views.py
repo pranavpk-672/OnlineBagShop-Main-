@@ -3042,7 +3042,7 @@ def view_purchased_products(request, user_id):
         # Pass the filter options to the template
         context = {
             'user': user,
-            'purchased_products': purchased_products,
+            'purchased_products': purchased_products,  
             'filters': filters,
             'distinct_categories': distinct_categories,
             # 'distinct_subcategories': distinct_subcategories,
@@ -3336,7 +3336,50 @@ def purchase_orders(request):
 #seller virew purchase detail of their products
 
 
-from operator import itemgetter
+# from operator import itemgetter
+
+# def purchase_detailsss(request):
+#     # Assuming the logged-in user is a seller
+#     seller = request.user
+
+#     # Get all Cart_items associated with the seller's products
+#     seller_cart_items = Cart_items.objects.filter(product__seller_id=seller)
+
+#     # Create a list to store payment details, product name, username, and number of items for each seller's product
+#     seller_details = []
+
+#     # Iterate over each Cart_items object and fetch its associated payment details
+#     for cart_item in seller_cart_items:
+#         payment_details = user_payment.objects.filter(cart=cart_item.cart_id).first()
+#         if payment_details:
+#             # Fetch the username associated with the payment
+#             username = payment_details.user.first_name
+#             last_name = payment_details.user.last_name
+
+#             # Append payment details, username, product name, and number of items to the list
+#             seller_details.append({
+#                 'payment_details': payment_details,
+#                 'username': username,
+#                 'last_name': last_name,
+#                 'product_name': cart_item.product.product_name,
+#                 'product_number': cart_item.product.product_number,
+#                 'brand_name': cart_item.product.brand_name,
+#                 'stock': cart_item.product.stock,
+#                 'price': cart_item.product.current_price,
+#                 'image_1': cart_item.product.image_1,  # Add the main image URL to the dictionary
+#                 'num_items': cart_item.quantity
+#             })
+
+#     # Sort the seller_details list based on the order ID data of payment details
+#     seller_details.sort(key=lambda x: x['payment_details'].order_id_data, reverse=True)
+
+#     context = {
+#         'seller_details': seller_details,
+#     }
+
+#     return render(request, 'purchase_details_by_seller_products.html', context)
+from django.shortcuts import render
+from .models import user_payment, Cart_items
 
 def purchase_detailsss(request):
     # Assuming the logged-in user is a seller
@@ -3344,6 +3387,19 @@ def purchase_detailsss(request):
 
     # Get all Cart_items associated with the seller's products
     seller_cart_items = Cart_items.objects.filter(product__seller_id=seller)
+
+    # Filter by date range if provided
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    if start_date and end_date:
+        # Correct the lookup to match the actual field name
+        seller_cart_items = seller_cart_items.filter(payment__datetime__range=(start_date, end_date))
+
+    # Filter by price range if provided
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price and max_price:
+        seller_cart_items = seller_cart_items.filter(product__current_price__range=(min_price, max_price))
 
     # Create a list to store payment details, product name, username, and number of items for each seller's product
     seller_details = []
@@ -3378,6 +3434,10 @@ def purchase_detailsss(request):
     }
 
     return render(request, 'purchase_details_by_seller_products.html', context)
+
+
+
+
 
 
 
