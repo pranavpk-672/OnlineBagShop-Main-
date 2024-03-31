@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Orders</title>
+</head>
+<body>
+    <h1>New Orders</h1>
+    <ul>
+        {% for assignment in pending_assignments %}
+            <li>
+                <p>Order ID: {{ assignment.order.id }}</p>
+                <p>User: {{ assignment.user.username }}</p>
+                <p>Status: {{ assignment.status }}</p>
+                {% if assignment.id in addresses %}
+                    <p>Delivery Address: {{ addresses.assignment.id }}</p>
+                {% else %}
+                    <p>No delivery address found</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

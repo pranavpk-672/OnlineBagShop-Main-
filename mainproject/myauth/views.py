@@ -1,9 +1,12 @@
 from collections import Counter
 import datetime
+from email.headerregistry import Address
 import io
 from itertools import count
 import json
 from multiprocessing import context
+import random
+import string
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from numpy import count_nonzero
 import pandas as pd
@@ -16,6 +19,7 @@ from .models import Notification
 
 from django.db.models.functions import Left
 from django.db.models import Count, Max
+from django.db.models import Q
 
 
 
@@ -1888,8 +1892,6 @@ def checkout_view(request):
 
 
 
-
-
 @csrf_exempt
 def paymenthandler(request):
     # only accept POST request.
@@ -1959,6 +1961,33 @@ def paymenthandler(request):
                         # Optionally, you can clear the 'cpid' from the session after use
                         request.session.pop('cpid')
 
+                        #do the coding here 
+
+
+
+
+
+
+
+                        
+                    order_instance = Order.objects.create(
+                    userpayment=user_payment_instance)
+                    
+                    pincode = request.user.profile.pincode  # Assuming Profile is associated with User
+                    delivery_boy_profile = Profile.objects.filter(pincode=pincode).first()
+
+                    if delivery_boy_profile:
+                        delivery_boy = DeliveryBoy.objects.filter(pincode=pincode).first()
+                    if delivery_boy:
+                        # Create DeliveryAssignment instance.
+                        delivery_assignment = DeliveryAssignment.objects.create(
+                            user=request.user,
+                            delivery_boy=delivery_boy,
+                            order=order_instance,
+                            assigned_at=current_datetime,
+                            status='PENDING'
+                        )
+
                     return redirect('payment_success')
                 except Exception as capture_error:
                     # if there is an error while capturing payment.
@@ -1972,6 +2001,12 @@ def paymenthandler(request):
     else:
         # if other than POST request is made.
         return JsonResponse({'error': 'Only POST requests are allowed'}, status=400)
+    
+
+
+
+
+
 
 # from myauth.utils import send_whatsapp_message  # Assuming you have a function to send WhatsApp messages
 
@@ -2304,7 +2339,10 @@ def add_delivery_boys(request):
                     vehicle_type=vehicle_type,
                     registration_number=registration_number,
                     delivery_zones=delivery_zones,
-                    availability_timings=availability_timings
+                    availability_timings=availability_timings,
+                    city = row['City'] , # New field
+                    state = row['State'],  # New field
+                    pincode = row['Pincode']  # New field
                 )
 
                 # Send an email to each delivery boy with their password
@@ -2414,7 +2452,6 @@ def prod_detail_review(request, product_id):
 
 
 
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
@@ -2441,6 +2478,9 @@ def register_delivery_boy(request):
         registration_number = request.POST.get('registration')
         delivery_zones = request.POST.get('delivery_zones')
         availability_timings = request.POST.get('availability_timings')
+        city = request.POST.get('city')  # New field
+        state = request.POST.get('state')  # New field
+        pincode = request.POST.get('pincode')  # New field
 
         random_password = get_user_model().objects.make_random_password()
 
@@ -2463,10 +2503,12 @@ def register_delivery_boy(request):
                 vehicle_type=vehicle_type,
                 registration_number=registration_number,
                 delivery_zones=delivery_zones,
-                availability_timings=availability_timings
+                availability_timings=availability_timings,
+                city=city,  # New field
+                state=state,  # New field
+                pincode=pincode  # New field
             )
             
-
             # Send email with the random password
             subject = 'Welcome to the Delivery Service'
             html_message = render_to_string('email_to_deliveryboy.html', {'user': user, 'password': random_password})
@@ -2482,10 +2524,11 @@ def register_delivery_boy(request):
         except IntegrityError:
             # Handle any IntegrityError
             # For example, you can redirect the user to a different page or display an error message
-            messages.success(request, 'Delivery boys added not successfully.')
+            messages.error(request, 'Delivery boys could not be added.')
 
     # Render the registration page template
     return render(request, 'delivery_boy_registration.html')
+
 
 
 
@@ -2494,17 +2537,78 @@ def register_delivery_boy(request):
 # def delivery_login(request):
     
 #    return render(request,'delivery_dashboard.html')
+# @login_required
+# def delivery_login(request):
+#     # Check if the delivery boy has already updated their password
+#     if request.user.deliveryboy.has_updated_password:
+#         return render(request, 'delivery_dashboard.html')  # Assuming 'delivery_login.html' is your login page
+#     else:
+#         return redirect('delivery_password')
+
+
 @login_required
 def delivery_login(request):
-    # Check if the delivery boy has already updated their password
-    if request.user.deliveryboy.has_updated_password:
-        return render(request, 'delivery_dashboard.html')  # Assuming 'delivery_login.html' is your login page
-    else:
-        return redirect('delivery_password')
+    # Assuming 'delivery_dashboard.html' is your template for delivery dashboard
+    # Fetch DeliveryAssignment instances related to the current delivery boy
+    delivery_assignments = DeliveryAssignment.objects.filter(delivery_boy=request.user.deliveryboy).order_by('-assigned_at')
+
+    # Get user details associated with each delivery assignment
+    assignment_details = []
+    for assignment in delivery_assignments:
+        assignment_details.append({
+            'assignment': assignment,
+            "email" : assignment.user.email,
+            'user_details': assignment.user.profile  # Assuming profile is related to User through OneToOneField
+        })
+
+    # Pass the data to the template for rendering
+    return render(request, 'delivery_dashboard.html', {'assignment_details': assignment_details})
 
 
+@login_required
+def update_delivery_status(request):
+    if request.method == 'POST':
+        assignment_id = request.POST.get('assignment_id')
+        status = request.POST.get('status')
+
+        try:
+            assignment = DeliveryAssignment.objects.get(id=assignment_id)
+            assignment.status = status
+            assignment.save()
+            return redirect('delivery_login')
+        except DeliveryAssignment.DoesNotExist:
+            return HttpResponseBadRequest("Invalid Assignment ID")
+
+    return HttpResponseBadRequest("Invalid Request")
 
 
+def verify_otp_delivery(request):
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        assignment_id = request.POST.get('out_for_delivery')
+
+        # Retrieve the delivery assignment
+        assignment = DeliveryAssignment.objects.get(id=assignment_id)
+
+        # Retrieve the OTP from the database
+        try:
+            delivery_otp = DeliveryOTP.objects.get(assignment=assignment)
+        except DeliveryOTP.DoesNotExist:
+            return HttpResponse('OTP not found!')
+
+        # Verify the OTP
+        if otp == delivery_otp.otp:
+            # Update delivery status to "DELIVERED"
+            assignment.status = 'DELIVERED'
+            assignment.save()
+
+            # You can add more logic here if needed
+
+            return redirect('delivery_login')
+        else:
+            return HttpResponse('Invalid OTP!')
+
+    return HttpResponse('Invalid request method!')
 
 from django.contrib.auth import update_session_auth_hash
 
@@ -3491,3 +3595,118 @@ def seller_display_product(request):
     }
 
     return render(request, 'seller_products_product_view.html', context)
+
+
+
+def new_orders(request):
+    if request.user.is_authenticated and hasattr(request.user, 'deliveryboy'):
+        delivery_boy = request.user.deliveryboy
+        orders = DeliveryAssignment.objects.filter(delivery_boy=delivery_boy, status='PENDING')
+        addresses = {}
+        for assignment in orders:
+            # Retrieve the address associated with the user in the delivery assignment
+            address = Address.objects.filter(user=assignment.user).first()
+            if address:
+                addresses[assignment.id] = address
+
+        context = {
+            'pending_assignments': orders,
+            'addresses': addresses,
+        }
+
+        return render(request, 'Delivery/new_orders.html', context)
+    else:
+        # Redirect or handle the case where the user is not authenticated or not a delivery boy
+        return render(request, 'error_page.html', {'message': 'Unauthorized access'})
+    
+
+
+
+
+
+
+
+
+
+
+# def trackmyorder(request):
+#     user=request.user
+#     order=DeliveryAssignment.objects.filter(user=user)
+#     context={
+#         'order':order
+#     }
+#     return render (request,'trackmyorder.html',context)
+
+
+def trackmyorder(request):
+    user = request.user
+    orders = DeliveryAssignment.objects.filter(user=user).exclude(status="DELIVERED")
+    orders_with_cart_id = []
+    
+    for order in orders:
+        # Fetch the related user_payment object for the order
+        user_payment_obj = user_payment.objects.filter(user=user, order=order.order).first()
+        cart_id = None
+        if user_payment_obj:
+            cart_id = user_payment_obj.cart
+        order_dict = {
+            'order': order,
+            'cart_id': cart_id
+        }
+        orders_with_cart_id.append(order_dict)
+    
+    context = {
+        'orders_info': orders_with_cart_id
+    }
+    return render(request, 'trackmyorder.html', context)
+
+
+
+def view_products_user(request):
+    if request.method == 'POST':
+        cart_id = request.POST.get('cart_id')
+        if cart_id:
+            # Fetch cart items based on the cart_id
+            cart_items = Cart_items.objects.filter(cart_id=cart_id)
+            # Get products associated with cart items
+            products = [item.product for item in cart_items]
+            context = {'products': products}
+            return render(request, 'view_products_user.html', context)
+    # Handle cases where cart_id is not provided or POST method is not used
+    return render(request, 'error.html', {'message': 'Invalid request'})
+
+
+def create_otp(request):
+    if request.method == 'POST':
+        out_for_delivery = request.POST.get('out_for_delivery')
+        email = request.POST.get('email')
+
+        # Generate OTP
+        otp = ''.join(random.choices(string.digits, k=6))
+
+        # Send email with OTP
+        send_mail(
+            'Your OTP for Delivery',
+            f'Your OTP for the delivery is: {otp}',
+            'prxnv2832@gmail.com',  # Replace with your sender email
+            [email],
+            fail_silently=False,
+        )
+
+        # Save OTP to database
+        otp_instance = DeliveryOTP.objects.create(
+            otp=otp,
+            assignment_id=out_for_delivery,  # Replace with the correct assignment ID
+        )
+
+        assignment = DeliveryAssignment.objects.get(id=out_for_delivery)
+        assignment.status = 'OUT_FOR_DELIVERY'
+        assignment.save()
+
+        # You can add more logic here if needed
+
+        return redirect('delivery_login')
+
+    return HttpResponse('Invalid request method!')
+
+

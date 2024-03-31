@@ -216,7 +216,13 @@ path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, n
     path('purchase-details/', views.purchase_detailsss, name='purchase_details'),
         path('seller_display_product/', views.seller_display_product, name='seller_display_product'),
 
+    path('new-orders/', views.new_orders, name='new_orders'),
+    path('trackmyorder/', views.trackmyorder, name='trackmyorder'),
 
+    path('delivery/update_status/', views.update_delivery_status, name='update_delivery_status'),
+    path('view-products/', views.view_products_user, name='view_products'),
+    path('create_otp/', views.create_otp, name='create_otp'),
+    path('verify_otp_delivery/', views.verify_otp_delivery, name='verify_otp_delivery'),
 ]
 
 #image

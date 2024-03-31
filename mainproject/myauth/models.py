@@ -1,6 +1,8 @@
 
 # Create your models here.
+from datetime import timezone
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
@@ -145,15 +147,20 @@ class product_review(models.Model):
     description = models.TextField(blank=True, null=True)  # Adding the description field
 
 
+
 class DeliveryBoy(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     contact_number = models.CharField(max_length=15)
-    address = models.TextField()
     vehicle_type = models.CharField(max_length=50)
     registration_number = models.CharField(max_length=20)
     delivery_zones = models.TextField()
     availability_timings = models.CharField(max_length=100)
+    city = models.CharField(max_length=20, default='DefaultCity')
+    state = models.CharField(max_length=20, default='DefaultState')
+    pincode = models.PositiveIntegerField(default=0)  # Set a default value here
+    address = models.TextField()
     has_updated_password = models.BooleanField(default=False)  # New field to track password update
+
 
 
 
@@ -179,6 +186,28 @@ class CouponUsed(models.Model):
     coupon_id = models.ForeignKey(Coupon, on_delete=models.CASCADE)
 
       
+class Order(models.Model):
+    userpayment = models.ForeignKey(user_payment, on_delete=models.CASCADE, null=True, blank=True)
+
+
+class DeliveryAssignment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    delivery_boy = models.ForeignKey(DeliveryBoy, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    assigned_at = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=20, default='PENDING')
+
+    def _str_(self):
+        return f"DeliveryAssignment - {self.order} - {self.delivery_boy} - {self.status}"
+
+
+
+       
+    
+
+class DeliveryOTP(models.Model):
+    assignment = models.ForeignKey(DeliveryAssignment, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)  # Assuming OTP length is 6 characters
 
 
 def __str__(self):

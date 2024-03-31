@@ -399,7 +399,7 @@ https://templatemo.com/tm-559-zay-shop
 
                         <div class="profile-logout">
                             <li class="dropdown">
-                                <a href="http://127.0.0.1:8000/myauth/purchase_orders/">view orders</a>
+                                <a href="http://127.0.0.1:8000/myauth/new-orders/">view orders</a>
                                 <div class="dropdown-content" >
     
                                     <!-- <a href="#">view orders</a> -->
@@ -437,6 +437,78 @@ https://templatemo.com/tm-559-zay-shop
                 
             </div>
         </header>
+
+
+        <h1>Welcome to the Delivery Dashboard</h1>
+
+        
+
+    <ul>
+        {% for assignment_detail in assignment_details %}
+            <li>
+                <h2>Assignment:</h2>
+                <p>Status: {{ assignment_detail.assignment.status }}</p>
+                <p>Assigned at: {{ assignment_detail.assignment.assigned_at }}</p>
+
+                <h2>User Details:</h2>
+                <p>Profile Picture: <img src="{{ assignment_detail.user_details.profile_picture.url }}" alt="Profile Picture"></p>
+                <p>Phone: {{ assignment_detail.user_details.phone }}</p>
+                <p>Alt Phone: {{ assignment_detail.user_details.alt_phone }}</p>
+                <p>Pincode: {{ assignment_detail.user_details.pincode }}</p>
+                <p>State: {{ assignment_detail.user_details.state }}</p>
+                <p>City: {{ assignment_detail.user_details.city }}</p>
+                <p>Building Name: {{ assignment_detail.user_details.building_name }}</p>
+                <p>Road/Area: {{ assignment_detail.user_details.road_area }}</p>
+                <p>Email : {{ assignment_detail.email }}</p>
+
+                <!-- Set the assignment ID value to the hidden field -->
+
+                {% if assignment_detail.assignment.status == 'PENDING' %}
+                <form action="{% url 'create_otp' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                    <input type="hidden" name="email" value="{{ assignment_detail.email }}">
+                    <button type="submit">Out for Delivery</button>
+                </form>
+            {% endif %}
+            
+            {% if assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' %}
+                <form action="{% url 'verify_otp_delivery' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                    <input type="text" name="otp" >
+                    <button type="submit">Delivered</button>
+                </form>
+            {% endif %}
+            
+<!--   
+
+                {% if assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' or assignment_detail.assignment.status == 'PENDING' %}
+        <form action="{% url 'update_delivery_status' %}" method="post">
+            {% csrf_token %}
+            <select name="status">
+                <option value="OUT_FOR_DELIVERY">Out for delivery</option>
+                <option value="DELIVERED">Delivered</option>
+            </select>
+            <input type="hidden" name="assignment_id" id="assignment_id" value="{{assignment_detail.assignment.id  }}">
+            <button type="submit">Update Status</button>
+        </form>
+
+
+
+
+       
+
+
+
+
+    {% endif %} -->
+                <script>
+                    document.getElementById('assignment_id').value = "{{ assignment_detail.assignment.id }}";
+                </script>
+            </li>
+        {% endfor %}
+    </ul>
     </body>
     </html>
 <!-- demoheader close -->
