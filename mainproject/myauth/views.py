@@ -2548,21 +2548,26 @@ def register_delivery_boy(request):
 
 @login_required
 def delivery_login(request):
-    # Assuming 'delivery_dashboard.html' is your template for delivery dashboard
-    # Fetch DeliveryAssignment instances related to the current delivery boy
-    delivery_assignments = DeliveryAssignment.objects.filter(delivery_boy=request.user.deliveryboy).order_by('-assigned_at')
+    # Check if the delivery boy has already updated their password
+    if request.user.deliveryboy.has_updated_password:
+        # Assuming 'delivery_dashboard.html' is your template for delivery dashboard
+        # Fetch DeliveryAssignment instances related to the current delivery boy
+        delivery_assignments = DeliveryAssignment.objects.filter(delivery_boy=request.user.deliveryboy).order_by('-assigned_at')
 
-    # Get user details associated with each delivery assignment
-    assignment_details = []
-    for assignment in delivery_assignments:
-        assignment_details.append({
-            'assignment': assignment,
-            "email" : assignment.user.email,
-            'user_details': assignment.user.profile  # Assuming profile is related to User through OneToOneField
-        })
+        # Get user details associated with each delivery assignment
+        assignment_details = []
+        for assignment in delivery_assignments:
+            assignment_details.append({
+                'assignment': assignment,
+                "email": assignment.user.email,
+                'user_details': assignment.user.profile  # Assuming profile is related to User through OneToOneField
+            })
 
-    # Pass the data to the template for rendering
-    return render(request, 'delivery_dashboard.html', {'assignment_details': assignment_details})
+        # Pass the data to the template for rendering
+        return render(request, 'delivery_dashboard.html', {'assignment_details': assignment_details})
+    else:
+        return redirect('delivery_password')  # Assuming 'delivery_password' is the name of the view where delivery boy updates password
+
 
 
 @login_required
