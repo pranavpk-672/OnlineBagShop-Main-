@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Assignments</title>
+    <!-- Add any custom styles here -->
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+<body>
+    <div id="container">
+        {% for assignment_details in assignment_details %}
+            <div class="card">
+                <p class="card-text">Order ID: {{ assignment_details.assignment.order.order_id_data }}</p>
+                <p class="card-text">Product Name: {{ assignment_details.assignment.product.product_name }}</p>
+                <p class="card-text">Customer Email: {{ assignment_details.user_details.email }}</p>
+                <p class="card-text">Customer Name: {{ assignment_details.user_details.profile.name }}</p>
+                <!-- Add any other user details as needed -->
+                <form action="{% url 'mark_shipped' assignment_details.assignment.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Mark as Shipped</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

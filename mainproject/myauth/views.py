@@ -2569,7 +2569,6 @@ def delivery_login(request):
         return redirect('delivery_password')  # Assuming 'delivery_password' is the name of the view where delivery boy updates password
 
 
-
 @login_required
 def update_delivery_status(request):
     if request.method == 'POST':
@@ -2637,7 +2636,6 @@ def Change_password(request):
             messages.error(request, 'Passwords do not match.')
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-
 
 def delivery_password(request):
     if request.method == 'POST':
@@ -3715,3 +3713,49 @@ def create_otp(request):
     return HttpResponse('Invalid request method!')
 
 
+
+
+
+
+
+
+from django.contrib.auth.decorators import login_required
+from django.db.models import Subquery
+from django.shortcuts import render
+from .models import DeliveryAssignment, Order, User, user_payment, Cart, Cart_items, Product
+
+@login_required
+def ship_order(request):
+    # Fetch pending assignments related to products sold by the logged-in seller
+    pending_assignments = DeliveryAssignment.objects.filter(
+        status='PENDING',
+        order__userpayment__cart__in=Cart.objects.filter(
+            cart_items__product__seller_id=request.user
+        )
+    )
+
+    # Prepare assignment details for rendering
+    assignment_details = []
+    for assignment in pending_assignments:
+        # Fetch corresponding user details (assuming directly available from DeliveryAssignment)
+        user_details = {
+            'email': assignment.user.email,
+            'profile': assignment.user.profile  # Assuming profile is a related field to User
+        }
+
+        assignment_details.append({
+            'assignment': assignment,
+            'user_details': user_details
+        })
+
+    context = {
+        'assignment_details': assignment_details,
+    }
+    return render(request, 'ship_order.html', context)
+
+def mark_as_shipped(request, assignment_id):
+    if request.method == 'POST':
+        assignment = DeliveryAssignment.objects.get(id=assignment_id)
+        assignment.status = 'SHIPPED'
+        assignment.save()
+    return redirect('ship_order')

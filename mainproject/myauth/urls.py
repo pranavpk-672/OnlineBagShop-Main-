@@ -223,6 +223,8 @@ path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, n
     path('view-products/', views.view_products_user, name='view_products'),
     path('create_otp/', views.create_otp, name='create_otp'),
     path('verify_otp_delivery/', views.verify_otp_delivery, name='verify_otp_delivery'),
+    path('ship_order/',views.ship_order,name='ship_order'),
+    path('mark-shipped/<int:assignment_id>/', views.mark_as_shipped, name='mark_shipped'),
 ]
 
 #image

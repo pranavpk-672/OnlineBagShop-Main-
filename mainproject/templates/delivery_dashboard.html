@@ -463,7 +463,7 @@ https://templatemo.com/tm-559-zay-shop
 
                 <!-- Set the assignment ID value to the hidden field -->
 
-                {% if assignment_detail.assignment.status == 'PENDING' %}
+                {% if assignment_detail.assignment.status == 'SHIPPED' %}
                 <form action="{% url 'create_otp' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
@@ -630,6 +630,19 @@ https://templatemo.com/tm-559-zay-shop
         document.getElementById('changePasswordModal').style.display = 'none';
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
