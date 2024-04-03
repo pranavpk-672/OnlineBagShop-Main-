@@ -616,7 +616,7 @@ https://templatemo.com/tm-559-zay-shop
             </div>
             <div class="status-info">
                 <p>Shipped Via: UPS Ground</p>
-                <p>Status: {{ orders.order.status }}</p>
+                <p>Status: DELIVERY {{ orders.order.status }}</p>
                 <p>Expected Date: {{ orders.order.assigned_at }}</p>
             </div>
             <form action="{% url 'view_products' %}" method="post">

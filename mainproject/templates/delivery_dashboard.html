@@ -439,76 +439,7 @@ https://templatemo.com/tm-559-zay-shop
         </header>
 
 
-        <h1>Welcome to the Delivery Dashboard</h1>
 
-        
-
-    <ul>
-        {% for assignment_detail in assignment_details %}
-            <li>
-                <h2>Assignment:</h2>
-                <p>Status: {{ assignment_detail.assignment.status }}</p>
-                <p>Assigned at: {{ assignment_detail.assignment.assigned_at }}</p>
-
-                <h2>User Details:</h2>
-                <p>Profile Picture: <img src="{{ assignment_detail.user_details.profile_picture.url }}" alt="Profile Picture"></p>
-                <p>Phone: {{ assignment_detail.user_details.phone }}</p>
-                <p>Alt Phone: {{ assignment_detail.user_details.alt_phone }}</p>
-                <p>Pincode: {{ assignment_detail.user_details.pincode }}</p>
-                <p>State: {{ assignment_detail.user_details.state }}</p>
-                <p>City: {{ assignment_detail.user_details.city }}</p>
-                <p>Building Name: {{ assignment_detail.user_details.building_name }}</p>
-                <p>Road/Area: {{ assignment_detail.user_details.road_area }}</p>
-                <p>Email : {{ assignment_detail.email }}</p>
-
-                <!-- Set the assignment ID value to the hidden field -->
-
-                {% if assignment_detail.assignment.status == 'SHIPPED' %}
-                <form action="{% url 'create_otp' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
-                    <input type="hidden" name="email" value="{{ assignment_detail.email }}">
-                    <button type="submit">Out for Delivery</button>
-                </form>
-            {% endif %}
-            
-            {% if assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' %}
-                <form action="{% url 'verify_otp_delivery' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
-                    <input type="text" name="otp" >
-                    <button type="submit">Delivered</button>
-                </form>
-            {% endif %}
-            
-<!--   
-
-                {% if assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' or assignment_detail.assignment.status == 'PENDING' %}
-        <form action="{% url 'update_delivery_status' %}" method="post">
-            {% csrf_token %}
-            <select name="status">
-                <option value="OUT_FOR_DELIVERY">Out for delivery</option>
-                <option value="DELIVERED">Delivered</option>
-            </select>
-            <input type="hidden" name="assignment_id" id="assignment_id" value="{{assignment_detail.assignment.id  }}">
-            <button type="submit">Update Status</button>
-        </form>
-
-
-
-
-       
-
-
-
-
-    {% endif %} -->
-                <script>
-                    document.getElementById('assignment_id').value = "{{ assignment_detail.assignment.id }}";
-                </script>
-            </li>
-        {% endfor %}
-    </ul>
     </body>
     </html>
 <!-- demoheader close -->
@@ -656,3 +587,132 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to the Delivery Dashboard</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-body {
+        padding: 20px;
+        background-color: #fff;
+    }
+    .status-details {
+        background-color: #f8f9fa;
+        border-radius: 0 0 10px 10px;
+    }
+    .user-details {
+        background-color: #f8f9fa;
+        border-radius: 0 0 10px 10px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .list-unstyled {
+        padding-left: 0;
+    }
+    .list-unstyled li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    .list-unstyled li span {
+        font-weight: bold;
+    }
+    h2 {
+        color: #007bff;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        {% for assignment_detail in assignment_details %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="status-details">
+                        <h2>Status</h2>
+                        <p><strong>Status:</strong> {{ assignment_detail.assignment.status }}</p>
+                        <p><strong>Assigned at:</strong> {{ assignment_detail.assignment.assigned_at }}</p>
+
+                        {% if assignment_detail.assignment.status == 'SHIPPED' %}
+                        <form action="{% url 'create_otp' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                            <input type="hidden" name="email" value="{{ assignment_detail.email }}">
+                            <button type="submit" class="btn btn-primary">Out for Delivery</button>
+                        </form>
+                        {% endif %}
+                        
+                        {% if assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' %}
+                        <form action="{% url 'verify_otp_delivery' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                            <input type="text" name="otp" placeholder="Enter OTP" class="form-control mb-2">
+                            <button type="submit" class="btn btn-primary">Delivered</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="user-details">
+                        <h2>User Details</h2>
+                        <ul class="list-unstyled">
+                            <li><span>Phone:</span> {{ assignment_detail.user_details.phone }}</li>
+                            <li><span>Alt Phone:</span> {{ assignment_detail.user_details.alt_phone }}</li>
+                            <li><span>Pincode:</span> {{ assignment_detail.user_details.pincode }}</li>
+                            <li><span>State:</span> {{ assignment_detail.user_details.state }}</li>
+                            <li><span>City:</span> {{ assignment_detail.user_details.city }}</li>
+                            <li><span>Building Name:</span> {{ assignment_detail.user_details.building_name }}</li>
+                            <li><span>Road/Area:</span> {{ assignment_detail.user_details.road_area }}</li>
+                            <li><span>Email:</span> {{ assignment_detail.email }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

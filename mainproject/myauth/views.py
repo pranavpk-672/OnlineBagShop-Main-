@@ -2560,6 +2560,10 @@ def delivery_login(request):
             assignment_details.append({
                 'assignment': assignment,
                 "email": assignment.user.email,
+                "name": assignment.user.first_name,
+                "last": assignment.user.last_name,
+
+
                 'user_details': assignment.user.profile  # Assuming profile is related to User through OneToOneField
             })
 
@@ -3740,7 +3744,7 @@ def ship_order(request):
         # Fetch corresponding user details (assuming directly available from DeliveryAssignment)
         user_details = {
             'email': assignment.user.email,
-            'profile': assignment.user.profile  # Assuming profile is a related field to User
+            'profile': assignment.user  # Assuming profile is a related field to User
         }
 
         assignment_details.append({
@@ -3752,6 +3756,11 @@ def ship_order(request):
         'assignment_details': assignment_details,
     }
     return render(request, 'ship_order.html', context)
+
+
+
+
+
 
 def mark_as_shipped(request, assignment_id):
     if request.method == 'POST':
