@@ -225,6 +225,16 @@ path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, n
     path('verify_otp_delivery/', views.verify_otp_delivery, name='verify_otp_delivery'),
     path('ship_order/',views.ship_order,name='ship_order'),
     path('mark-shipped/<int:assignment_id>/', views.mark_as_shipped, name='mark_shipped'),
+    path('delivered-products/', views.delivered_products, name='delivered_products'),
+    path('wallet/update/', views.wallet_update, name='wallet_update'),
+    path('wallet/payment/success/', views.payment_success, name='payment_success'),
+    path('wallet_page/', views.wallet_page, name='wallet_page'),
+    path('wallet_page/', views.wallet_page, name='wallet_page'),
+
+
+
+
+
 ]
 
 #image

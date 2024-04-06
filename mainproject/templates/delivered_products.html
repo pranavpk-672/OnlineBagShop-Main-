@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivered Products</title>
+</head>
+<body>
+    <h1>Delivered Products</h1>
+    <div>
+        {% if delivered_products_list %}
+            <ul>
+                {% for product in delivered_products_list %}
+                    <li>
+                        <h3>Delivered Product: {{ product.delivered_product }}</h3>
+                        <p>Brand: {{ product.brand_name }}</p>
+                        <p>Stock: {{ product.stock }}</p>
+                        <p>Current Price: ${{ product.current_price }}</p>
+                        <img src="{{ product.image_1 }}" alt="Product Image">
+                        <p>Delivered By: {{ product.delivery_boy_name }}</p>
+                        <p>Delivered At: {{ product.delivered_at }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No delivered products found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

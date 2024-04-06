@@ -4,6 +4,18 @@ from datetime import timezone
 from django.db import models
 from django.utils import timezone
 
+
+
+from django.db import models
+from django.conf import settings
+
+class Wallet(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"{self.user}'s Wallet"
+
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 
@@ -197,11 +209,20 @@ class DeliveryAssignment(models.Model):
     assigned_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, default='PENDING')
 
+
+
     def _str_(self):
         return f"DeliveryAssignment - {self.order} - {self.delivery_boy} - {self.status}"
 
 
+class Wallet(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
+class PaymentData(models.Model):
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
        
     
 

@@ -159,6 +159,7 @@ https://templatemo.com/tm-559-zay-shop
 
         </div>
     </nav>
+    
     <!-- Close Header -->
 
 
@@ -391,8 +392,8 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="profile-logout">
 
                     <ul class="nav-links">
-                        <li><a href="#">View Product</a></li>
-
+                        <li><a href="http://127.0.0.1:8000/myauth/delivered-products/">View Product</a></li>
+                        
                         <li><a href="#">View feedback</a></li>
                         <!-- <li><a href="#">Notifications</a></li> -->
                         <li><a href="#">View Delivery Details </a></li>
@@ -415,8 +416,10 @@ https://templatemo.com/tm-559-zay-shop
                                 <a href="#">View Coupons</a>
                                 <a href="#">Promotional Coupon</a>
                             </div>
+
                         </li>
                         </div>
+                      
                     </ul>
                 </nav>
                 <!-- Right Side: Profile and Logout Dropdown -->
@@ -438,12 +441,17 @@ https://templatemo.com/tm-559-zay-shop
             </div>
         </header>
 
-
+       
 
     </body>
     </html>
 <!-- demoheader close -->
-<style>
+
+
+
+
+  <style>
+    
     /* Modal styles */
     .modal {
         display: none;
@@ -521,7 +529,14 @@ https://templatemo.com/tm-559-zay-shop
     button[type="submit"]:hover {
         background-color: #0056b3;
     }
+
+
+
+
+   
 </style>
+
+
 
 <!-- Modal -->
 <div style="margin-top: 60px;">
@@ -560,7 +575,13 @@ https://templatemo.com/tm-559-zay-shop
     function closeModal() {
         document.getElementById('changePasswordModal').style.display = 'none';
     }
+
+
+
+
+    
 </script>
+
 
 
 
@@ -661,15 +682,21 @@ https://templatemo.com/tm-559-zay-shop
         font-size: 1.5rem;
         margin-bottom: 20px;
     }
+
 </style>
 </head>
 <body>
+   
+    
+    
 <div class="container mt-5">
+    
     <div class="row">
         {% for assignment_detail in assignment_details %}
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
+                 
                     <div class="status-details">
                         <h2>Status</h2>
                         <p><strong>Status:</strong> {{ assignment_detail.assignment.status }}</p>
@@ -713,6 +740,10 @@ https://templatemo.com/tm-559-zay-shop
     </div>
 </div>
 
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
 </body>
 </html>

@@ -3099,7 +3099,7 @@ def list_purchased_users_of_seller(request):
 
 
 def seller_product_user_view(request):
-    return render(request,'seller_products_purchase_users.html') 
+    return render(request,'seller_products_purchase_users.html')  
 
 
 # def view_purchased_products(request, user_id):
@@ -3768,3 +3768,172 @@ def mark_as_shipped(request, assignment_id):
         assignment.status = 'SHIPPED'
         assignment.save()
     return redirect('ship_order')
+
+
+from django.shortcuts import render
+from .models import DeliveryAssignment
+
+
+
+
+@login_required
+def delivered_products(request):
+    # Check if the logged-in user is a delivery boy
+    if not hasattr(request.user, 'deliveryboy'):
+        # Redirect or handle the case where the user is not a delivery boy
+        # For example, you can display an error message or redirect them to a different page
+        return render(request, 'not_delivery_boy.html')  # Create a template for this case
+
+    # Fetching all delivery assignments where status is 'DELIVERED' and assigned to the current delivery boy
+    delivered_assignments = DeliveryAssignment.objects.filter(delivery_boy=request.user.deliveryboy, status='DELIVERED')
+
+    # Create a list to store details of delivered products
+    delivered_products_list = []
+
+    for assignment in delivered_assignments:
+        try:
+            # Fetch product details from the associated order
+            product = assignment.order.userpayment.cart_items.first().product
+
+            # Append the product details along with delivery details to the list
+            delivered_products_list.append({
+                'delivery_boy_name': request.user.deliveryboy.user.username,
+                'delivered_product': product.product_name,
+                'brand_name': product.brand_name,
+                'stock': product.stock,
+                'current_price': product.current_price,
+                'image_1': product.image_1.url if product.image_1 else None,  # Assuming image_1 is an ImageField
+                'delivered_at': assignment.assigned_at,
+            })
+        except Exception as e:
+            # Handle any exceptions gracefully
+            print(f"Error fetching product details: {e}")
+
+    # Pass the list of delivered products to the template
+    return render(request, 'delivered_products.html', {'delivered_products_list': delivered_products_list})
+
+
+
+
+# views.py in the wallet app
+
+# from django.shortcuts import render
+# from .models import Wallet
+
+# def wallet_page(request):
+#     # Assuming you have implemented authentication and user login
+#     wallet = Wallet.objects.get(user=request.user)
+#     return render(request, 'wallet.html', {'wallet': wallet})
+
+
+
+# views.py in the myauth app
+# from decimal import Decimal
+# from django.shortcuts import render, redirect
+# from django.contrib import messages
+# from .models import Wallet
+
+# def wallet_update(request):
+#     if request.method == 'POST':
+#         new_balance = request.POST.get('balance')
+#         try:
+#             wallet = Wallet.objects.get(user=request.user)
+#         except Wallet.DoesNotExist:
+#             # If Wallet does not exist for the user, create a new one
+#             wallet = Wallet.objects.create(user=request.user, balance=new_balance)
+#             messages.success(request, 'Wallet created successfully.')
+#             return redirect('wallet_page')
+
+#         # Convert new_balance to Decimal before adding it to the existing balance
+#         new_balance_decimal = Decimal(new_balance)
+#         wallet.balance += new_balance_decimal
+#         wallet.save()
+#         messages.success(request, 'Wallet balance updated successfully.')
+#         return redirect('wallet_page')
+#     return render(request, 'wallet_update.html')
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from decimal import Decimal
+from .models import Wallet, PaymentData
+import razorpay
+
+def wallet_update(request):
+    if request.method == 'POST':
+        new_balance = request.POST.get('balance')
+        if new_balance is None:
+            messages.error(request, "New balance is not provided.")
+            return redirect('wallet_update')
+
+        try:
+            new_balance = float(new_balance)
+        except ValueError:
+            messages.error(request, "Invalid new balance value.")
+            return redirect('wallet_update')
+
+        # Initialize Razorpay client with your API key and secret
+        client = razorpay.Client(auth=("rzp_test_UWsnOOpJ8l5HSD", "f35ZNp66fSEQVhGztOacN0jD"))
+
+        # Create a Razorpay payment request
+        amount = int(new_balance * 100)  # Convert new_balance to paise
+        payment_data = {
+            'amount': amount,
+            'currency': 'INR',
+            'receipt': 'receipt_id',  # Unique identifier for the payment
+            'payment_capture': '1'  # Automatically capture the payment
+        }
+        payment = client.order.create(data=payment_data)
+
+        # Get the payment ID from the payment response
+        payment_id = payment['id']
+
+        # Store payment_id and new_balance temporarily in session
+        request.session['payment_id'] = payment_id
+        request.session['new_balance'] = new_balance
+
+        # Fetch wallet balance
+        user = request.user
+        wallet, created = Wallet.objects.get_or_create(user=user)
+        wallet_balance = wallet.balance
+
+        return render(request, 'wallet_payment.html', {'payment_id': payment_id, 'new_balance': new_balance, 'wallet_balance': wallet_balance})
+
+    # Fetch wallet balance
+    user = request.user
+    wallet, created = Wallet.objects.get_or_create(user=user)
+    wallet_balance = wallet.balance
+
+    return render(request, 'wallet_update.html', {'wallet_balance': wallet_balance})
+
+
+from django.shortcuts import redirect
+from django.contrib import messages
+from decimal import Decimal
+from .models import Wallet, PaymentData
+
+def wallet_page(request):
+    if 'razorpay_payment_id' in request.GET:
+        payment_id = request.GET.get('razorpay_payment_id')
+        new_balance = request.session.get('new_balance')
+        user = request.user
+        wallet, created = Wallet.objects.get_or_create(user=user)
+
+        # Fetch existing balance and convert it to Decimal
+        existing_balance = Decimal(wallet.balance)
+
+        # Update the balance by adding the new amount
+        wallet.balance = existing_balance + Decimal(new_balance)
+        wallet.save()
+
+        # Store payment data
+        PaymentData.objects.create(wallet=wallet, payment_id=payment_id, amount=new_balance)
+
+        messages.success(request, "Payment successful! Updated balance: {}".format(wallet.balance))
+        return redirect('wallet_update')  # Redirect to 'wallet_update' URL after successful payment
+    else:
+        messages.error(request, "Payment failed!")
+        return redirect('wallet_update')  # Redirect to 'wallet_update' URL after failed payment
+
+
+
+
+
