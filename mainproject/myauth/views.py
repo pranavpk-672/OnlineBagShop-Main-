@@ -1773,7 +1773,10 @@ def checkout_view(request):
     items_json = request.GET.get('items', '[]')
     discountdata = request.GET.get('discountdata','')
     cpid = request.GET.get('cpid', '')
+    request.session['cpid_data_session'] = request.GET.get('cpid', '')
     request.session['cpid'] = cpid
+    request.session['items'] = items_json
+    request.session['discountdata'] = discountdata
    
     items = json.loads(items_json)
 
@@ -1890,6 +1893,303 @@ def checkout_view(request):
 
 
 
+
+# @login_required
+# def checkout_view_wallet(request):
+#     # Get items from the request
+#     items_json = request.GET.get('items', '[]')
+#     discountdata = request.GET.get('discountdata','')
+#     cpid = request.GET.get('cpid', '')
+#     request.session['cpid'] = cpid
+   
+#     items = json.loads(items_json)
+
+
+#     seller_coupons = {}
+
+#     for item in items:
+#         item_id = item.get('item_id')
+#         quantity = item.get('quantity')
+#         price = item.get('price')
+#         seller_id = item.get('seller_id')
+
+#         # Get the Cart_items instance
+#         cart_item = get_object_or_404(Cart_items, id=item_id) 
+
+#         if seller_id:
+#             if seller_id not in seller_coupons:
+#                 # Fetch coupons associated with the seller and not expired
+#                 coupons = Coupon.objects.filter(seller_id=seller_id, expiration_date__gte=timezone.now())
+#                 seller_coupons[seller_id] = coupons
+
+#         # Update quantity and price
+#         cart_item.quantity = quantity
+#         cart_item.price = price
+#         cart_item.cart_verify = 1
+#         cart_item.save()
+#         cart_itemd = get_object_or_404(Cart_items, id=item_id)
+#         sessiondata = cart_itemd.cart_id
+
+#     # Retrieve the cart_id from the Cart_items instance
+#         request.session['cart_id'] = sessiondata 
+
+#     # Calculate total price
+#     total_price = sum(item['price'] for item in items)
+
+    
+
+#     if not discountdata:
+#       total_price_after_discount = total_price
+#     else:
+#       discount_multiplier = (100 - int(discountdata) ) / 100
+#       total_price_after_discount = total_price * discount_multiplier
+
+# # Reduce total price by the discount percentage
+#   #  total_price_after_discount = total_price * discount_multiplier
+
+#     try:
+#         # Get user profile details
+#         profile = request.user.profile
+#         building_name = profile.building_name
+#         road_area = profile.road_area
+#         city = profile.city
+#         state = profile.state
+#         pincode = profile.pincode
+
+#         currency = "INR"
+
+#         request.session['amount'] = total_price_after_discount
+
+#         try:
+#             current_datetime = timezone.now()
+#             user_payment_instance = user_payment.objects.create(
+#             user=request.user,
+#             cart=request.session.get('cart_id'),
+#             amount=request.session.get('amount'),
+#             datetime=current_datetime,
+#             order_id_data="nill",
+#             payment_id_data="nill"
+            
+# )
+            
+#             cart = get_object_or_404(Cart, id=request.session.get('cart_id'))
+
+#             # Retrieve all cart items for the given cart
+#             cart_items = Cart_items.objects.filter(cart=cart)
+
+#             # Update stock for each product based on the quantity ordered
+#             for cart_item in cart_items:
+#                 product = cart_item.product
+#                 ordered_quantity = cart_item.quantity
+
+#                 # Check if the ordered quantity is less than or equal to the available stock
+#                 if ordered_quantity <= product.stock:
+#                 # Update the stock
+#                     product.stock -= ordered_quantity
+#                     product.save()
+
+#                     if product.stock <= 2:
+#                         # Send email to the seller
+#                         seller_email = product.seller_id.email
+#                         subject = 'Low Stock Alert'
+#                         message = f'Your product {product.product_name} is running low on stock. Current stock: {product.stock}'
+#                         sender_email = settings.EMAIL_HOST_USER
+#                         send_mail(subject, message, sender_email, [seller_email])
+
+#             # capture the payment
+#             # razorpay_client.payment.capture(payment_id, 321)
+#             # render success page on successful capture of payment
+#             if 'cpid' in request.session and request.session['cpid']:
+#                 cpid = request.session['cpid']
+
+#                 coupon_id = int(cpid)  # Extract the ID of the Coupon object
+#                 user = request.user  # Assuming you have authenticated users
+#                 coupon = get_object_or_404(Coupon, pk=coupon_id)
+#                 coupon_used = CouponUsed.objects.create(user=user, coupon_id=coupon)
+#                 # Optionally, you can clear the 'cpid' from the session after use
+#                 request.session.pop('cpid')
+
+#                 #do the coding here 
+                
+#             order_instance = Order.objects.create(
+#             userpayment=user_payment_instance)
+            
+#             pincode = request.user.profile.pincode  # Assuming Profile is associated with User
+#             delivery_boy_profile = Profile.objects.filter(pincode=pincode).first()
+
+#             if delivery_boy_profile:
+#                 delivery_boy = DeliveryBoy.objects.filter(pincode=pincode).first()
+#             if delivery_boy:
+#                 # Create DeliveryAssignment instance.
+#                 delivery_assignment = DeliveryAssignment.objects.create(
+#                     user=request.user,
+#                     delivery_boy=delivery_boy,
+#                     order=order_instance,
+#                     assigned_at=current_datetime,
+#                     status='PENDING'
+#                 )
+
+
+#             return redirect('payment_success')
+#         except Exception as capture_error:
+#             # if there is an error while capturing payment.
+#             return JsonResponse({'error': str(capture_error)}, status=500)
+#     except Profile.DoesNotExist:
+#         context = {
+#             'total_price': total_price * 100,
+#         }
+
+#         return render(request, 'checkout.html', context)
+
+
+@login_required
+def checkout_view_wallet(request):
+    try:
+        # Get the wallet object for the current user
+        wallet = Wallet.objects.get(user=request.user)
+
+
+        print(wallet.balance)
+
+        # Get items from the request
+        #items_json = request.GET.get('items', '[]')
+        items_json = request.session.get('items')
+        discountdata = str(request.session.get('discountdata', ''))
+
+        cpid = request.session['cpid_data_session']
+        request.session['cpid'] = cpid
+
+        items = json.loads(items_json)
+
+        seller_coupons = {}
+
+        for item in items:
+            item_id = item.get('item_id')
+            quantity = item.get('quantity')
+            price = item.get('price')
+            seller_id = item.get('seller_id')
+
+            # Get the Cart_items instance
+            cart_item = get_object_or_404(Cart_items, id=item_id)
+
+            if seller_id:
+                if seller_id not in seller_coupons:
+                    # Fetch coupons associated with the seller and not expired
+                    coupons = Coupon.objects.filter(seller_id=seller_id, expiration_date__gte=timezone.now())
+                    seller_coupons[seller_id] = coupons
+
+            # Update quantity and price
+            cart_item.quantity = quantity
+            cart_item.price = price
+            cart_item.cart_verify = 1
+            cart_item.save()
+            cart_itemd = get_object_or_404(Cart_items, id=item_id)
+            sessiondata = cart_itemd.cart_id
+
+            # Retrieve the cart_id from the Cart_items instance
+            request.session['cart_id'] = sessiondata
+
+        # Calculate total price
+        total_price = sum(item['price'] for item in items)
+
+        # Check if the wallet balance is sufficient
+        if wallet.balance >= int(total_price):
+            print("ggggggggggggggggggggggggggggggggggggggggg")
+            if not discountdata:
+                total_price_after_discount = total_price
+
+            else:
+                discount_multiplier = (100 - int(discountdata)) / 100
+                total_price_after_discount = total_price * discount_multiplier
+
+            # Deduct the total price from the wallet balance
+
+
+
+
+            try:
+                
+                wallet.balance = wallet.balance -  int(total_price_after_discount)
+                wallet.save()
+
+                current_datetime = timezone.now()
+                user_payment_instance = user_payment.objects.create(
+                    user=request.user,
+                    cart=request.session.get('cart_id'),
+                    amount=request.session.get('amount'),
+                    datetime=current_datetime,
+                    order_id_data="nill",
+                    payment_id_data="nill"
+                )
+
+                cart = get_object_or_404(Cart, id=request.session.get('cart_id'))
+
+                # Retrieve all cart items for the given cart
+                cart_items = Cart_items.objects.filter(cart=cart)
+
+                # Update stock for each product based on the quantity ordered
+                for cart_item in cart_items:
+                    product = cart_item.product
+                    ordered_quantity = cart_item.quantity
+
+                    # Check if the ordered quantity is less than or equal to the available stock
+                    if ordered_quantity <= product.stock:
+                        # Update the stock
+                        product.stock -= ordered_quantity
+                        product.save()
+
+                        if product.stock <= 2:
+                            # Send email to the seller
+                            seller_email = product.seller_id.email
+                            subject = 'Low Stock Alert'
+                            message = f'Your product {product.product_name} is running low on stock. Current stock: {product.stock}'
+                            sender_email = settings.EMAIL_HOST_USER
+                            send_mail(subject, message, sender_email, [seller_email])
+
+                if 'cpid' in request.session and request.session['cpid']:
+                    cpid = request.session['cpid']
+
+                    coupon_id = int(cpid)  # Extract the ID of the Coupon object
+                    user = request.user  # Assuming you have authenticated users
+                    coupon = get_object_or_404(Coupon, pk=coupon_id)
+                    coupon_used = CouponUsed.objects.create(user=user, coupon_id=coupon)
+                    # Optionally, you can clear the 'cpid' from the session after use
+                    request.session.pop('cpid')
+
+                    # Do the coding here
+
+                order_instance = Order.objects.create(
+                    userpayment=user_payment_instance)
+
+                pincode = request.user.profile.pincode  # Assuming Profile is associated with User
+                delivery_boy_profile = Profile.objects.filter(pincode=pincode).first()
+
+                if delivery_boy_profile:
+                    delivery_boy = DeliveryBoy.objects.filter(pincode=pincode).first()
+                if delivery_boy:
+                    # Create DeliveryAssignment instance.
+                    delivery_assignment = DeliveryAssignment.objects.create(
+                        user=request.user,
+                        delivery_boy=delivery_boy,
+                        order=order_instance,
+                        assigned_at=current_datetime,
+                        status='PENDING'
+                    )
+
+                return redirect('payment_success')
+            except Exception as capture_error:
+                # If there is an error while capturing payment.
+                return JsonResponse({'error': str(capture_error)}, status=500)
+        else:
+            # If the wallet balance is insufficient, redirect to the payment failed page
+            return redirect('payment_failed')
+
+    except Profile.DoesNotExist:
+        context = {
+            'total_price': total_price * 100,
+        }
+
+        return render(request, 'checkout.html', context)
 
 
 @csrf_exempt
@@ -2547,12 +2847,39 @@ def register_delivery_boy(request):
 
 
 @login_required
+def delivery_delivered(request):
+    # Check if the delivery boy has already updated their password
+    if request.user.deliveryboy.has_updated_password:
+        # Assuming 'delivery_dashboard.html' is your template for delivery dashboard
+        # Fetch DeliveryAssignment instances related to the current delivery boy
+        delivery_assignments = DeliveryAssignment.objects.filter( delivery_boy=request.user.deliveryboy, status='DELIVERED' ).order_by('-assigned_at')
+
+        # Get user details associated with each delivery assignment
+        assignment_details = []
+        for assignment in delivery_assignments:
+            assignment_details.append({
+                'assignment': assignment,
+                "email": assignment.user.email,
+                "name": assignment.user.first_name,
+                "last": assignment.user.last_name,
+
+
+                'user_details': assignment.user.profile  # Assuming profile is related to User through OneToOneField
+            })
+
+        # Pass the data to the template for rendering
+        return render(request, 'delivery_dashboard.html', {'assignment_details': assignment_details})
+    else:
+        return redirect('delivery_password')  # Assuming 'delivery_password' is the name of the view where delivery boy updates password
+
+
+@login_required
 def delivery_login(request):
     # Check if the delivery boy has already updated their password
     if request.user.deliveryboy.has_updated_password:
         # Assuming 'delivery_dashboard.html' is your template for delivery dashboard
         # Fetch DeliveryAssignment instances related to the current delivery boy
-        delivery_assignments = DeliveryAssignment.objects.filter(delivery_boy=request.user.deliveryboy).order_by('-assigned_at')
+        delivery_assignments = DeliveryAssignment.objects.filter( delivery_boy=request.user.deliveryboy ).exclude(status='DELIVERED').order_by('-assigned_at')
 
         # Get user details associated with each delivery assignment
         assignment_details = []
@@ -3728,7 +4055,37 @@ from django.db.models import Subquery
 from django.shortcuts import render
 from .models import DeliveryAssignment, Order, User, user_payment, Cart, Cart_items, Product
 
-@login_required
+# @login_required
+# def ship_order(request):
+#     # Fetch pending assignments related to products sold by the logged-in seller
+#     pending_assignments = DeliveryAssignment.objects.filter(
+#         status='PENDING',
+#         order__userpayment__cart__in=Cart.objects.filter(
+#             cart_items__product__seller_id=request.user
+#         )
+#     )
+
+#     # Prepare assignment details for rendering
+#     assignment_details = []
+#     for assignment in pending_assignments:
+#         # Fetch corresponding user details (assuming directly available from DeliveryAssignment)
+#         user_details = {
+#             'email': assignment.user.email,
+#             'profile': assignment.user  # Assuming profile is a related field to User
+#         }
+
+#         assignment_details.append({
+#             'assignment': assignment,
+#             'user_details': user_details
+#         })
+
+#     context = {
+#         'assignment_details': assignment_details,
+#     }
+#     return render(request, 'ship_order.html', context)
+
+
+
 def ship_order(request):
     # Fetch pending assignments related to products sold by the logged-in seller
     pending_assignments = DeliveryAssignment.objects.filter(
@@ -3743,13 +4100,19 @@ def ship_order(request):
     for assignment in pending_assignments:
         # Fetch corresponding user details (assuming directly available from DeliveryAssignment)
         user_details = {
+             'first_name': assignment.user.profile.user.first_name,
+            'last_name': assignment.user.profile.user.last_name,
             'email': assignment.user.email,
             'profile': assignment.user  # Assuming profile is a related field to User
         }
+        
+        # Fetch products associated with this assignment
+        products_list = get_products_for_assignment(assignment)
 
         assignment_details.append({
             'assignment': assignment,
-            'user_details': user_details
+            'user_details': user_details,
+            'products': products_list
         })
 
     context = {
@@ -3757,6 +4120,28 @@ def ship_order(request):
     }
     return render(request, 'ship_order.html', context)
 
+def get_products_for_assignment(assignment):
+    # Step 1: Get the associated Order
+    order = assignment.order
+    
+    # Step 2: Get the associated UserPayment
+    user_payment = order.userpayment
+    
+    # Step 3: Get the Cart associated with the UserPayment
+    cart_items = Cart_items.objects.filter(cart=user_payment.cart)
+    
+    # Step 4: Iterate over the CartItems to get the associated Products
+    products_list = []
+    for cart_item in cart_items:
+        product = cart_item.product
+        # Assuming "product title image" means the first image associated with the product
+        product_image_url = product.image_1.url if product.image_1 else None
+        products_list.append({
+            'product_name': product.product_name,
+            'product_image': product_image_url
+        })
+    
+    return products_list
 
 
 
@@ -3774,7 +4159,19 @@ from django.shortcuts import render
 from .models import DeliveryAssignment
 
 
+def mark_shipped_multiple(request):
+    if request.method == 'POST':
+        # Get the JSON data from the request body
+        data = json.loads(request.body)
 
+        # Extract the list of selected assignment IDs
+        selected_assignment_ids = data.get('selected_assignments', [])
+
+        # Update the status of selected assignments to "SHIPPED"
+        DeliveryAssignment.objects.filter(id__in=selected_assignment_ids).update(status='SHIPPED')
+
+        # Return a JSON response indicating success
+        return JsonResponse({'message': 'Assignments marked as shipped successfully'})
 
 @login_required
 def delivered_products(request):
@@ -3932,6 +4329,60 @@ def wallet_page(request):
     else:
         messages.error(request, "Payment failed!")
         return redirect('wallet_update')  # Redirect to 'wallet_update' URL after failed payment
+
+
+
+
+
+
+
+from django.shortcuts import render
+from .models import Profile
+
+def customer_detail_view(request):
+    if request.user.is_authenticated:
+        customer_profile = Profile.objects.get(user=request.user)
+        return render(request, 'customer_detail.html', {'customer_profile': customer_profile})
+    else:
+        # Handle the case where the user is not authenticated
+        # For example, redirect to the login page
+        return redirect('login')  # Adjust this according to your login URL
+
+
+
+
+
+
+#offer add by seller
+
+
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from .models import Offer, Product, SellerProfile
+from django import forms
+
+def add_offer(request):
+    class OfferForm(forms.ModelForm):
+        class Meta:
+            model = Offer
+            fields = ['product', 'offer_name', 'discount_rate', 'start_date', 'end_date']
+
+    if request.method == 'POST':
+        form = OfferForm(request.POST)
+        if form.is_valid():
+            offer = form.save(commit=False)
+            offer.user = request.user
+            offer.save()
+            return HttpResponseRedirect('/success/')  # Redirect to a success page or wherever you need
+    else:
+        form = OfferForm()
+    
+    # Filter products based on the current user's seller profile
+    seller_profile = SellerProfile.objects.get(user=request.user)
+    products = Product.objects.filter(seller_id=seller_profile.user)
+    
+    return render(request, 'add_offer.html', {'form': form, 'products': products})
+
 
 
 

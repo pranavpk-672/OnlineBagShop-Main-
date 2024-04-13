@@ -1,0 +1,654 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <title>Customer Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
+<!--
+
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+</head>
+
+<body>
+
+   
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+
+
+         <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/myauth/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:8000/myauth/productallview/">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="/myauth/logout/">Logout</a>
+                        </li>-->
+
+                      <!-- <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Welcome{{user.username}}</a>
+                            
+                        </li>
+
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="">Signup</a>
+                                <a class="dropdown-item" href=""></a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                        </li>--> 
+
+                        <!--<li class="nav-item dropdown">
+                           
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                          
+                        </li>-->
+
+
+                </div>
+                <div class="navbar align-self-center d-flex">
+                  <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                                <a class="nav-icon d-none d-lg-inline" href="/myauth/search/" >
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="/myauth/view_cart/">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                            {{ cart_items_count }}
+                        </span>
+                    </a>
+                   <!-- <li class="nav-item dropdown">
+                           
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                        </div>-->
+                      
+                    </li>
+                    <a class="nav-icon position-relative text-decoration-none" href="/myauth/customer/">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+
+    
+
+
+
+ <!--demo header-->
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Website Header</title>
+     <style>
+         /* Header styles */
+         header {
+             background-color: #2c621d;
+             color: #fff;
+             padding: 10px 0;
+         }
+ 
+         .container {
+             max-width: 1200px;
+             margin: 0 auto;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+ 
+         /* Navigation styles */
+         nav ul {
+             list-style: none;
+             margin: 0;
+             padding: 0;
+             display: flex;
+             
+         }
+ 
+         nav ul li {
+             margin-right: 20px;
+             
+             
+         }
+ 
+         nav ul li:last-child {
+             margin-right: 0;
+         }
+ 
+         nav a {
+             text-decoration: none;
+             color: #fff;
+             font-weight: bold;
+         }
+ 
+         /* Dropdown styles */
+         .dropdown {
+             position: relative;
+         }
+ 
+         .dropdown-content {
+             display: none;
+             position: absolute;
+             background-color: #333;
+             min-width: 120px;
+             z-index: 1;
+             
+         }
+ 
+         .dropdown:hover .dropdown-content {
+             display: block;
+         }
+ 
+         .dropdown-content a {
+             padding: 10px;
+             text-align: center;
+             color: #fff;
+             text-decoration: none;
+             display: block;
+         }
+ 
+         .dropdown-content a:hover {
+             /* background-color: #555; */
+             border-bottom: 4px solid rgb(9, 149, 188);
+
+         }
+ 
+         .user {
+             display: flex;
+             align-items: center;
+             margin-left: auto; /* Align to the right */
+         }
+ 
+         .user img {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             margin-right: 10px; /* Add some space between image and text */
+         }
+         header {
+            background-color: #2c621d;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back {
+           
+            padding: 10px;
+            display: flex; /* Use flex to align items horizontally */
+        }
+
+        .back ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .back ul li {
+            margin-right: 20px;
+        }
+
+        .back ul li:last-child {
+            margin-right: 0;
+        }
+
+        .back a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .user.dropdown {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .user.dropdown a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .user.dropdown img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #343a40;
+            min-width: 120px;
+            z-index: 1;
+        }
+
+        .user.dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+     </style>
+ </head>
+ 
+ <body>
+     <header>
+        <div class="container">
+            <div class="back">
+                <ul>
+                    <li><a href="http://127.0.0.1:8000/myauth/productallview/">All Collections </a></li>
+                    <li class="dropdown">
+                        <a href="#">Categories</a>
+                        <div class="dropdown-content">
+                            <!-- Categories loop -->
+                            {% for category in categories %}
+                            <a href="http://127.0.0.1:8000/myauth/productscategorylist/{{ category.id }}">{{ category.category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Sub-categories</a>
+                        <div class="dropdown-content">
+                            <!-- Subcategories loop -->
+                            {% for subcategory in subcategories %}
+                            <a href="http://127.0.0.1:8000/myauth/productssubcategorylist/{{ subcategory.id }}">{{ subcategory.sub_category_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/4">Men</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/5">Women</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/6">Kids</a>
+                    </li>
+                  
+                    <li>
+                        <a href="#">Latest Collections</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="user dropdown">
+                <a href="#">
+                    {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+                    {% else %}
+                    <img src="{% static 'assets/img/pro.png' %}" alt="Default Profile Picture">
+                    {% endif %}
+                    Hello, {{ user.first_name }}
+                </a>
+                <div class="dropdown-content" style="margin-top: 215px;">
+                    <!-- <a href="/myauth/customer/">Profile</a>
+                    <a href="/myauth/updateprofile/">Profile</a>
+                    <a href="/myauth/view_cart/">View Cart</a>
+                    <a href="/myauth/view_wishlist/">View Wishlist</a>
+                    <a href="/myauth/payment_history/">View History</a>
+                    <a href="/myauth/trackmyorder/">View Order</a>
+                    <a href="/myauth/wallet/update/">Wallet</a>
+                    <a href="/myauth/logout/">Logout</a> -->
+                </div>
+            </div>
+        </div>
+     </header>
+     <!-- Your page content goes here -->
+ </body>
+ 
+ </html>
+ 
+<!--demoheader close-->
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .containerr {
+            padding: 20px;
+            
+        }
+
+        .profile-picture {
+            width: 230px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-right: 200px;
+            
+        }
+
+        .detail label {
+            font-weight: bold;
+            color: #333;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+            
+
+
+        }
+
+        .detail span {
+            color: #555;
+
+        }
+
+        .quick-actions .card {
+            border: none;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-radius: 40px;
+            box-shadow: 0px 0px 15px #2c621d33;
+            
+
+        }
+
+        .quick-actions .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-actions .card a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 18px;
+            display: block;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            
+        }
+
+        .quick-actions .card:last-child a {
+            border-bottom: none;
+        }
+
+        .quick-actions .card a:hover {
+            color: #555;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+            
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Standard Color Scheme for Card Links */
+        .card-link {
+            background-color: #fff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-link:hover {
+            background-color: #a6afb8;
+            color: #fff;
+        }
+        .grad-text {
+  background: -webkit-linear-gradient(#0f5112, #2ede8c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  margin-left: 400px;
+  size: 0ch;
+
+    }
+    
+   
+    .demo {
+        width: 900px;
+        margin-left: 100px;
+
+
+    }
+    .demoo {
+        width: 500px;
+        margin-left: 250px;
+    }
+
+    
+    </style>
+</head>
+<body>
+
+<div class="containerr">
+    <div class="row">
+        <div class="col-md-6"><br>
+
+            <h2 class="grad-text">Profile</h2><br>
+            <div class="demo">
+            <div class="card shadow-sm mb-4 p-4 fade-in">
+                <div class="text-center mb-4">
+                    <img src="{{ customer_profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+                </div>
+                <div class="mb-3">
+                    <div class="detail">
+                        <label class="me-2">Name:</label>
+                        <span>{{ customer_profile.user.first_name }} {{ customer_profile.user.last_name }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Email:</label>
+                        <span>{{ customer_profile.user.email }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Phone:</label>
+                        <span>{{ customer_profile.phone }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Alternate Phone:</label>
+                        <span>{{ customer_profile.alt_phone }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Pincode:</label>
+                        <span>{{ customer_profile.pincode }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">State:</label>
+                        <span>{{ customer_profile.state }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">City:</label>
+                        <span>{{ customer_profile.city }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Building Name:</label>
+                        <span>{{ customer_profile.building_name }}</span>
+                    </div>
+                    <div class="detail">
+                        <label class="me-2">Road/Area:</label>
+                        <span>{{ customer_profile.road_area }}</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6"><br>
+            <h2 class="grad-text">Quick Actions</h2><br>
+            <div class="demoo">
+
+
+            <div class="card shadow-sm p-4 fade-in">
+                <div class="quick-actions">
+                    <div class="card mb-3">
+                        <a href="/myauth/updateprofile/" class="text-decoration-none card-link">Edit Profile</a>
+                    </div>
+                    <div class="card mb-3">
+                        <a href="/myauth/view_cart/" class="text-decoration-none card-link">View Cart</a>
+                    </div>
+                    <div class="card mb-3">
+                        <a href="/myauth/view_wishlist/" class="text-decoration-none card-link">View Wishlist</a>
+                    </div>
+                    <div class="card mb-3">
+                        <a href="/myauth/payment_history/" class="text-decoration-none card-link">View History</a>
+                    </div>
+                    <div class="card mb-3">
+                        <a href="/myauth/trackmyorder/" class="text-decoration-none card-link">View Order</a>
+                    </div>
+                    <div class="card mb-3">
+                        <a href="/myauth/wallet/update/" class="text-decoration-none card-link">View Wallet</a>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <a href="/myauth/logout/" class="text-decoration-none card-link">Logout</a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

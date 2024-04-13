@@ -32,6 +32,8 @@ urlpatterns = [
     path('sellerr/',views.sellerr,name='sellerr'),
     path('sellviews/',views.sellviews,name='sellviews'),
     path('userviewss/',views.userviewss,name='userviewss'),
+        path('customer/', views.customer_detail_view, name='customer_detail'),
+
 
 
     #selleer approval
@@ -175,6 +177,8 @@ path('payment_success/', views.payment_success, name='payment_success'),
     path('Change_password/', views.Change_password, name='Change_password'),
     path('delivery_password/', views.delivery_password, name='delivery_password'),
 
+     path('delivery_delivered/',views.delivery_delivered,name="delivery_delivered"),
+
 
 
  #purchase history view
@@ -230,6 +234,13 @@ path('seller_product_user_view/<int:user_id>/', views.view_purchased_products, n
     path('wallet/payment/success/', views.payment_success, name='payment_success'),
     path('wallet_page/', views.wallet_page, name='wallet_page'),
     path('wallet_page/', views.wallet_page, name='wallet_page'),
+
+    path('checkout_view_wallet/', views.checkout_view_wallet, name="checkout_view_wallet"),
+
+    path('mark_shipped_multiple/', views.mark_shipped_multiple, name='mark_shipped_multiple'),
+
+
+    path('add_offer/', views.add_offer, name='add_offer'),
 
 
 

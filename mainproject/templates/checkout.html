@@ -256,8 +256,14 @@ https://templatemo.com/tm-559-zay-shop
              <input type="hidden" class="tprc" value="{{ total_price }}">
             <p>Total Price: {{ total_price }}</p>
 
-    
+<!--     
             <button id="pay-btn">Checkout</button>
+            <a href="{% url 'checkout_view_wallet' %}"><button>Checkout wallet</button></a> -->
+
+            <input type="checkbox" id="use-wallet-checkbox"> Use Wallet
+
+<button id="pay-btn">Checkout</button>
+<a href="{% url 'checkout_view_wallet' %}" id="wallet-link"><button>Checkout wallet</button></a>
         </div>
     </div>
 
@@ -275,7 +281,53 @@ https://templatemo.com/tm-559-zay-shop
     <!-- Apply Button -->
    
 {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
+
+<script>
+    // Get references to the checkbox and buttons
+    const useWalletCheckbox = document.getElementById("use-wallet-checkbox");
+    const payButton = document.getElementById("pay-btn");
+    const walletLink = document.getElementById("wallet-link");
+
+    walletLink.style.display = "none"; 
+
+    // Add event listener to checkbox
+    useWalletCheckbox.addEventListener("change", function() {
+        // If checkbox is checked, hide payButton and show walletLink
+        if (this.checked) {
+            payButton.style.display = "none";
+            walletLink.style.display = "inline-block"; // Show the link
+        } else { // If checkbox is not checked, show payButton and hide walletLink
+            payButton.style.display = "inline-block"; // Show the button
+            walletLink.style.display = "none"; // Hide the link
+        }
+    });
+</script>
 
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

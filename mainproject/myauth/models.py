@@ -9,12 +9,7 @@ from django.utils import timezone
 from django.db import models
 from django.conf import settings
 
-class Wallet(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    def __str__(self):
-        return f"{self.user}'s Wallet"
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
@@ -230,6 +225,20 @@ class DeliveryOTP(models.Model):
     assignment = models.ForeignKey(DeliveryAssignment, on_delete=models.CASCADE)
     otp = models.CharField(max_length=6)  # Assuming OTP length is 6 characters
 
+
+
+
+
+class Offer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    offer_name = models.CharField(max_length=100)
+    discount_rate = models.DecimalField(max_digits=5, decimal_places=2)  # Assuming discount rate is a decimal value
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+
+    
 
 def __str__(self):
         return f"Coupon: {self.coupon_code}, Discount: {self.discount_percentage}%"

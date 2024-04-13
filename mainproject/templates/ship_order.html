@@ -551,24 +551,120 @@ https://templatemo.com/tm-559-zay-shop
     </style>
 </head>
 <div id="bbody">
-
-<body>
-   <center> <div id="containerr">
-        <!-- <h1>Pending Assignments</h1> -->
-        {% for assignment_details in assignment_details %}
-            <div class="card">
-                <p><strong>Order ID:</strong> ORDERID_{{ assignment_details.assignment.order.id }}</p>
-                <!-- <p class="card-text">Product Name: {{ assignment_details.assignment.product.product_name }}</p> -->
-                <p><strong>Customer Email:</strong> {{ assignment_details.user_details.email }}</p>
-                <p><strong>Customer Name:</strong>{{ assignment_details.user_details.profile.first_name }} {{ assignment_details.user_details.profile.last_name }}</p>
-                <form action="{% url 'mark_shipped' assignment_details.assignment.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Mark as Shipped</button>
-                </form>
+    <body>
+        <center>
+            <div id="containerr">
+                <!-- <h1>Pending Assignments</h1> -->
+                {% if assignment_details %}
+                <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
+                <button type="button" id="checkAllBtn" class="btn btn-secondary">Check All</button>
+                {% for assignment_details in assignment_details %}
+                <div>
+                    <input type="checkbox" class="assignment-checkbox" value="{{ assignment_details.assignment.id }}">
+                    <p><strong>Order ID:</strong> ORDERID_{{ assignment_details.assignment.order.id }}</p>
+                    <!-- <p class="card-text">Product Name: {{ assignment_details.assignment.product.product_name }}</p> -->
+                    <p><strong>Customer Email:</strong> {{ assignment_details.user_details.email }}</p>
+                    <p><strong>Customer Name:</strong>{{ assignment_details.user_details.profile.first_name }} {{ assignment_details.user_details.profile.last_name }}</p>
+                    <div class="products">
+                        <h2>Products:</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Serial No.</th>
+                                    <th>Product Name</th>
+                                    <th>Product Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in assignment_details.products %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ product.product_name }}</td>
+                                    <td>
+                                        {% if product.product_image %}
+                                        <img src="{{ product.product_image }}" alt="{{ product.product_name }}" width="100">
+                                        {% else %}
+                                        <p>No image available</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+    <p>No results found</p>
+{% endif %}
             </div>
-        {% endfor %}
-    </div></center>
-</body>
+        </center>
+        <script>
+
+            // JavaScript code
+// JavaScript code
+document.addEventListener("DOMContentLoaded", function() {
+    var isAllChecked = false; // Flag to track whether all checkboxes are checked
+
+    document.getElementById("checkAllBtn").addEventListener("click", function() {
+        var checkboxes = document.querySelectorAll(".assignment-checkbox");
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = !isAllChecked; // Toggle the checked state
+        });
+
+        isAllChecked = !isAllChecked; // Toggle the flag
+    });
+});
+
+
+
+
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                var selectedIds = [];
+                var checkboxes = document.getElementsByClassName('assignment-checkbox');
+        
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        selectedIds.push(checkboxes[i].value);
+                    }
+                }
+        
+                // Convert the array to JSON
+                var data = JSON.stringify({ selected_assignments: selectedIds });
+        
+                // Send AJAX request to your Django backend using fetch
+                fetch('{% url "mark_shipped_multiple" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token in headers
+                    },
+                    body: data
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                        window.location.href = window.location.href;
+
+                       
+                    } else {
+                        throw new Error('Failed to mark assignments as shipped');
+                    }
+                })
+                .then(data => {
+                    console.log(data.message);  // Log success message
+                    // Optionally, perform any further actions based on the response
+                })
+                .catch(error => {
+                    console.error(error.message);  // Log error message
+                    // Optionally, handle errors or display error messages to the user
+                });
+            });
+        </script>
+        
+    </body>
+    
+    
 </div>
 
 </html>
