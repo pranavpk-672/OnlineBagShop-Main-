@@ -4384,7 +4384,10 @@ def add_offer(request):
     return render(request, 'add_offer.html', {'form': form, 'products': products})
 
 
+#about home
+def about_home(request):
 
+    return render(request, 'about_home.html' )
 
 
 

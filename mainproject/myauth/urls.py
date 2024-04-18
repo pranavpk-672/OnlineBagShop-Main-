@@ -21,6 +21,7 @@ urlpatterns = [
     path('adminreg/',views.adminreg,name='adminreg'),
     path('adminn/',views.adminn,name='adminn'),
     path('abouttt/',views.abouttt,name='abouttt'),
+    path('about_home/',views.about_home,name='about_home'),
     path('con/',views.con,name='con'),
     path('updateprofile/',views.updateprofile,name='updateprofile'),
     path('update-profile/',views.update_profile,name='update-profile'),

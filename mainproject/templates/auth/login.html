@@ -43,8 +43,9 @@ AispaceX Login
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                       </div>
                       {% endfor %}
-    
-                    <form action="http://127.0.0.1:8000/myauth/login/" method="POST" id="Login-form">
+                      <!-- <form action="http://127.0.0.1:8000/myauth/login/" method="POST" id="Login-form"> -->
+
+                    <form action="{% url 'handlelogin' %}" method="POST" id="Login-form">
                         {% csrf_token %}
                         <br>
                        

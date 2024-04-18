@@ -72,10 +72,12 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="/myauth/home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
+                            <a class="nav-link" href="/myauth/about_home">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://127.0.0.1:8000/myauth/productallview/">Shop</a>
+                            <!-- <a class="nav-link" href="http://127.0.0.1:8000/myauth/productallview/">Shop</a> -->
+                            <a class="nav-link" href="{% url 'productallview' %}">Shop</a>
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
@@ -342,13 +344,17 @@ https://templatemo.com/tm-559-zay-shop
         <div class="container">
             <div class="back">
                 <ul>
-                    <li><a href="http://127.0.0.1:8000/myauth/productallview/">All Collections </a></li>
+                    <!-- <li><a href="http://127.0.0.1:8000/myauth/productallview/">All Collections </a></li> -->
+                    <li><a href="{% url 'productallview' %}">All Collections </a></li>
+
                     <li class="dropdown">
                         <a href="#">Categories</a>
                         <div class="dropdown-content">
                             <!-- Categories loop -->
                             {% for category in categories %}
-                            <a href="http://127.0.0.1:8000/myauth/productscategorylist/{{ category.id }}">{{ category.category_name }}</a>
+                            <!-- <a href="http://127.0.0.1:8000/myauth/productscategorylist/{{ category.id }}">{{ category.category_name }}</a> -->
+                            <a href="{% url 'product_category_list' category.id %}">{{ category.category_name }}</a>
+
                             {% endfor %}
                         </div>
                     </li>
@@ -357,22 +363,31 @@ https://templatemo.com/tm-559-zay-shop
                         <div class="dropdown-content">
                             <!-- Subcategories loop -->
                             {% for subcategory in subcategories %}
-                            <a href="http://127.0.0.1:8000/myauth/productssubcategorylist/{{ subcategory.id }}">{{ subcategory.sub_category_name }}</a>
+                            <!-- <a href="http://127.0.0.1:8000/myauth/productssubcategorylist/{{ subcategory.id }}">{{ subcategory.sub_category_name }}</a> -->
+                            <a href="{% url 'product_sub_category_list' subcategory.id %}">{{ subcategory.sub_category_name }}</a>
+
                             {% endfor %}
                         </div>
                     </li>
                     <li>
-                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/4">Men</a>
+                        <!-- <a href="http://127.0.0.1:8000/myauth/productscategorylist/4">Men</a> -->
+                        <a href="{% url 'productscategorylist_index' 4 %}">Men</a>
+
+                    </li>
+
+                    <li>
+                        <!-- <a href="http://127.0.0.1:8000/myauth/productscategorylist/5">Women</a> -->
+                        <a href="{% url 'productscategorylist_index' 5 %}">Women</a>
+
                     </li>
                     <li>
-                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/5">Women</a>
-                    </li>
-                    <li>
-                        <a href="http://127.0.0.1:8000/myauth/productscategorylist/6">Kids</a>
+                        <!-- <a href="http://127.0.0.1:8000/myauth/productscategorylist/6">Kids</a> -->
+                        <a href="{% url 'productscategorylist_index' 6 %}">Kids</a>
+
                     </li>
                   
                     <li>
-                        <a href="#">Latest Collections</a>
+                        <a href="{% url 'productallview' %}">Latest Collections</a>
                     </li>
 
                 </ul>
