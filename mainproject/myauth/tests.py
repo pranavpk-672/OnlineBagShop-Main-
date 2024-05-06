@@ -15,17 +15,17 @@
 #         username_input = self.driver.find_element(By.ID, 'email')
 #         password_input = self.driver.find_element(By.ID, 'password')
 
-#         # Replace 'valid_username' and 'valid_password' with actual credentials
-#         username_input.send_keys('roshangeorge2024b@mca.ajce.in')
-#         password_input.send_keys('Pranav@2002')
+        # # Replace 'valid_username' and 'valid_password' with actual credentials
+        # username_input.send_keys('roshangeorge2024b@mca.ajce.in')
+        # password_input.send_keys('Pranav@2002')
 
-#         login_button = self.driver.find_element(By.ID, 'submit')
-#         login_button.click()
+        # login_button = self.driver.find_element(By.ID, 'submit')
+        # login_button.click()
 
-#         time.sleep(2)  # Adjust the time as needed
+        # time.sleep(2)  # Adjust the time as needed
 
-#         # Check if redirected to the ownerpage
-#         self.assertIn('http://127.0.0.1:8000/myauth/delivery_login/', self.driver.current_url.lower())
+        # # Check if redirected to the ownerpage
+        # self.assertIn('http://127.0.0.1:8000/myauth/delivery_login/', self.driver.current_url.lower())
 
 
 
@@ -41,39 +41,39 @@
 
 # class LoginTest(unittest.TestCase):
 
-#     def setUp(self):
-#         self.driver = webdriver.Chrome()
+    # def setUp(self):
+    #     self.driver = webdriver.Chrome()
 
-#     def test_successful_login(self):
-#         self.driver.get('http://127.0.0.1:8000/myauth/login/')
-#         username_input = self.driver.find_element(By.ID, 'email')
-#         password_input = self.driver.find_element(By.ID, 'password')
+    # def test_successful_login(self):
+    #     self.driver.get('http://127.0.0.1:8000/myauth/login/')
+    #     username_input = self.driver.find_element(By.ID, 'email')
+    #     password_input = self.driver.find_element(By.ID, 'password')
 
-#         # Replace 'valid_username' and 'valid_password' with actual credentials
-#         username_input.send_keys('pranavpk2024b@mca.ajce.in')
-#         password_input.send_keys('pRANAV@2002')
+    #     # Replace 'valid_username' and 'valid_password' with actual credentials
+    #     username_input.send_keys('pranavpk2024b@mca.ajce.in')
+    #     password_input.send_keys('pRANAV@2002')
 
-#         login_button = self.driver.find_element(By.ID, 'submit')
-#         login_button.click()
+    #     login_button = self.driver.find_element(By.ID, 'submit')
+    #     login_button.click()
 
-#         time.sleep(2)  # Adjust the time as needed
+    #     time.sleep(2)  # Adjust the time as needed
 
-#         # Check if redirected to the owner page
-#         self.assertIn('http://127.0.0.1:8000/myauth/home/', self.driver.current_url.lower())
+    #     # Check if redirected to the owner page
+    #     self.assertIn('http://127.0.0.1:8000/myauth/home/', self.driver.current_url.lower())
 
-#         # Click on the "All Collections" link
-#         all_collections_link = self.driver.find_element(By.XPATH, "//a[contains(text(),'All Collections')]")
-#         all_collections_link.click()
-#         time.sleep(2)  # Adjust the time as needed
-#         self.assertIn('http://127.0.0.1:8000/myauth/productallview/', self.driver.current_url.lower())
+    #     # Click on the "All Collections" link
+    #     all_collections_link = self.driver.find_element(By.XPATH, "//a[contains(text(),'All Collections')]")
+    #     all_collections_link.click()
+    #     time.sleep(2)  # Adjust the time as needed
+    #     self.assertIn('http://127.0.0.1:8000/myauth/productallview/', self.driver.current_url.lower())
 
-#         # Scroll to the "Add to Cart" button
-#         add_to_cart_button = WebDriverWait(self.driver, 10).until(
-#             EC.visibility_of_element_located((By.XPATH, "//a[contains(@class,'btn-wishlist') and contains(text(),'Add to Cart')]"))
-#         )
-#         self.driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
+    #     # Scroll to the "Add to Cart" button
+    #     add_to_cart_button = WebDriverWait(self.driver, 10).until(
+    #         EC.visibility_of_element_located((By.XPATH, "//a[contains(@class,'btn-wishlist') and contains(text(),'Add to Cart')]"))
+    #     )
+    #     self.driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
 
-#         # Click on the "Add to Cart" button using JavaScript
+    #     # Click on the "Add to Cart" button using JavaScript
 #         self.driver.execute_script("arguments[0].click();", add_to_cart_button)
 
 #         # Wait for the cart page to load
@@ -209,45 +209,45 @@
 
 #         # Click on the "All Collections" link
 #         all_collections_link = self.driver.find_element(By.XPATH, "//a[contains(text(),'All Collections')]")
-#         all_collections_link.click()
-#         time.sleep(2)  # Adjust the time as needed
-#         self.assertIn('http://127.0.0.1:8000/myauth/productallview/', self.driver.current_url.lower())
+        # all_collections_link.click()
+        # time.sleep(2)  # Adjust the time as needed
+        # self.assertIn('http://127.0.0.1:8000/myauth/productallview/', self.driver.current_url.lower())
 
-#         # Scroll to the "Add to Cart" button
-#         add_to_cart_button = WebDriverWait(self.driver, 10).until(
-#             EC.visibility_of_element_located((By.XPATH, "//a[contains(@class,'btn-wishlist') and contains(text(),'Add to Cart')]"))
-#         )
-#         self.driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
+        # # Scroll to the "Add to Cart" button
+        # add_to_cart_button = WebDriverWait(self.driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//a[contains(@class,'btn-wishlist') and contains(text(),'Add to Cart')]"))
+        # )
+        # self.driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
 
-#         # Click on the "Add to Cart" button using JavaScript
-#         self.driver.execute_script("arguments[0].click();", add_to_cart_button)
+        # # Click on the "Add to Cart" button using JavaScript
+        # self.driver.execute_script("arguments[0].click();", add_to_cart_button)
 
-#         # Wait for the cart page to load
-#         WebDriverWait(self.driver, 10).until(
-#             EC.url_contains('http://127.0.0.1:8000/myauth/view_cart/')
-#         )
-#         time.sleep(2)  # Adjust the time as needed
+        # # Wait for the cart page to load
+        # WebDriverWait(self.driver, 10).until(
+        #     EC.url_contains('http://127.0.0.1:8000/myauth/view_cart/')
+        # )
+        # time.sleep(2)  # Adjust the time as needed
 
-#         # Assert that the cart page URL is loaded
-#         self.assertIn('http://127.0.0.1:8000/myauth/view_cart/', self.driver.current_url.lower())
+        # # Assert that the cart page URL is loaded
+        # self.assertIn('http://127.0.0.1:8000/myauth/view_cart/', self.driver.current_url.lower())
 
-#         # Scroll to the "Checkout" button
-#         checkout_button = WebDriverWait(self.driver, 10).until(
-#             EC.visibility_of_element_located((By.CLASS_NAME, 'checkout-btn'))
-#         )
-#         self.driver.execute_script("arguments[0].scrollIntoView();", checkout_button)
+        # # Scroll to the "Checkout" button
+        # checkout_button = WebDriverWait(self.driver, 10).until(
+        #     EC.visibility_of_element_located((By.CLASS_NAME, 'checkout-btn'))
+        # )
+        # self.driver.execute_script("arguments[0].scrollIntoView();", checkout_button)
 
-#         # Click on the "Checkout" button using JavaScript
-#         self.driver.execute_script("arguments[0].click();", checkout_button)
+        # # Click on the "Checkout" button using JavaScript
+        # self.driver.execute_script("arguments[0].click();", checkout_button)
 
-#         # Wait for the checkout page to load
-#         WebDriverWait(self.driver, 10).until(
-#             EC.url_contains('http://127.0.0.1:8000/myauth/checkout/')
-#         )
-#         time.sleep(2)  # Adjust the time as needed
+        # # Wait for the checkout page to load
+        # WebDriverWait(self.driver, 10).until(
+        #     EC.url_contains('http://127.0.0.1:8000/myauth/checkout/')
+        # )
+        # time.sleep(2)  # Adjust the time as needed
 
-#         # Assert that the checkout page URL is loaded
-#         self.assertIn('http://127.0.0.1:8000/myauth/checkout/', self.driver.current_url.lower())
+        # # Assert that the checkout page URL is loaded
+        # self.assertIn('http://127.0.0.1:8000/myauth/checkout/', self.driver.current_url.lower())
 
 #         # Click on the checkbox to use wallet
 #         use_wallet_checkbox = self.driver.find_element(By.ID, 'use-wallet-checkbox')
@@ -311,11 +311,11 @@
 
 #         time.sleep(2)  # Adjust the time as needed
 
-#         # Click on "Update Stock"
-#         update_stock_link = self.driver.find_element(By.XPATH, "//a[@href='http://127.0.0.1:8000/myauth/seller_prodview/']")
-#         update_stock_link.click()
+        # # Click on "Update Stock"
+        # update_stock_link = self.driver.find_element(By.XPATH, "//a[@href='http://127.0.0.1:8000/myauth/seller_prodview/']")
+        # update_stock_link.click()
 
-#         time.sleep(2)  # Adjust the time as needed
+        # time.sleep(2)  # Adjust the time as needed
 
 #         # Assert if redirected to the update stock page
 #         self.assertIn('http://127.0.0.1:8000/myauth/seller_prodview/', self.driver.current_url.lower())

@@ -17,6 +17,8 @@
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
 <!--
 
@@ -24,157 +26,12 @@
 https://templatemo.com/tm-559-zay-shop
 
 -->
-</head>
-
-<body>
-
-   
-    <!-- Start Top Nav -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
-        <div class="container text-light">
-            <div class="w-100 d-flex justify-content-between">
-                <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                </div>
-                <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Close Top Nav -->
 
 
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+<style>
 
-
-         <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-            
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- <a class="nav-link" href="{% url 'productallview' %}">Shop</a> -->
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            
-                            <!-- <a class="nav-link" href="#contact">Notifications <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><linearGradient id="a" x1="228.382" x2="321.162" y1="110.857" y2="-43.773" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><circle cx="255.995" cy="454.485" r="57.513" style="fill:url(#a);" fill=""></circle><linearGradient id="b" x1="320.435" x2="197.095" y1="26.9" y2="150.24" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M255.995 396.975c-29.957 0-54.554 22.907-57.255 52.158l62.609 62.61c29.251-2.702 52.158-27.298 52.158-57.255 0-31.764-25.749-57.513-57.512-57.513z" style="fill:url(#b);" fill=""></path><linearGradient id="c" x1="182.863" x2="414.443" y1="237.048" y2="-148.912" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><path d="M444.458 354.192H67.532c-25.743 0-46.611 20.868-46.611 46.612 0 25.743 20.868 46.612 46.611 46.612h376.926c25.743 0 46.612-20.869 46.612-46.612-.001-25.744-20.869-46.612-46.612-46.612z" style="fill:url(#c);" fill=""></path><linearGradient id="d" x1="182.14" x2="393.42" y1="328.145" y2="129.135" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><path d="M417.478 319.025v-93.437c0-75.566-51.902-138.983-121.996-156.602a45.639 45.639 0 0 0 6.313-23.187C301.794 20.508 281.286 0 255.995 0s-45.799 20.508-45.799 45.799a45.636 45.636 0 0 0 6.313 23.187C146.413 86.605 94.525 150.023 94.525 225.588v93.437c0 20.227-16.398 36.626-36.625 36.626h396.19c-20.228 0-36.612-16.399-36.612-36.626zM255.995 64.106c-10.114 0-18.32-8.192-18.32-18.306 0-10.128 8.206-18.32 18.32-18.32s18.32 8.192 18.32 18.32c0 10.114-8.206 18.306-18.32 18.306z" style="fill:url(#d);" fill=""></path><linearGradient id="e" x1="433.798" x2="-2.942" y1="142.993" y2="97.923" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M21.5 410.067c3.519 22.257 22.786 39.277 46.032 37.172h376.926c23.247 2.105 42.513-14.915 46.032-37.172H21.5z" style="fill:url(#e);" fill=""></path><linearGradient id="f" x1="433.673" x2="356.063" y1="215.738" y2="293.348" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M417.478 252.114v53.852l-71.708-71.708.261-.015c3.686-.203 7.289.953 10.276 3.122 13.62 9.888 30.373 15.717 48.49 15.717a83.693 83.693 0 0 0 12.681-.968z" style="fill:url(#f);" fill=""></path><linearGradient id="g" x1="342.728" x2="409.798" y1="443.22" y2="283.45" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#D63305" stop-color="#d63305"></stop><stop offset=".366" style="stop-color:#CF3004" stop-color="#cf3004"></stop><stop offset=".899" style="stop-color:#BC2602" stop-color="#bc2602"></stop><stop offset="1" style="stop-color:#B72401" stop-color="#b72401"></stop></linearGradient><circle cx="404.805" cy="170.432" r="86.272" style="fill:url(#g);" fill=""></circle><path d="M385.346 135.879c0-2.798 1.13-5.006 3.391-6.62l16.793-16.146c1.183-1.183 2.637-1.776 4.359-1.776 1.938 0 3.685.512 5.248 1.534 1.559 1.024 2.341 2.397 2.341 4.117v106.891c0 1.723-.863 3.095-2.583 4.117-1.723 1.024-3.714 1.534-5.974 1.534-2.369 0-4.387-.51-6.055-1.534-1.67-1.022-2.502-2.395-2.502-4.117v-89.775l-5.651 7.105c-1.077 1.077-2.26 1.614-3.552 1.614-1.615 0-2.988-.726-4.117-2.179-1.133-1.455-1.698-3.042-1.698-4.765z" style="" fill="#ffffff" data-original="#ffffff"></path></g></svg></a> -->
-                        </li>
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="/myauth/logout/">Logout</a>
-                        </li>-->
-
-                      <!-- <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Welcome{{user.username}}</a>
-                            
-                        </li>
-
-                       
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Profile
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="">Signup</a>
-                                <a class="dropdown-item" href=""></a>
-                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
-                            </div>
-                        </li>--> 
-
-                        <!--<li class="nav-item dropdown">
-                           
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome {{ user.username }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">Profile</a>
-                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
-                            </div>
-                          
-                        </li>-->
-
-
-                       
-
-
-                    
-                </div>
-                <!-- <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a> -->
-                   <!-- <li class="nav-item dropdown">
-                           
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             {{ user.username }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="/myauth/logout/">Logout</a>
-                        </div>-->
-                      
-                    </li>
-                    <!--<a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>-->
-                </div>
-            </div>
-
-        </div>
-    </nav>
-    
-    <!-- Close Header -->
-
-
-
-    <!--demo header-->
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>High-Designed Header</title>
-        <style>
-            /* General Styles */
-            body {
+  /* General Styles */
+  body {
                 font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 0;
@@ -380,77 +237,9 @@ https://templatemo.com/tm-559-zay-shop
   font-weight: bold;
 
     }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <!-- Left Side: Brand/Logo -->
-                
-                <!-- Middle Section: Navigation Links -->
-                <nav>
-                    <div class="profile-logout">
 
-                    <ul class="nav-links">
-                        <li><a href="http://127.0.0.1:8000/myauth/delivery_delivered/">View Delivered Details</a></li>
-                        
-                        <!-- <li><a href="#">View feedback</a></li> -->
-                        <!-- <li><a href="#">Notifications</a></li> -->
-                        <!-- <li><a href="#">View Delivery Details </a></li> -->
-
-                        <div class="profile-logout">
-                            <li class="dropdown">
-                                <!-- <a href="http://127.0.0.1:8000/myauth/delivery_delivered/">view orders</a> -->
-                                <div class="dropdown-content" >
-    
-                                    <!-- <a href="#">view orders</a> -->
-
-                                </div>
-                            </li>
-
-                        <!-- <li class="dropdown">
-                            <a href="#">Create Coupon</a>
-                            <div class="dropdown-content" >
-
-                                <a href="#">Discount Coupon</a>
-                                <a href="#">View Coupons</a>
-                                <a href="#">Promotional Coupon</a>
-                            </div>
-
-                        </li> -->
-                        </div>
-                      
-                    </ul>
-                </nav>
-                <!-- Right Side: Profile and Logout Dropdown -->
-                <div class="profile-logout">
-                    <div class="dropdown">
-                        <a href="#" class="user">
-                            <img src="{{ user.sellerprofile.profile_picture.url }}" style="width: 40px; height: 40px; border-radius: 50%;">
-                            Hello, {{ user.first_name }}
-                        </a>
-                        <div class="dropdown-content">
-                            <!-- <a href="">Profile</a> -->
-                            <!-- <a href="">View Cart</a> -->
-                            <a href="#" onclick="openModal()">Change password</a>
-                            <a href="/myauth/logout/">Logout</a>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </header>
-
-       
-
-    </body>
-    </html>
-<!-- demoheader close -->
-
-  <style>
-    
-    /* Modal styles */
-    .modal {
+      /* Modal styles */
+      .modal {
         display: none;
         position: fixed;
         z-index: 1000;
@@ -512,7 +301,7 @@ https://templatemo.com/tm-559-zay-shop
         color: red;
     }
 
-    button[type="submit"] {
+    /* button[type="submit"] {
         margin-top: 20px;
         padding: 10px 20px;
         background-color: #007bff;
@@ -526,12 +315,304 @@ https://templatemo.com/tm-559-zay-shop
     button[type="submit"]:hover {
         background-color: #0056b3;
     }
+ */
+
+
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-body {
+        padding: 20px;
+        background-color: #fff;
+    }
+    .status-details {
+        background-color: #f8f9fa;
+        border-radius: 0 0 10px 10px;
+    }
+    .user-details {
+        background-color: #f8f9fa;
+        border-radius: 0 0 10px 10px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .list-unstyled {
+        padding-left: 0;
+    }
+    .list-unstyled li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    .list-unstyled li span {
+        font-weight: bold;
+    }
+    h2 {
+        color: #007bff;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    .rd-data {
+        color: rgb(255, 4, 63);
+        font-weight: bold;
+    }
 
 
 
+.button-88 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-88:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.button-88:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+
+.body-tr {
+    background-color: white;
+    color: #6b6565;
+}
+.head-tr {
+    background-color: #e5e5e5;
+    color: #000000;
+}
+.cls-grn {
+    color: #00c300;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
 
    
-</style>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img class="img-fluid" src="{% static 'assets/img/logo3.jpg' %}" alt="">
+
+
+         <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="{% url 'productallview' %}">Shop</a> -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            
+                            <!-- <a class="nav-link" href="#contact">Notifications <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><linearGradient id="a" x1="228.382" x2="321.162" y1="110.857" y2="-43.773" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><circle cx="255.995" cy="454.485" r="57.513" style="fill:url(#a);" fill=""></circle><linearGradient id="b" x1="320.435" x2="197.095" y1="26.9" y2="150.24" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M255.995 396.975c-29.957 0-54.554 22.907-57.255 52.158l62.609 62.61c29.251-2.702 52.158-27.298 52.158-57.255 0-31.764-25.749-57.513-57.512-57.513z" style="fill:url(#b);" fill=""></path><linearGradient id="c" x1="182.863" x2="414.443" y1="237.048" y2="-148.912" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><path d="M444.458 354.192H67.532c-25.743 0-46.611 20.868-46.611 46.612 0 25.743 20.868 46.612 46.611 46.612h376.926c25.743 0 46.612-20.869 46.612-46.612-.001-25.744-20.869-46.612-46.612-46.612z" style="fill:url(#c);" fill=""></path><linearGradient id="d" x1="182.14" x2="393.42" y1="328.145" y2="129.135" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200" stop-color="#ffc200"></stop><stop offset=".268" style="stop-color:#FFBB00" stop-color="#ffbb00"></stop><stop offset=".659" style="stop-color:#FFA801" stop-color="#ffa801"></stop><stop offset="1" style="stop-color:#FF9102" stop-color="#ff9102"></stop></linearGradient><path d="M417.478 319.025v-93.437c0-75.566-51.902-138.983-121.996-156.602a45.639 45.639 0 0 0 6.313-23.187C301.794 20.508 281.286 0 255.995 0s-45.799 20.508-45.799 45.799a45.636 45.636 0 0 0 6.313 23.187C146.413 86.605 94.525 150.023 94.525 225.588v93.437c0 20.227-16.398 36.626-36.625 36.626h396.19c-20.228 0-36.612-16.399-36.612-36.626zM255.995 64.106c-10.114 0-18.32-8.192-18.32-18.306 0-10.128 8.206-18.32 18.32-18.32s18.32 8.192 18.32 18.32c0 10.114-8.206 18.306-18.32 18.306z" style="fill:url(#d);" fill=""></path><linearGradient id="e" x1="433.798" x2="-2.942" y1="142.993" y2="97.923" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M21.5 410.067c3.519 22.257 22.786 39.277 46.032 37.172h376.926c23.247 2.105 42.513-14.915 46.032-37.172H21.5z" style="fill:url(#e);" fill=""></path><linearGradient id="f" x1="433.673" x2="356.063" y1="215.738" y2="293.348" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#FFC200;stop-opacity:0" stop-color="#ffc200;stop-opacity:0"></stop><stop offset=".203" style="stop-color:#FFBB00;stop-opacity:0.203" stop-color="#ffbb00;stop-opacity:0.203"></stop><stop offset=".499" style="stop-color:#FFA700;stop-opacity:0.499" stop-color="#ffa700;stop-opacity:0.499"></stop><stop offset=".852" style="stop-color:#FF8800;stop-opacity:0.852" stop-color="#ff8800;stop-opacity:0.852"></stop><stop offset="1" style="stop-color:#FF7800" stop-color="#ff7800"></stop></linearGradient><path d="M417.478 252.114v53.852l-71.708-71.708.261-.015c3.686-.203 7.289.953 10.276 3.122 13.62 9.888 30.373 15.717 48.49 15.717a83.693 83.693 0 0 0 12.681-.968z" style="fill:url(#f);" fill=""></path><linearGradient id="g" x1="342.728" x2="409.798" y1="443.22" y2="283.45" gradientTransform="matrix(1.0667 0 0 -1.0667 3.267 557.533)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#D63305" stop-color="#d63305"></stop><stop offset=".366" style="stop-color:#CF3004" stop-color="#cf3004"></stop><stop offset=".899" style="stop-color:#BC2602" stop-color="#bc2602"></stop><stop offset="1" style="stop-color:#B72401" stop-color="#b72401"></stop></linearGradient><circle cx="404.805" cy="170.432" r="86.272" style="fill:url(#g);" fill=""></circle><path d="M385.346 135.879c0-2.798 1.13-5.006 3.391-6.62l16.793-16.146c1.183-1.183 2.637-1.776 4.359-1.776 1.938 0 3.685.512 5.248 1.534 1.559 1.024 2.341 2.397 2.341 4.117v106.891c0 1.723-.863 3.095-2.583 4.117-1.723 1.024-3.714 1.534-5.974 1.534-2.369 0-4.387-.51-6.055-1.534-1.67-1.022-2.502-2.395-2.502-4.117v-89.775l-5.651 7.105c-1.077 1.077-2.26 1.614-3.552 1.614-1.615 0-2.988-.726-4.117-2.179-1.133-1.455-1.698-3.042-1.698-4.765z" style="" fill="#ffffff" data-original="#ffffff"></path></g></svg></a> -->
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="/myauth/logout/">Logout</a>
+                        </li>-->
+
+                      <!-- <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Welcome{{user.username}}</a>
+                            
+                        </li>
+
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="">Signup</a>
+                                <a class="dropdown-item" href=""></a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                        </li>--> 
+
+                        <!--<li class="nav-item dropdown">
+                           
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                            </div>
+                          
+                        </li>-->
+
+
+                       
+
+
+                    
+                </div>
+                <!-- <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a> -->
+                   <!-- <li class="nav-item dropdown">
+                           
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="/myauth/logout/">Logout</a>
+                        </div>-->
+                      
+                    </li>
+                    <!--<a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>-->
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <header>
+        <div class="container">
+            <!-- Left Side: Brand/Logo -->
+            
+            <!-- Middle Section: Navigation Links -->
+            <nav>
+                <div class="profile-logout">
+
+                <ul class="nav-links">
+                    <li><a href="http://127.0.0.1:8000/myauth/delivery_delivered/">View Delivered Details</a></li>
+                    
+                    <!-- <li><a href="#">View feedback</a></li> -->
+                    <!-- <li><a href="#">Notifications</a></li> -->
+                    <!-- <li><a href="#">View Delivery Details </a></li> -->
+
+                    <div class="profile-logout">
+                        <li class="dropdown">
+                            <!-- <a href="http://127.0.0.1:8000/myauth/delivery_delivered/">view orders</a> -->
+                            <div class="dropdown-content" >
+
+                                <!-- <a href="#">view orders</a> -->
+
+                            </div>
+                        </li>
+
+                    <!-- <li class="dropdown">
+                        <a href="#">Create Coupon</a>
+                        <div class="dropdown-content" >
+
+                            <a href="#">Discount Coupon</a>
+                            <a href="#">View Coupons</a>
+                            <a href="#">Promotional Coupon</a>
+                        </div>
+
+                    </li> -->
+                    </div>
+                  
+                </ul>
+            </nav>
+            <!-- Right Side: Profile and Logout Dropdown -->
+            <div class="profile-logout">
+                <div class="dropdown">
+                    <a href="#" class="user">
+                        <img src="{{ user.sellerprofile.profile_picture.url }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                        Hello, {{ user.first_name }}
+                    </a>
+                    <div class="dropdown-content">
+                        <!-- <a href="">Profile</a> -->
+                        <!-- <a href="">View Cart</a> -->
+                        <a href="#" onclick="openModal()">Change password</a>
+                        <a href="/myauth/logout/">Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
 
 
 
@@ -609,95 +690,23 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to the Delivery Dashboard</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    body {
-        background-color: #f4f4f4;
-        font-family: Arial, sans-serif;
-    }
-    .card {
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        width: 500px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-    }
-    .card-body {
-        padding: 20px;
-        background-color: #fff;
-    }
-    .status-details {
-        background-color: #f8f9fa;
-        border-radius: 0 0 10px 10px;
-    }
-    .user-details {
-        background-color: #f8f9fa;
-        border-radius: 0 0 10px 10px;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        color: #fff;
-        transition: background-color 0.3s ease;
-    }
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-    .list-unstyled {
-        padding-left: 0;
-    }
-    .list-unstyled li {
-        list-style: none;
-        margin-bottom: 10px;
-    }
-    .list-unstyled li span {
-        font-weight: bold;
-    }
-    h2 {
-        color: #007bff;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
-
-</style>
-</head>
-<body>
    
     
     
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     
     <div class="row">
         <div class="col-md-12">
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="head-tr">
                         <th>Serial No.</th>
                         <th>Status</th>
+                       
+                        <th>Location Details</th>
+                        <th>Contact Details</th>
+                        <th>Action</th>
                         <th>Assigned at</th>
-                        <th>User Details</th>
-                        <!-- <th>Action</th> -->
                       
                     </tr>
                 </tr>
@@ -705,24 +714,65 @@ https://templatemo.com/tm-559-zay-shop
                 <tbody>
                     {% with counter=1 %}
                     {% for assignment_detail in assignment_details %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ assignment_detail.assignment.status }}</td>
-                        <td>{{ assignment_detail.assignment.assigned_at }}</td>
+                    <tr class="body-tr">
+                        <td><strong>{{ forloop.counter }}.</strong></td>
+                        <td><div class="mt-data">
+                            <strong style="color: white;
+                            background-color: {% if assignment_detail.assignment.status == 'SHIPPED' or assignment_detail.assignment.status == 'DELIVERED' %}#00c300{% else %}#ff043f{% endif %};
+                            width: 7.5rem;
+                            padding: 9px 10px 9px 10px;
+                            border-radius: 1.3rem;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;">
+             
+                                <!-- {{ assignment_detail.assignment.status }} -->
+
+
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C114.509 0 0 114.496 0 256c0 141.489 114.496 256 256 256 141.491 0 256-114.496 256-256C512 114.511 397.504 0 256 0zm26.289 357.621c0 8.088-11.794 16.174-26.284 16.174-15.164 0-25.946-8.086-25.946-16.174V229.234c0-9.435 10.783-15.839 25.946-15.839 14.49 0 26.284 6.404 26.284 15.839v128.387zm-26.283-175.225c-15.501 0-27.631-11.457-27.631-24.263 0-12.805 12.131-23.925 27.631-23.925 15.164 0 27.296 11.12 27.296 23.925 0 12.806-12.133 24.263-27.296 24.263z" fill="#ffffff" opacity="1" data-original="#ffffff" class=""></path></g></svg>
+
+
+
+                                {{ assignment_detail.assignment.status|lower }}
+
+                            </strong>
+                        </div>
+                        </td>
+                       
                         
                         <td>
                             <ul class="list-unstyled">
-                                <li><span>Phone:</span> {{ assignment_detail.user_details.phone }}</li>
-                                <li><span>Alt Phone:</span> {{ assignment_detail.user_details.alt_phone }}</li>
-                                <li><span>Pincode:</span> {{ assignment_detail.user_details.pincode }}</li>
-                                <li><span>State:</span> {{ assignment_detail.user_details.state }}</li>
-                                <li><span>City:</span> {{ assignment_detail.user_details.city }}</li>
+                               
+                             
                                 <li><span>Building Name:</span> {{ assignment_detail.user_details.building_name }}</li>
                                 <li><span>Road/Area:</span> {{ assignment_detail.user_details.road_area }}</li>
-                                <li><span>Email:</span> {{ assignment_detail.email }}</li>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C166.035 0 91 72.47 91 165c0 35.202 10.578 66.592 30.879 96.006l121.494 189.58c5.894 9.216 19.372 9.198 25.254 0l122.021-190.225C410.512 232.28 421 199.307 421 165 421 74.019 346.981 0 256 0zm0 240c-41.353 0-75-33.647-75-75s33.647-75 75-75 75 33.647 75 75-33.647 75-75 75z" fill="#8d949b" opacity="1" data-original="#8d949b" class=""></path><path d="m373.264 344.695-75.531 118.087c-19.551 30.482-64.024 30.382-83.481.029l-75.654-118.085C72.034 360.116 31 388.309 31 422c0 58.462 115.928 90 225 90s225-31.538 225-90c0-33.715-41.091-61.923-107.736-77.305z" fill="#8d949b" opacity="1" data-original="#8d949b" class=""></path></g></svg>
+                                    
+                                    {{ assignment_detail.user_details.city }}, {{ assignment_detail.user_details.pincode }}, {{ assignment_detail.user_details.state }}</li>
+                               
                             </ul>
                         </td>
                         <td>
+                            <ul class="list-unstyled">
+                                <li><span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C114.624 0 0 114.624 0 256s114.624 256 256 256 256-114.624 256-256S397.376 0 256 0zm128 400c-149.984 0-272-122.016-272-272 0-8.832 7.168-16 16-16h59.072c8.832 0 16 7.168 16 16 0 27.648 6.016 53.984 17.888 78.24a15.84 15.84 0 0 1 .736 12.256 15.921 15.921 0 0 1-8.16 9.184l-23.872 11.52c19.872 34.592 48.544 63.296 83.104 83.104l11.52-23.84c1.856-3.84 5.152-6.752 9.184-8.16 4.032-1.376 8.448-1.12 12.256.736 24.32 11.872 50.624 17.888 78.24 17.888 8.832 0 16 7.168 16 16V384H400c0 8.832-7.168 16-16 16z" fill="#8d949b" opacity="1" data-original="#8d949b" class=""></path></g></svg>
+                                    
+                                    </span> <a href="tel:{{ assignment_detail.user_details.phone }}"><strong>{{ assignment_detail.user_details.phone }}</strong></a></li>
+                                <li><span>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C114.624 0 0 114.624 0 256s114.624 256 256 256 256-114.624 256-256S397.376 0 256 0zm128 400c-149.984 0-272-122.016-272-272 0-8.832 7.168-16 16-16h59.072c8.832 0 16 7.168 16 16 0 27.648 6.016 53.984 17.888 78.24a15.84 15.84 0 0 1 .736 12.256 15.921 15.921 0 0 1-8.16 9.184l-23.872 11.52c19.872 34.592 48.544 63.296 83.104 83.104l11.52-23.84c1.856-3.84 5.152-6.752 9.184-8.16 4.032-1.376 8.448-1.12 12.256.736 24.32 11.872 50.624 17.888 78.24 17.888 8.832 0 16 7.168 16 16V384H400c0 8.832-7.168 16-16 16z" fill="#8d949b" opacity="1" data-original="#8d949b" class=""></path></g></svg>
+                                </span> <a href="tel:{{ assignment_detail.user_details.alt_phone }}"><strong>{{ assignment_detail.user_details.alt_phone }}</strong></a></li>
+                            
+                                <li><span>
+
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path fill-rule="evenodd" d="M256 0c141.385 0 256 114.615 256 256S397.385 512 256 512 0 397.385 0 256 114.615 0 256 0zm162.5 355.241V164.978l-95.137 95.131zm-304.676 3.876h284.358l-86.908-86.908-33.123 33.118a8.563 8.563 0 0 1-6.05 2.5h-32.2a8.553 8.553 0 0 1-6.051-2.5l-33.122-33.118-86.908 86.908zM93.5 164.972v190.274l95.137-95.137zm312.906-12.089H105.6l137.844 137.844h25.117z" fill="#8d949b" opacity="1" data-original="#8d949b" class=""></path></g></svg>
+                                </span> <a href="mailto:{{ assignment_detail.email }}"><strong>{{ assignment_detail.email }}</strong></a></li>
+
+                            </ul>
+                        </td>
+                        <!-- <td>
                             {% if assignment_detail.assignment.status == 'SHIPPED' %}
                             <form action="{% url 'create_otp' %}" method="post">
                                 {% csrf_token %}
@@ -738,7 +788,43 @@ https://templatemo.com/tm-559-zay-shop
                                 <button type="submit" class="btn btn-primary">Delivered</button>
                             </form>
                             {% endif %}
+                        </td> -->
+
+                        <td>
+                            {% if assignment_detail.assignment.status == 'SHIPPED' %}
+                            <form action="{% url 'create_otp' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                                <input type="hidden" name="email" value="{{ assignment_detail.email }}">
+                                <button type="submit" class="button-88">Out for Delivery</button>
+                            </form>
+                            {% elif assignment_detail.assignment.status == 'OUT_FOR_DELIVERY' %}
+                            <form action="{% url 'verify_otp_delivery' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="out_for_delivery" value="{{ assignment_detail.assignment.id }}">
+                                <input type="text" name="otp" placeholder="Enter OTP" class="form-control mb-2">
+                                <button type="submit" class="button-88">Delivered</button>
+                            </form>
+                            {% elif assignment_detail.assignment.status == 'DELIVERED' %}
+                            <form action="{% url 'verify_otp_delivery' %}" method="post">
+                                {% csrf_token %}
+                                <span class="cls-grn">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C114.509 0 0 114.496 0 256c0 141.489 114.496 256 256 256 141.491 0 256-114.496 256-256C512 114.511 397.504 0 256 0zm26.289 357.621c0 8.088-11.794 16.174-26.284 16.174-15.164 0-25.946-8.086-25.946-16.174V229.234c0-9.435 10.783-15.839 25.946-15.839 14.49 0 26.284 6.404 26.284 15.839v128.387zm-26.283-175.225c-15.501 0-27.631-11.457-27.631-24.263 0-12.805 12.131-23.925 27.631-23.925 15.164 0 27.296 11.12 27.296 23.925 0 12.806-12.133 24.263-27.296 24.263z" fill="#00c300" opacity="1" data-original="#00c300" class=""></path></g></svg>
+
+                                
+                                Product delivered</span>
+                            </form>
+                            {% else %}
+                            <span class="rd-data">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M256 0C114.509 0 0 114.496 0 256c0 141.489 114.496 256 256 256 141.491 0 256-114.496 256-256C512 114.511 397.504 0 256 0zm26.289 357.621c0 8.088-11.794 16.174-26.284 16.174-15.164 0-25.946-8.086-25.946-16.174V229.234c0-9.435 10.783-15.839 25.946-15.839 14.49 0 26.284 6.404 26.284 15.839v128.387zm-26.283-175.225c-15.501 0-27.631-11.457-27.631-24.263 0-12.805 12.131-23.925 27.631-23.925 15.164 0 27.296 11.12 27.296 23.925 0 12.806-12.133 24.263-27.296 24.263z" fill="#ff043f" opacity="1" data-original="#ff043f" class=""></path></g></svg>
+
+                                
+                                Shipping pending</span>
+                            {% endif %}
                         </td>
+                        
+                        <td>
+                            <i>{{ assignment_detail.assignment.assigned_at }}</i></td>
                     </tr>
                     {% with counter=counter|add:1 %}
                     {% endwith %}
